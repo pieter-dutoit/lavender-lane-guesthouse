@@ -1,12 +1,12 @@
-import type { CollectionConfig } from "payload";
+import type { CollectionConfig } from 'payload'
 
-import { isAdmin, isAdminFieldLevel } from "../access/is-admin";
-import { isAdminOrSelf } from "../access/is-admin-or-self";
+import { isAdmin, isAdminFieldLevel } from '../access/is-admin'
+import { isAdminOrSelf } from '../access/is-admin-or-self'
 
 export const Users: CollectionConfig = {
-  slug: "users",
+  slug: 'users',
   admin: {
-    useAsTitle: "email",
+    useAsTitle: 'email'
   },
   auth: {
     depth: 0,
@@ -15,9 +15,9 @@ export const Users: CollectionConfig = {
     maxLoginAttempts: 5, // Automatically lock a user out after X amount of failed logins
     lockTime: 600 * 1000, // 10mins: Time period to allow the max login attempts
     cookies: {
-      sameSite: "Strict",
-      secure: true,
-    },
+      sameSite: 'Strict',
+      secure: true
+    }
   },
   access: {
     create: isAdmin,
@@ -25,31 +25,31 @@ export const Users: CollectionConfig = {
     read: isAdminOrSelf,
     // Admins can update all, but any other logged in user can only update themselves
     update: isAdminOrSelf,
-    delete: isAdmin,
+    delete: isAdmin
   },
   fields: [
     {
-      name: "roles",
+      name: 'roles',
       // Save this field to JWT so we can use from `req.user`
       saveToJWT: true,
-      type: "select",
+      type: 'select',
       hasMany: true,
-      defaultValue: ["editor"],
+      defaultValue: ['editor'],
       access: {
         // Only admins can create or update a value for this field
         create: isAdminFieldLevel,
-        update: isAdminFieldLevel,
+        update: isAdminFieldLevel
       },
       options: [
         {
-          label: "Admin",
-          value: "admin",
+          label: 'Admin',
+          value: 'admin'
         },
         {
-          label: "Editor",
-          value: "editor",
-        },
-      ],
-    },
-  ],
-};
+          label: 'Editor',
+          value: 'editor'
+        }
+      ]
+    }
+  ]
+}
