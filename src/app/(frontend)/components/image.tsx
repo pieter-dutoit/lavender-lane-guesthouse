@@ -24,7 +24,10 @@ export function calculatePortraitHeight(width: number): number {
 const MOBILE_BREAK = 900
 
 function createSourceSet(src: string, portrait: boolean): string {
-  const [name, extension] = src.split('.')
+  const pathSections = src.split('.')
+  const extension = pathSections[pathSections.length - 1]
+  const name = pathSections.slice(0, pathSections.length - 1).join('.')
+
   const result = ALLOWED_SIZES.reduce((acc, width, index) => {
     const height =
       width <= MOBILE_BREAK && portrait ? calculatePortraitHeight(width) : 0

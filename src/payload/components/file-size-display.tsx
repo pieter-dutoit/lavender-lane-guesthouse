@@ -1,4 +1,5 @@
 'use client'
+import React from 'react'
 import { useFormFields } from '@payloadcms/ui'
 
 interface FileField {
@@ -9,7 +10,7 @@ interface FileField {
 
 const FILE_SIZE_LIMIT = 4500000
 
-export default function FileSizeDisplay(): JSX.Element | null {
+export default function FileSizeDisplay(): React.JSX.Element | null {
   const file = useFormFields(([fields]) => fields.file) as FileField
   const currentSize = file?.value?.size
 

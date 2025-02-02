@@ -1,5 +1,20 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 body {
   font-family: var(--font-playfair), Arial, Helvetica, sans-serif;
+}
+
+.page-heading {
+  font-size: 16rem;
+}
+
+.embla {
+  overflow: hidden;
+}
+.embla__container {
+  display: flex;
+}
+.embla__slide {
+  flex: 0 0 100%;
+  min-width: 0;
 }

@@ -19,6 +19,7 @@ import { SocialMediaPlatforms } from './collections/social-media-platforms'
 import { Amenities } from './collections/amenities'
 import { Rooms } from './collections/rooms'
 import { Beds } from './collections/beds'
+import { Facilities } from './collections/facilities'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -42,6 +43,7 @@ export default buildConfig({
     SocialMediaPlatforms,
     RichtextSections,
     Amenities,
+    Facilities,
     Rooms,
     Beds
   ],
