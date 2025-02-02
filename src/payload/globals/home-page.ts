@@ -1,64 +1,65 @@
-import type { GlobalConfig, GroupField } from "payload";
+import type { GlobalConfig, GroupField } from 'payload'
 
-import { isLoggedInOrIsPublished } from "@/payload/access/is-logged-in-or-is-published";
-import { isLoggedIn } from "@/payload/access/is-logged-in";
+import { isLoggedInOrIsPublished } from '@/payload/access/is-logged-in-or-is-published'
+import { isLoggedIn } from '@/payload/access/is-logged-in'
 
-import revalidateCache from "../hooks/globals/revalidate-cache";
-import Amenities from "../field-groups/amenities";
-import HeroFields from "../field-groups/hero";
-import SEOFields from "../field-groups/seo";
+import revalidateCache from '../hooks/globals/revalidate-cache'
+
+import HeroFields from '../field-groups/hero'
+import SEOFields from '../field-groups/seo'
+import Facilities from '../field-groups/facilities'
 
 const BookingPlatform: GroupField = {
-  name: "booking_platform",
-  label: "Booking Platform",
-  type: "group",
+  name: 'booking_platform',
+  label: 'Booking Platform',
+  type: 'group',
   admin: {
-    position: "sidebar",
+    position: 'sidebar'
   },
   fields: [
     {
-      name: "name",
-      type: "select",
-      label: "Select Platform",
+      name: 'name',
+      type: 'select',
+      label: 'Select Platform',
       required: true,
-      options: [{ label: "NightsBridge", value: "NightsBridge" }],
+      options: [{ label: 'NightsBridge', value: 'NightsBridge' }]
     },
     {
-      name: "url",
-      type: "text",
-      label: "Booking Link URL",
-      required: true,
-    },
-  ],
-};
+      name: 'url',
+      type: 'text',
+      label: 'Booking Link URL',
+      required: true
+    }
+  ]
+}
 
 export const HomePage: GlobalConfig = {
-  slug: "home-page",
+  slug: 'home-page',
   versions: {
-    drafts: true,
+    drafts: true
   },
   hooks: {
-    afterChange: [revalidateCache("home-page")],
+    afterChange: [revalidateCache('home-page')]
   },
   access: {
     read: isLoggedInOrIsPublished,
-    update: isLoggedIn,
+    update: isLoggedIn
   },
   fields: [
     BookingPlatform,
     {
-      type: "tabs",
+      type: 'tabs',
       tabs: [
         {
-          label: "Content",
-          fields: [HeroFields, Amenities],
+          label: 'Content',
+          fields: [HeroFields, Facilities]
         },
         {
-          name: "seo",
-          label: "SEO",
-          fields: SEOFields,
-        },
-      ],
-    },
-  ],
-};
+          name: 'seo',
+          label: 'SEO',
+          fields: SEOFields
+        }
+      ]
+    }
+  ]
+}

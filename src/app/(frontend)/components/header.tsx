@@ -2,23 +2,53 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { Menu, X } from 'lucide-react'
+import { usePathname } from 'next/navigation'
+import { ExternalLink, Menu, X } from 'lucide-react'
+
 import Image from './image'
+
+const LINKS = [
+  {
+    name: 'Home',
+    path: '/'
+  },
+  {
+    name: 'Rooms',
+    path: '/rooms'
+  },
+  {
+    name: 'About',
+    path: '/about'
+  },
+  {
+    name: 'Contact',
+    path: '/contact'
+  },
+  {
+    name: 'Book Now',
+    path: '#',
+    external: true
+  }
+]
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false)
+  const pathname = usePathname()
 
   const toggleMenu = () => {
     setIsOpen(!isOpen)
   }
 
   return (
-    <header className='bg-white shadow-sm'>
-      <div className='mx-auto px-4 py-1 sm:px-8'>
-        <div className='flex h-12 justify-between sm:h-16'>
+    <header className='sticky top-0 z-50 bg-white shadow-sm'>
+      <nav className='container mx-auto px-4 md:px-6 lg:px-8'>
+        <div className='flex h-16 justify-between'>
           {/* Logo */}
-          <div className='relative h-full w-40'>
-            <Link href='/' className='text-2xl font-bold text-indigo-600'>
+          <Link
+            href='/'
+            className='h-full py-1 text-2xl font-bold text-indigo-600'
+          >
+            <div className='relative h-full w-32 sm:w-40'>
               <Image
                 src='/cms/api/media/file/logo-1.webp'
                 alt='logo'
@@ -26,36 +56,32 @@ export default function Header() {
                 className='object-contain object-left'
                 sizes='10rem'
               />
-            </Link>
-          </div>
+            </div>
+          </Link>
 
-          <div className='hidden sm:ml-6 sm:flex sm:space-x-8'>
-            <Link
-              href='/'
-              className='inline-flex items-center border-b-2 border-indigo-500 px-1 pt-1 text-base font-medium text-gray-900'
-            >
-              Home
-            </Link>
-            <Link
-              href='#rooms'
-              className='inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-base font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700'
-            >
-              Rooms
-            </Link>
-            <Link
-              href='#'
-              className='inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-base font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700'
-            >
-              About
-            </Link>
-            <Link
-              href='#'
-              className='inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-base font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700'
-            >
-              Contact
-            </Link>
-          </div>
-          <div className='-mr-2 flex items-center sm:hidden'>
+          {/* Desktop Menu */}
+          <ul className='hidden md:ml-6 md:flex md:space-x-8'>
+            {LINKS.map(({ path, name, external }) => {
+              const isActive = path === pathname
+
+              return (
+                <li key={path} className='h-full'>
+                  <Link
+                    href={path}
+                    className={` ${isActive ? 'border-indigo-500' : 'border-transparent'} ${external ? 'font-extrabold text-indigo-600' : 'font-medium text-gray-500'} flex h-full items-center gap-2 border-b-2 px-1 pt-1 text-base hover:border-gray-300 hover:text-gray-700`}
+                    {...(external && {
+                      target: '_blank'
+                    })}
+                  >
+                    {name}
+                    {external && <ExternalLink size={16} />}
+                  </Link>
+                </li>
+              )
+            })}
+          </ul>
+
+          <div className='-mr-2 flex items-center md:hidden'>
             <button
               onClick={toggleMenu}
               type='button'
@@ -72,44 +98,35 @@ export default function Header() {
             </button>
           </div>
         </div>
-      </div>
+      </nav>
 
-      {/* Mobile menu, show/hide based on menu state */}
-      <div
-        className={`sm:hidden ${isOpen ? 'block' : 'hidden'}`}
+      {/* Mobile Menu */}
+
+      <nav
+        className={`md:hidden ${isOpen ? 'absolute' : 'hidden'} top-full left-0 w-full border-b-2 border-gray-300 bg-white`}
         id='mobile-menu'
       >
-        <div className='space-y-1 pt-2 pb-3'>
-          <Link
-            href='/'
-            className='block border-l-4 border-indigo-500 bg-indigo-50 py-2 pr-4 pl-3 text-lg font-medium text-indigo-700'
-            onClick={toggleMenu}
-          >
-            Home
-          </Link>
-          <Link
-            href='#rooms'
-            className='block border-l-4 border-transparent py-2 pr-4 pl-3 text-lg font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700'
-            onClick={toggleMenu}
-          >
-            Rooms
-          </Link>
-          <Link
-            href='#'
-            className='block border-l-4 border-transparent py-2 pr-4 pl-3 text-lg font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700'
-            onClick={toggleMenu}
-          >
-            About
-          </Link>
-          <Link
-            href='#'
-            className='block border-l-4 border-transparent py-2 pr-4 pl-3 text-lg font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700'
-            onClick={toggleMenu}
-          >
-            Contact
-          </Link>
-        </div>
-      </div>
+        <ul className='space-y-1 pt-2 pb-3'>
+          {LINKS.map(({ path, name, external }) => {
+            const isActive = path === pathname
+
+            return (
+              <li key={path} onClick={toggleMenu}>
+                <Link
+                  href={path}
+                  className={`${isActive ? 'border-indigo-500 bg-indigo-50 text-indigo-700' : 'border-white bg-white text-gray-500'} flex items-center gap-2 border-l-4 py-2 pr-4 pl-3 text-lg font-medium`}
+                  {...(external && {
+                    target: '_blank'
+                  })}
+                >
+                  {name}
+                  {external && <ExternalLink size={16} />}
+                </Link>
+              </li>
+            )
+          })}
+        </ul>
+      </nav>
     </header>
   )
 }

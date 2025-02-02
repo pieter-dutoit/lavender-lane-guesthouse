@@ -18,6 +18,7 @@ export interface Config {
     'social-media-platforms': SocialMediaPlatform;
     'richtext-sections': RichtextSection;
     amenities: Amenity;
+    facilities: Facility;
     rooms: Room;
     beds: Bed;
     'payload-locked-documents': PayloadLockedDocument;
@@ -33,6 +34,7 @@ export interface Config {
     'social-media-platforms': SocialMediaPlatformsSelect<false> | SocialMediaPlatformsSelect<true>;
     'richtext-sections': RichtextSectionsSelect<false> | RichtextSectionsSelect<true>;
     amenities: AmenitiesSelect<false> | AmenitiesSelect<true>;
+    facilities: FacilitiesSelect<false> | FacilitiesSelect<true>;
     rooms: RoomsSelect<false> | RoomsSelect<true>;
     beds: BedsSelect<false> | BedsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -229,6 +231,18 @@ export interface Amenity {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "facilities".
+ */
+export interface Facility {
+  id: string;
+  name: string;
+  description?: string | null;
+  image: string | Media;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "rooms".
  */
 export interface Room {
@@ -294,6 +308,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'amenities';
         value: string | Amenity;
+      } | null)
+    | ({
+        relationTo: 'facilities';
+        value: string | Facility;
       } | null)
     | ({
         relationTo: 'rooms';
@@ -483,6 +501,17 @@ export interface AmenitiesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "facilities_select".
+ */
+export interface FacilitiesSelect<T extends boolean = true> {
+  name?: T;
+  description?: T;
+  image?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "rooms_select".
  */
 export interface RoomsSelect<T extends boolean = true> {
@@ -560,14 +589,56 @@ export interface HomePage {
   };
   hero: {
     background_image: string | Media;
-    title: string;
-    subtitle?: string | null;
+    heading: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    subheading: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
   };
-  amenities: {
+  facilities: {
     heading: string;
     description: string;
-    background_image: string | Media;
-    general_amenities: (string | Amenity)[];
+    facility_groups?:
+      | {
+          heading: string;
+          icon: string | Media;
+          facilities?: (string | Facility)[] | null;
+          id?: string | null;
+        }[]
+      | null;
+    amenity_groups?:
+      | {
+          heading: string;
+          icon: string | Media;
+          amenities?: (string | Amenity)[] | null;
+          id?: string | null;
+        }[]
+      | null;
   };
   seo: {
     meta: MetadataField;
@@ -658,16 +729,30 @@ export interface HomePageSelect<T extends boolean = true> {
     | T
     | {
         background_image?: T;
-        title?: T;
-        subtitle?: T;
+        heading?: T;
+        subheading?: T;
       };
-  amenities?:
+  facilities?:
     | T
     | {
         heading?: T;
         description?: T;
-        background_image?: T;
-        general_amenities?: T;
+        facility_groups?:
+          | T
+          | {
+              heading?: T;
+              icon?: T;
+              facilities?: T;
+              id?: T;
+            };
+        amenity_groups?:
+          | T
+          | {
+              heading?: T;
+              icon?: T;
+              amenities?: T;
+              id?: T;
+            };
       };
   seo?:
     | T
