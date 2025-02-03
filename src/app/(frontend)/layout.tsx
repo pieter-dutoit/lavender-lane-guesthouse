@@ -8,7 +8,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang='en' className={`${playfair.className} antialiased`}>
+    <html lang='en' className={`antialiased`}>
       <body>
         <Header />
         <main>{children}</main>

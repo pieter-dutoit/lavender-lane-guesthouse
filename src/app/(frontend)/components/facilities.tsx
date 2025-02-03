@@ -3,6 +3,7 @@ import { fetchHomePageData } from '@/lib/data'
 import { extractImageProps } from '@/lib/utils'
 
 import Image from './image'
+import SectionHeader from './section-header'
 
 interface Props {
   id?: string
@@ -15,7 +16,7 @@ function SubSection({ id, heading, image, children }: Props) {
   const { url, alt } = extractImageProps(image)
   return (
     <div className='mt-12 flex flex-col gap-4 lg:mt-16' id={id}>
-      <div className='mx-auto flex w-fit items-center justify-center gap-2 rounded-lg bg-indigo-700 p-1 text-white'>
+      <div className='mx-auto mb-4 flex w-fit items-center justify-center gap-2 rounded-lg bg-gray-700 p-1 text-white lg:mb-6'>
         <Image
           src={url}
           alt={alt}
@@ -44,17 +45,11 @@ export default async function Amenities() {
       id='facilities'
     >
       <div className='container mx-auto px-4 md:px-6 lg:px-8'>
-        <div className='text-center'>
-          <h2 className='font-extrabold tracking-wide text-indigo-600 uppercase sm:text-lg'>
-            Facilities & Amenities
-          </h2>
-          <p className='mt-4 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl lg:text-5xl'>
-            {heading}
-          </p>
-          <p className='mt-4 max-w-2xl text-lg text-gray-600 lg:mx-auto lg:mt-5 lg:text-xl'>
-            {description}
-          </p>
-        </div>
+        <SectionHeader
+          heading='Facilities & Amenities'
+          subHeading={heading}
+          description={description}
+        />
 
         {facility_groups?.map(({ heading, icon, facilities }) => {
           return (
@@ -105,7 +100,7 @@ export default async function Amenities() {
               image={icon}
               id='amenities'
             >
-              <ul className='mt-6 gap-x-8 space-y-10 md:grid md:grid-cols-2 xl:grid-cols-3'>
+              <ul className='gap-x-8 space-y-10 md:grid md:grid-cols-2 xl:grid-cols-3'>
                 {amenities?.map((amenity) => {
                   if (typeof amenity === 'string') return null
                   const { name, description, icon } = amenity
@@ -125,7 +120,7 @@ export default async function Amenities() {
                       </div>
 
                       <div className='-mt-1 whitespace-normal'>
-                        <h4 className='leading-6 font-extrabold font-medium text-gray-900 sm:text-lg'>
+                        <h4 className='leading-6 font-medium text-gray-900 sm:text-lg'>
                           {name}
                         </h4>
 

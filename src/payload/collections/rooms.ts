@@ -18,8 +18,7 @@ const BedCount: ArrayField = {
       type: 'relationship',
       relationTo: 'beds',
       hasMany: false,
-      required: true,
-      unique: true
+      required: true
     },
     {
       name: 'quantity',
@@ -64,6 +63,9 @@ export const Rooms: CollectionConfig = {
   slug: 'rooms',
   admin: {
     useAsTitle: 'name'
+  },
+  versions: {
+    drafts: true
   },
   access: DEFAULT_COLLECTION_ACCESS,
   fields: [
