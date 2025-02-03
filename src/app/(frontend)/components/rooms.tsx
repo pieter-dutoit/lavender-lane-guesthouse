@@ -3,7 +3,7 @@ import SectionHeader from './section-header'
 import Image from './image'
 import { getRooms } from '@/lib/data'
 import { extractImageProps } from '@/lib/utils'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, Users } from 'lucide-react'
 
 export default async function Rooms() {
   const rooms = await getRooms()
@@ -19,12 +19,14 @@ export default async function Rooms() {
         />
 
         <ul className='mt-12 grid gap-8 md:grid-cols-2'>
-          {rooms.map(({ id, name, description, gallery }) => {
+          {rooms.map(({ id, name, slug, description, gallery, details }) => {
+            const { sleeps_adults, sleeps_children } = details
             return (
               <li
                 key={id}
                 className='flex flex-col overflow-hidden rounded-lg bg-white shadow-lg'
               >
+                {/* Images */}
                 <div className='grid grid-cols-3 gap-2 p-2'>
                   {gallery.slice(0, 2).map((image, index) => {
                     const { url, alt } = extractImageProps(image)
@@ -44,11 +46,17 @@ export default async function Rooms() {
                     )
                   })}
                 </div>
+
+                {/* Details */}
                 <div className='flex flex-1 flex-col justify-between p-6'>
-                  <div className='flex-1'>
+                  <div className='flex flex-1 flex-col'>
                     <h3 className='text-xl font-semibold text-gray-900'>
                       {name}
                     </h3>
+                    <div className='mt-2 mr-auto flex items-center gap-2 rounded-full bg-gray-600 px-2 py-1 text-xs font-bold text-white'>
+                      <Users size={14} />
+                      Sleeps {sleeps_adults + sleeps_children}
+                    </div>
                     <p className='mt-3 text-base text-gray-500'>
                       {description}
                     </p>
@@ -61,7 +69,7 @@ export default async function Rooms() {
                       Book Now
                     </Link>
                     <Link
-                      href='#'
+                      href={`/rooms/${slug}`}
                       className='under flex items-center gap-2 font-semibold text-indigo-600 underline-offset-2 hover:underline'
                     >
                       View details <ArrowRight />

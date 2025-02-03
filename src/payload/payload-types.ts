@@ -20,6 +20,7 @@ export interface Config {
     amenities: Amenity;
     facilities: Facility;
     rooms: Room;
+    reviews: Review;
     beds: Bed;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -36,6 +37,7 @@ export interface Config {
     amenities: AmenitiesSelect<false> | AmenitiesSelect<true>;
     facilities: FacilitiesSelect<false> | FacilitiesSelect<true>;
     rooms: RoomsSelect<false> | RoomsSelect<true>;
+    reviews: ReviewsSelect<false> | ReviewsSelect<true>;
     beds: BedsSelect<false> | BedsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -248,6 +250,7 @@ export interface Facility {
 export interface Room {
   id: string;
   name: string;
+  slug?: string | null;
   description: string;
   details: {
     sleeps_adults: number;
@@ -274,6 +277,22 @@ export interface Bed {
   icon: string | Media;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "reviews".
+ */
+export interface Review {
+  id: string;
+  name: string;
+  title?: string | null;
+  text: string;
+  rating: number;
+  platform?: ('Google' | 'Booking.com' | 'AirBnb' | 'LekkeSlaap' | 'Tripadvisor' | 'Facebook') | null;
+  link?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -317,6 +336,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'rooms';
         value: string | Room;
+      } | null)
+    | ({
+        relationTo: 'reviews';
+        value: string | Review;
       } | null)
     | ({
         relationTo: 'beds';
@@ -517,6 +540,7 @@ export interface FacilitiesSelect<T extends boolean = true> {
  */
 export interface RoomsSelect<T extends boolean = true> {
   name?: T;
+  slug?: T;
   description?: T;
   details?:
     | T
@@ -533,6 +557,21 @@ export interface RoomsSelect<T extends boolean = true> {
       };
   amenities?: T;
   gallery?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "reviews_select".
+ */
+export interface ReviewsSelect<T extends boolean = true> {
+  name?: T;
+  title?: T;
+  text?: T;
+  rating?: T;
+  platform?: T;
+  link?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;

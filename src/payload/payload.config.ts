@@ -20,6 +20,7 @@ import { Amenities } from './collections/amenities'
 import { Rooms } from './collections/rooms'
 import { Beds } from './collections/beds'
 import { Facilities } from './collections/facilities'
+import { Reviews } from './collections/reviews'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -45,6 +46,7 @@ export default buildConfig({
     Amenities,
     Facilities,
     Rooms,
+    Reviews,
     Beds
   ],
   globals: [HomePage, AboutUsPage, Gallery],

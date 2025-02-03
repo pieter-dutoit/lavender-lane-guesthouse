@@ -3,6 +3,8 @@ import type { ArrayField, CollectionConfig, GroupField } from 'payload'
 import { DEFAULT_COLLECTION_ACCESS } from '../access/default-config'
 
 import { validateSlugFriendly } from '../utils/validation'
+import createSlug from '../hooks/collections/create-slug'
+import revalidateCache from '../hooks/collections/revalidate-cache'
 
 const BedCount: ArrayField = {
   name: 'bed_count',
@@ -67,6 +69,10 @@ export const Rooms: CollectionConfig = {
   versions: {
     drafts: true
   },
+  hooks: {
+    beforeChange: [createSlug],
+    afterChange: [revalidateCache('rooms', true)]
+  },
   access: DEFAULT_COLLECTION_ACCESS,
   fields: [
     {
@@ -78,6 +84,16 @@ export const Rooms: CollectionConfig = {
       unique: true,
       required: true,
       validate: validateSlugFriendly
+    },
+    {
+      name: 'slug',
+      label: 'Page Slug / URL (Auto Generated)',
+      type: 'text',
+      unique: true,
+      admin: {
+        position: 'sidebar',
+        readOnly: true
+      }
     },
     {
       name: 'description',

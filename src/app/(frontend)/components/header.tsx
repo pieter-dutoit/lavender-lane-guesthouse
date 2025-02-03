@@ -14,15 +14,15 @@ const LINKS = [
   },
   {
     name: 'Rooms',
-    path: '/rooms'
+    path: '/our-rooms'
   },
   {
     name: 'About',
-    path: '/about'
+    path: '/about-us'
   },
   {
     name: 'Contact',
-    path: '/contact'
+    path: '/contact-us'
   },
   {
     name: 'Book Now',

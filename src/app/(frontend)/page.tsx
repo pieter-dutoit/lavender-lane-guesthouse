@@ -1,5 +1,6 @@
 import Facilities from './components/facilities'
 import Hero from './components/hero'
+import Reviews from './components/reviews'
 import Rooms from './components/rooms'
 
 export default function Page() {
@@ -8,6 +9,7 @@ export default function Page() {
       <Hero />
       <Facilities />
       <Rooms />
+      <Reviews />
     </>
   )
 }
