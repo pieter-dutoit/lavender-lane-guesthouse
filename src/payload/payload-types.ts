@@ -20,6 +20,7 @@ export interface Config {
     amenities: Amenity;
     facilities: Facility;
     rooms: Room;
+    reviews: Review;
     beds: Bed;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -36,6 +37,7 @@ export interface Config {
     amenities: AmenitiesSelect<false> | AmenitiesSelect<true>;
     facilities: FacilitiesSelect<false> | FacilitiesSelect<true>;
     rooms: RoomsSelect<false> | RoomsSelect<true>;
+    reviews: ReviewsSelect<false> | ReviewsSelect<true>;
     beds: BedsSelect<false> | BedsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -46,11 +48,13 @@ export interface Config {
   };
   globals: {
     'home-page': HomePage;
+    'booking-platform': BookingPlatform;
     'about-us-page': AboutUsPage;
     gallery: Gallery;
   };
   globalsSelect: {
     'home-page': HomePageSelect<false> | HomePageSelect<true>;
+    'booking-platform': BookingPlatformSelect<false> | BookingPlatformSelect<true>;
     'about-us-page': AboutUsPageSelect<false> | AboutUsPageSelect<true>;
     gallery: GallerySelect<false> | GallerySelect<true>;
   };
@@ -173,12 +177,13 @@ export interface SeoMedia {
  */
 export interface ContactPerson {
   id: string;
-  name: string;
+  name?: string | null;
   email: string;
   phone: string;
   position?: string | null;
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -191,6 +196,7 @@ export interface SocialMediaPlatform {
   link: string;
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -248,6 +254,7 @@ export interface Facility {
 export interface Room {
   id: string;
   name: string;
+  slug?: string | null;
   description: string;
   details: {
     sleeps_adults: number;
@@ -262,6 +269,7 @@ export interface Room {
   gallery: (string | Media)[];
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -273,6 +281,22 @@ export interface Bed {
   icon: string | Media;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "reviews".
+ */
+export interface Review {
+  id: string;
+  name: string;
+  title?: string | null;
+  text: string;
+  rating: number;
+  platform?: ('Google' | 'Booking.com' | 'AirBnb' | 'LekkeSlaap' | 'Tripadvisor' | 'Facebook') | null;
+  link?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -316,6 +340,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'rooms';
         value: string | Room;
+      } | null)
+    | ({
+        relationTo: 'reviews';
+        value: string | Review;
       } | null)
     | ({
         relationTo: 'beds';
@@ -466,6 +494,7 @@ export interface ContactPersonsSelect<T extends boolean = true> {
   position?: T;
   updatedAt?: T;
   createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -477,6 +506,7 @@ export interface SocialMediaPlatformsSelect<T extends boolean = true> {
   link?: T;
   updatedAt?: T;
   createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -516,6 +546,7 @@ export interface FacilitiesSelect<T extends boolean = true> {
  */
 export interface RoomsSelect<T extends boolean = true> {
   name?: T;
+  slug?: T;
   description?: T;
   details?:
     | T
@@ -534,6 +565,22 @@ export interface RoomsSelect<T extends boolean = true> {
   gallery?: T;
   updatedAt?: T;
   createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "reviews_select".
+ */
+export interface ReviewsSelect<T extends boolean = true> {
+  name?: T;
+  title?: T;
+  text?: T;
+  rating?: T;
+  platform?: T;
+  link?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -583,10 +630,6 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  */
 export interface HomePage {
   id: string;
-  booking_platform: {
-    name: 'NightsBridge';
-    url: string;
-  };
   hero: {
     background_image: string | Media;
     heading: {
@@ -677,6 +720,18 @@ export interface TwitterField {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "booking-platform".
+ */
+export interface BookingPlatform {
+  id: string;
+  name: 'NightsBridge';
+  url: string;
+  _status?: ('draft' | 'published') | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "about-us-page".
  */
 export interface AboutUsPage {
@@ -719,12 +774,6 @@ export interface Gallery {
  * via the `definition` "home-page_select".
  */
 export interface HomePageSelect<T extends boolean = true> {
-  booking_platform?:
-    | T
-    | {
-        name?: T;
-        url?: T;
-      };
   hero?:
     | T
     | {
@@ -791,6 +840,18 @@ export interface OpenGraphFieldSelect<T extends boolean = true> {
 export interface TwitterFieldSelect<T extends boolean = true> {
   creator?: T;
   creatorId?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "booking-platform_select".
+ */
+export interface BookingPlatformSelect<T extends boolean = true> {
+  name?: T;
+  url?: T;
+  _status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

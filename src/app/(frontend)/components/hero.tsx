@@ -61,14 +61,6 @@ export default async function Hero() {
                 Book Now <ExternalLink size={16} />
               </Link>
             </div>
-            <div className='mt-3 sm:mt-0 sm:ml-3'>
-              <Link
-                href='/about'
-                className='flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-100 px-8 py-3 text-base font-medium text-indigo-700 hover:bg-indigo-200 md:px-10 md:py-4 md:text-lg'
-              >
-                Learn More
-              </Link>
-            </div>
           </div>
         </div>
       </div>

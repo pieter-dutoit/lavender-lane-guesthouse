@@ -1,43 +1,36 @@
 'use client'
 
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { ExternalLink, Menu, X } from 'lucide-react'
 
 import Image from './image'
+import { NAV_LINKS } from '@/lib/config'
 
-const LINKS = [
-  {
-    name: 'Home',
-    path: '/'
-  },
-  {
-    name: 'Rooms',
-    path: '/rooms'
-  },
-  {
-    name: 'About',
-    path: '/about'
-  },
-  {
-    name: 'Contact',
-    path: '/contact'
-  },
-  {
-    name: 'Book Now',
-    path: '#',
-    external: true
-  }
-]
+interface Props {
+  bookingLink: string
+}
 
-export default function Header() {
+export default function Header({ bookingLink }: Props) {
   const [isOpen, setIsOpen] = useState(false)
   const pathname = usePathname()
 
   const toggleMenu = () => {
     setIsOpen(!isOpen)
   }
+
+  const LINKS = useMemo(
+    () => [
+      ...NAV_LINKS,
+      {
+        name: 'Book Now',
+        path: bookingLink || '#',
+        external: true
+      }
+    ],
+    [bookingLink]
+  )
 
   return (
     <header className='sticky top-0 z-50 bg-white shadow-sm'>

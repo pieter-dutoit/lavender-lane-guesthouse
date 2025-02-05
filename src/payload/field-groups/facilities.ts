@@ -3,7 +3,7 @@ import { GroupField } from 'payload'
 const Facilities: GroupField = {
   name: 'facilities',
   type: 'group',
-  label: 'General Facilties & Amenities',
+  label: 'General Facilities & Amenities',
   fields: [
     {
       name: 'heading',
