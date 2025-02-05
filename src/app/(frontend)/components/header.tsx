@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation'
 import { ExternalLink, Menu, X } from 'lucide-react'
 
 import Image from './image'
+import { NAV_LINKS } from '@/lib/config'
 
 interface Props {
   bookingLink: string
@@ -21,22 +22,7 @@ export default function Header({ bookingLink }: Props) {
 
   const LINKS = useMemo(
     () => [
-      {
-        name: 'Home',
-        path: '/'
-      },
-      {
-        name: 'Rooms',
-        path: '/our-rooms'
-      },
-      {
-        name: 'About',
-        path: '/about-us'
-      },
-      {
-        name: 'Contact',
-        path: '/contact-us'
-      },
+      ...NAV_LINKS,
       {
         name: 'Book Now',
         path: bookingLink || '#',

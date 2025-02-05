@@ -3,9 +3,11 @@ import { getPayload, Where } from 'payload'
 import config from '@payload-config'
 import {
   BookingPlatform,
+  ContactPerson,
   HomePage,
   Review,
-  Room
+  Room,
+  SocialMediaPlatform
 } from '@/payload/payload-types'
 
 type HomePageData = Partial<HomePage>
@@ -96,4 +98,58 @@ export const getReviews = unstable_cache(
   },
   [],
   { revalidate: false, tags: ['reviews'] }
+)
+
+export const getContacts = unstable_cache(
+  async (query?: Where): Promise<ContactPerson[]> => {
+    const payload = await getPayload({ config })
+    const res = await payload.find({
+      draft: false,
+      collection: 'contact-persons',
+      depth: 1,
+      pagination: false,
+      sort: '-name',
+      where: {
+        ...query,
+        _status: {
+          equals: 'published'
+        }
+      }
+    })
+
+    if (!res) {
+      throw new Error('Failed to fetch contact persons data')
+    }
+
+    return res.docs
+  },
+  [],
+  { revalidate: false, tags: ['contact-persons'] }
+)
+
+export const getSocials = unstable_cache(
+  async (query?: Where): Promise<SocialMediaPlatform[]> => {
+    const payload = await getPayload({ config })
+    const res = await payload.find({
+      draft: false,
+      collection: 'social-media-platforms',
+      depth: 1,
+      pagination: false,
+      sort: '-name',
+      where: {
+        ...query,
+        _status: {
+          equals: 'published'
+        }
+      }
+    })
+
+    if (!res) {
+      throw new Error('Failed to fetch social media data')
+    }
+
+    return res.docs
+  },
+  [],
+  { revalidate: false, tags: ['social-media-platforms'] }
 )

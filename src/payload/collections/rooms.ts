@@ -71,7 +71,7 @@ export const Rooms: CollectionConfig = {
   },
   hooks: {
     beforeChange: [createSlug],
-    afterChange: [revalidateCache('rooms', true)]
+    afterChange: [revalidateCache('rooms')]
   },
   access: DEFAULT_COLLECTION_ACCESS,
   fields: [

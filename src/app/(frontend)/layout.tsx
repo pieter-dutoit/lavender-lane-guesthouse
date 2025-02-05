@@ -1,6 +1,7 @@
 import { getBookingPlatform } from '@/lib/data'
 import Header from './components/header'
 import './globals.css'
+import Footer from './components/footer'
 // import { playfair } from '@/fonts'
 
 export default async function RootLayout({
@@ -16,6 +17,7 @@ export default async function RootLayout({
       <body>
         <Header bookingLink={url} />
         <main>{children}</main>
+        <Footer bookingLink={url} />
       </body>
     </html>
   )

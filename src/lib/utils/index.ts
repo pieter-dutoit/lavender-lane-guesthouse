@@ -1,4 +1,4 @@
-import { Media, SeoMedia } from '@/payload/payload-types'
+import { ContactPerson, Media, SeoMedia } from '@/payload/payload-types'
 
 export function extractImageProps(
   image: Media | string | SeoMedia | undefined
@@ -20,4 +20,23 @@ export function extractImageProps(
     height: height ?? 0,
     width: width ?? 0
   }
+}
+
+export function extractContactDetails(contacts: ContactPerson[] | undefined): {
+  name: string | undefined | null
+  phone: string
+  phoneLink: string
+  email: string
+  position: string | undefined | null
+}[] {
+  if (!contacts) return []
+
+  return contacts.map(({ name, phone, email, position }) => {
+    const phoneLink = phone
+      .replaceAll(' ', '')
+      .replace(/^0/, '')
+      .replace(/^\+27/, '')
+
+    return { name, phone, phoneLink, email, position }
+  })
 }

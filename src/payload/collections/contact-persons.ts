@@ -12,7 +12,7 @@ export const ContactPersons: CollectionConfig = {
     useAsTitle: 'name'
   },
   hooks: {
-    afterChange: [revalidateCache('reviews')]
+    afterChange: [revalidateCache('contact-persons')]
   },
   versions: {
     drafts: true
