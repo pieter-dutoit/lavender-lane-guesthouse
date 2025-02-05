@@ -1,16 +1,10 @@
 import Link from 'next/link'
-import {
-  Facebook,
-  Twitter,
-  Instagram,
-  ExternalLink,
-  Mail,
-  Phone
-} from 'lucide-react'
+import { ExternalLink, Mail, Phone } from 'lucide-react'
 
 import { NAV_LINKS } from '@/lib/config'
 import { getContacts, getSocials } from '@/lib/data'
 import { extractContactDetails, extractImageProps } from '@/lib/utils'
+
 import Image from './image'
 
 export default async function Footer() {
