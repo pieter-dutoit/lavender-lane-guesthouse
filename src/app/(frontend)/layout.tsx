@@ -17,7 +17,7 @@ export default async function RootLayout({
       <body>
         <Header bookingLink={url} />
         <main>{children}</main>
-        <Footer bookingLink={url} />
+        <Footer />
       </body>
     </html>
   )
