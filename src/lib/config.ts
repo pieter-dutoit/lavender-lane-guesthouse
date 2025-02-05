@@ -10,6 +10,10 @@ export const NAV_LINKS: NavLink[] = [
     path: '/'
   },
   {
+    name: 'Gallery',
+    path: '/gallery'
+  },
+  {
     name: 'Rooms',
     path: '/our-rooms'
   },

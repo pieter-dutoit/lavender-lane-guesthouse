@@ -53,7 +53,7 @@ export default async function Rooms() {
                     <h3 className='text-xl font-semibold text-gray-900'>
                       {name}
                     </h3>
-                    <div className='mt-2 mr-auto flex items-center gap-2 rounded-full bg-gray-600 px-2 py-1 text-xs font-bold text-white'>
+                    <div className='mt-2 mr-auto flex items-center gap-2 rounded-full bg-black px-2 py-1 text-xs font-semibold text-white'>
                       <Users size={14} />
                       Sleeps {sleeps_adults + sleeps_children}
                     </div>

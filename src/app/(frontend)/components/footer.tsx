@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { ExternalLink, Mail, Phone } from 'lucide-react'
+import { ExternalLink, Mail, MapPin, Phone } from 'lucide-react'
 
 import { NAV_LINKS } from '@/lib/config'
 import { getContacts, getSocials } from '@/lib/data'
@@ -28,6 +28,7 @@ export default async function Footer() {
                 className='flex items-center gap-2 underline underline-offset-4'
                 target='_blank'
               >
+                <MapPin className='size-4 text-white' />
                 17 Nieshout Street, Kathu, 8446
                 <ExternalLink size={14} />
               </Link>
