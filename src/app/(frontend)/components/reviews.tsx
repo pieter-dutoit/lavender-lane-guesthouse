@@ -7,14 +7,12 @@ export default async function Reviews() {
   const reviews = await getReviews()
   if (!reviews) return <></>
 
-  console.log({ reviews })
-
   return (
     <section className='bg-white py-12 lg:py-20' id='reviews'>
       <div className='container mx-auto px-4 md:px-6 lg:px-8'>
         <SectionHeader
-          heading='What Our Guests Say'
-          subHeading='Reviews from Satisfied Visitors'
+          label='What Our Guests Say'
+          heading='Reviews from Satisfied Visitors'
           description='Authentic reviews from platforms like Booking.com, Google, and LekkeSlaap.'
         />
 

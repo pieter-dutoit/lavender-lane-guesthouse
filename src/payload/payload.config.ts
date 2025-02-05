@@ -21,6 +21,7 @@ import { Rooms } from './collections/rooms'
 import { Beds } from './collections/beds'
 import { Facilities } from './collections/facilities'
 import { Reviews } from './collections/reviews'
+import { BookingPlatform } from './globals/booking-platform'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -49,7 +50,7 @@ export default buildConfig({
     Reviews,
     Beds
   ],
-  globals: [HomePage, AboutUsPage, Gallery],
+  globals: [HomePage, BookingPlatform, AboutUsPage, Gallery],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

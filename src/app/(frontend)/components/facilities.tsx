@@ -46,8 +46,8 @@ export default async function Amenities() {
     >
       <div className='container mx-auto px-4 md:px-6 lg:px-8'>
         <SectionHeader
-          heading='Facilities & Amenities'
-          subHeading={heading}
+          label='Stay In Comfort'
+          heading={heading}
           description={description}
         />
 
@@ -100,7 +100,7 @@ export default async function Amenities() {
               image={icon}
               id='amenities'
             >
-              <ul className='gap-x-8 space-y-10 md:grid md:grid-cols-2 xl:grid-cols-3'>
+              <ul className='gap-x-8 space-y-10 md:grid md:grid-cols-2 xl:grid-cols-4'>
                 {amenities?.map((amenity) => {
                   if (typeof amenity === 'string') return null
                   const { name, description, icon } = amenity

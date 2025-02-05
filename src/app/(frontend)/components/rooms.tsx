@@ -13,8 +13,8 @@ export default async function Rooms() {
     <section className='bg-gray-100 py-12 lg:py-20' id='rooms'>
       <div className='container mx-auto px-4 md:px-6 lg:px-8'>
         <SectionHeader
-          heading='Stay, Work, Recharge'
-          subHeading='Rooms'
+          label='Stay, Work, Recharge'
+          heading='Our Rooms'
           description='Choose from our selection of comfortable rooms, with everything you need to recharge and get ready for the next day.'
         />
 

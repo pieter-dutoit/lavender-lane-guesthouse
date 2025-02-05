@@ -48,11 +48,13 @@ export interface Config {
   };
   globals: {
     'home-page': HomePage;
+    'booking-platform': BookingPlatform;
     'about-us-page': AboutUsPage;
     gallery: Gallery;
   };
   globalsSelect: {
     'home-page': HomePageSelect<false> | HomePageSelect<true>;
+    'booking-platform': BookingPlatformSelect<false> | BookingPlatformSelect<true>;
     'about-us-page': AboutUsPageSelect<false> | AboutUsPageSelect<true>;
     gallery: GallerySelect<false> | GallerySelect<true>;
   };
@@ -175,12 +177,13 @@ export interface SeoMedia {
  */
 export interface ContactPerson {
   id: string;
-  name: string;
+  name?: string | null;
   email: string;
   phone: string;
   position?: string | null;
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -490,6 +493,7 @@ export interface ContactPersonsSelect<T extends boolean = true> {
   position?: T;
   updatedAt?: T;
   createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -624,10 +628,6 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  */
 export interface HomePage {
   id: string;
-  booking_platform: {
-    name: 'NightsBridge';
-    url: string;
-  };
   hero: {
     background_image: string | Media;
     heading: {
@@ -718,6 +718,18 @@ export interface TwitterField {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "booking-platform".
+ */
+export interface BookingPlatform {
+  id: string;
+  name: 'NightsBridge';
+  url: string;
+  _status?: ('draft' | 'published') | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "about-us-page".
  */
 export interface AboutUsPage {
@@ -760,12 +772,6 @@ export interface Gallery {
  * via the `definition` "home-page_select".
  */
 export interface HomePageSelect<T extends boolean = true> {
-  booking_platform?:
-    | T
-    | {
-        name?: T;
-        url?: T;
-      };
   hero?:
     | T
     | {
@@ -832,6 +838,18 @@ export interface OpenGraphFieldSelect<T extends boolean = true> {
 export interface TwitterFieldSelect<T extends boolean = true> {
   creator?: T;
   creatorId?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "booking-platform_select".
+ */
+export interface BookingPlatformSelect<T extends boolean = true> {
+  name?: T;
+  url?: T;
+  _status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

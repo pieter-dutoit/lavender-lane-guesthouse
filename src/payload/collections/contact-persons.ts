@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
 import { DEFAULT_COLLECTION_ACCESS } from '../access/default-config'
+import revalidateCache from '../hooks/collections/revalidate-cache'
 
 export const ContactPersons: CollectionConfig = {
   slug: 'contact-persons',
@@ -10,13 +11,18 @@ export const ContactPersons: CollectionConfig = {
   admin: {
     useAsTitle: 'name'
   },
+  hooks: {
+    afterChange: [revalidateCache('reviews')]
+  },
+  versions: {
+    drafts: true
+  },
   access: DEFAULT_COLLECTION_ACCESS,
   fields: [
     {
       name: 'name',
-      label: 'Contact Person Full Name',
-      type: 'text',
-      required: true
+      label: 'Contact Person Full Name (Optional)',
+      type: 'text'
     },
     {
       name: 'email',
