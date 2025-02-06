@@ -1,7 +1,7 @@
 interface Props {
   label: string
   heading: string
-  description: string
+  description?: string
 }
 
 export default function SectionHeader({ label, heading, description }: Props) {
@@ -13,9 +13,11 @@ export default function SectionHeader({ label, heading, description }: Props) {
       <h2 className='mt-4 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl lg:text-5xl'>
         {heading}
       </h2>
-      <p className='mt-4 max-w-2xl text-lg text-gray-600 lg:mx-auto lg:mt-5 lg:text-xl'>
-        {description}
-      </p>
+      {description && (
+        <p className='mt-4 max-w-2xl text-lg text-gray-600 lg:mx-auto lg:mt-5 lg:text-xl'>
+          {description}
+        </p>
+      )}
     </div>
   )
 }

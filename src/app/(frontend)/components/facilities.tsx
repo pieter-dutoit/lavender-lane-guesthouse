@@ -16,16 +16,16 @@ function SubSection({ id, heading, image, children }: Props) {
   const { url, alt } = extractImageProps(image)
   return (
     <div className='mt-12 flex flex-col gap-4 lg:mt-16' id={id}>
-      <div className='mx-auto mb-4 flex w-fit items-center justify-center gap-2 rounded-full bg-black p-1 text-white lg:mb-6'>
+      <div className='mx-auto mb-4 flex w-fit items-center justify-center gap-2 rounded-full border-2 border-indigo-600 bg-transparent p-1 text-white lg:mb-6'>
         <Image
           src={url}
           alt={alt}
           height={18}
           width={18}
-          className='size-6 rounded-full bg-white p-1'
+          className='size-6 rounded-full p-1'
         />
 
-        <h3 className='pr-2 text-sm font-semibold'>{heading}</h3>
+        <h3 className='pr-2 text-sm font-semibold text-gray-900'>{heading}</h3>
       </div>
       {children}
     </div>
