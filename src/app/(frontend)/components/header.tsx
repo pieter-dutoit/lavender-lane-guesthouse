@@ -53,7 +53,7 @@ export default function Header({ bookingLink }: Props) {
           </Link>
 
           {/* Desktop Menu */}
-          <ul className='hidden md:ml-6 md:flex md:space-x-8'>
+          <ul className='hidden lg:ml-6 lg:flex lg:space-x-8'>
             {LINKS.map(({ path, name, external }) => {
               const isActive = path === pathname
 
@@ -74,7 +74,7 @@ export default function Header({ bookingLink }: Props) {
             })}
           </ul>
 
-          <div className='-mr-2 flex items-center md:hidden'>
+          <div className='-mr-2 flex items-center lg:hidden'>
             <button
               onClick={toggleMenu}
               type='button'
@@ -96,7 +96,7 @@ export default function Header({ bookingLink }: Props) {
       {/* Mobile Menu */}
 
       <nav
-        className={`md:hidden ${isOpen ? 'absolute' : 'hidden'} top-full left-0 w-full border-b-2 border-gray-300 bg-white`}
+        className={`lg:hidden ${isOpen ? 'absolute' : 'hidden'} top-full left-0 w-full border-b-2 border-gray-300 bg-white`}
         id='mobile-menu'
       >
         <ul className='space-y-1 pt-2 pb-3'>

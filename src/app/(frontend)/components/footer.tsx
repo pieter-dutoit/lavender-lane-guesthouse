@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { ExternalLink, Mail, MapPin, Phone } from 'lucide-react'
+import { Mail, MapPin, Phone } from 'lucide-react'
 
 import { NAV_LINKS } from '@/lib/config'
 import { getContacts, getSocials } from '@/lib/data'
@@ -22,21 +22,24 @@ export default async function Footer() {
             <h3 className='mb-4 text-lg font-semibold sm:text-xl'>
               Lavender Lane Guesthouse
             </h3>
-            <div className='mt-4 space-y-4'>
+
+            {/* Address */}
+            <div className='mt-4 flex flex-col gap-4'>
+              <p> 17 Nieshout Street, Kathu, 8446</p>
               <Link
                 href='https://maps.app.goo.gl/KR5bnydJB9HdNGMs8'
-                className='flex items-center gap-2 underline underline-offset-4'
+                className='flex items-center gap-1 text-indigo-200 underline underline-offset-2'
                 target='_blank'
               >
-                <MapPin className='size-4 text-white' />
-                17 Nieshout Street, Kathu, 8446
-                <ExternalLink size={14} />
+                <MapPin className='size-4' />
+                Find us on Maps
               </Link>
             </div>
+
+            {/* Contact details */}
             <ul className='mt-4 lg:mt-8'>
-              {contacts.map(({ position, phone, phoneLink, email }) => (
+              {contacts.map(({ phone, phoneLink, email }) => (
                 <li key={email} className='mt-4 space-y-4'>
-                  <h4 className='font-bold'>{position || 'Reception'}</h4>
                   <Link
                     href={`mailto:${email}`}
                     className='flex items-center gap-2'
