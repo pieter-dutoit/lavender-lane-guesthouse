@@ -4,11 +4,65 @@ import config from '@payload-config'
 import {
   BookingPlatform,
   ContactPerson,
+  Gallery,
   HomePage,
+  Logo,
+  Pricing,
   Review,
   Room,
   SocialMediaPlatform
 } from '@/payload/payload-types'
+
+export const getGallery = unstable_cache(
+  async (): Promise<Gallery> => {
+    const payload = await getPayload({ config })
+    const res = await payload.findGlobal({
+      slug: 'gallery',
+      depth: 1
+    })
+    if (!res) {
+      throw new Error('Failed to gallery images')
+    }
+    return res
+  },
+
+  [],
+  { revalidate: false, tags: ['gallery'] }
+)
+
+export const getLogo = unstable_cache(
+  async (): Promise<Logo> => {
+    const payload = await getPayload({ config })
+    const res = await payload.findGlobal({
+      slug: 'logos',
+      depth: 1
+    })
+    if (!res) {
+      throw new Error('Failed to logo')
+    }
+    return res
+  },
+
+  [],
+  { revalidate: false, tags: ['logos'] }
+)
+
+export const getPrices = unstable_cache(
+  async (): Promise<Pricing> => {
+    const payload = await getPayload({ config })
+    const res = await payload.findGlobal({
+      slug: 'pricing',
+      depth: 1
+    })
+    if (!res) {
+      throw new Error('Failed to fetch price data')
+    }
+    return res
+  },
+
+  [],
+  { revalidate: false, tags: ['pricing'] }
+)
 
 type HomePageData = Partial<HomePage>
 
