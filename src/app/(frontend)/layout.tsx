@@ -1,4 +1,4 @@
-import { getBookingPlatform } from '@/lib/data'
+import { getBookingPlatform, getLogo } from '@/lib/data'
 import Header from './components/header'
 import './globals.css'
 import Footer from './components/footer'
@@ -12,10 +12,12 @@ export default async function RootLayout({
   const bookingPlatform = await getBookingPlatform()
   const { url } = bookingPlatform
 
+  const logoData = await getLogo()
+
   return (
     <html lang='en' className={`antialiased`}>
       <body>
-        <Header bookingLink={url} />
+        <Header bookingLink={url} logo={logoData} />
         <main>{children}</main>
         <Footer />
       </body>
