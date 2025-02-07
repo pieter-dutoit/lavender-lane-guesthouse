@@ -5,10 +5,28 @@ import {
   BookingPlatform,
   ContactPerson,
   HomePage,
+  Pricing,
   Review,
   Room,
   SocialMediaPlatform
 } from '@/payload/payload-types'
+
+export const getPrices = unstable_cache(
+  async (): Promise<Pricing> => {
+    const payload = await getPayload({ config })
+    const res = await payload.findGlobal({
+      slug: 'pricing',
+      depth: 1
+    })
+    if (!res) {
+      throw new Error('Failed to fetch price data')
+    }
+    return res
+  },
+
+  [],
+  { revalidate: false, tags: ['pricing'] }
+)
 
 type HomePageData = Partial<HomePage>
 
