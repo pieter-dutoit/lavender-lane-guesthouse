@@ -47,12 +47,14 @@ export interface Config {
     defaultIDType: string;
   };
   globals: {
+    pricing: Pricing;
     'home-page': HomePage;
     'booking-platform': BookingPlatform;
     'about-us-page': AboutUsPage;
     gallery: Gallery;
   };
   globalsSelect: {
+    pricing: PricingSelect<false> | PricingSelect<true>;
     'home-page': HomePageSelect<false> | HomePageSelect<true>;
     'booking-platform': BookingPlatformSelect<false> | BookingPlatformSelect<true>;
     'about-us-page': AboutUsPageSelect<false> | AboutUsPageSelect<true>;
@@ -626,6 +628,26 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pricing".
+ */
+export interface Pricing {
+  id: string;
+  base_price?: number | null;
+  additional_guest?: number | null;
+  price_items?:
+    | {
+        item_name: string;
+        item_price: number;
+        unit_type?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  _status?: ('draft' | 'published') | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "home-page".
  */
 export interface HomePage {
@@ -768,6 +790,26 @@ export interface Gallery {
   _status?: ('draft' | 'published') | null;
   updatedAt?: string | null;
   createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pricing_select".
+ */
+export interface PricingSelect<T extends boolean = true> {
+  base_price?: T;
+  additional_guest?: T;
+  price_items?:
+    | T
+    | {
+        item_name?: T;
+        item_price?: T;
+        unit_type?: T;
+        id?: T;
+      };
+  _status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

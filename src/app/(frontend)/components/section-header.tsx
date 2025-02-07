@@ -1,5 +1,5 @@
 interface Props {
-  label: string
+  label?: string
   heading: string
   description?: string
 }
@@ -7,9 +7,11 @@ interface Props {
 export default function SectionHeader({ label, heading, description }: Props) {
   return (
     <div className='text-center'>
-      <span className='font-extrabold tracking-wide text-indigo-600 uppercase sm:text-lg'>
-        {label}
-      </span>
+      {label && (
+        <span className='font-extrabold tracking-wide text-indigo-600 uppercase sm:text-lg'>
+          {label}
+        </span>
+      )}
       <h2 className='mt-4 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl lg:text-5xl'>
         {heading}
       </h2>

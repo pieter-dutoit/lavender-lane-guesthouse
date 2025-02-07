@@ -9,6 +9,8 @@ import sharp from 'sharp'
 import { HomePage } from './globals/home-page'
 import { Gallery } from './globals/gallery'
 import { AboutUsPage } from './globals/about-us-page'
+import { BookingPlatform } from './globals/booking-platform'
+import { Pricing } from './globals/pricing'
 
 import { Users } from './collections/users'
 import { Media } from './collections/media'
@@ -21,7 +23,6 @@ import { Rooms } from './collections/rooms'
 import { Beds } from './collections/beds'
 import { Facilities } from './collections/facilities'
 import { Reviews } from './collections/reviews'
-import { BookingPlatform } from './globals/booking-platform'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -50,7 +51,7 @@ export default buildConfig({
     Reviews,
     Beds
   ],
-  globals: [HomePage, BookingPlatform, AboutUsPage, Gallery],
+  globals: [Pricing, HomePage, BookingPlatform, AboutUsPage, Gallery],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

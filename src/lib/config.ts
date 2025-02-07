@@ -14,7 +14,7 @@ export const NAV_LINKS: NavLink[] = [
     path: '/gallery'
   },
   {
-    name: 'Rooms',
+    name: 'Rooms & Prices',
     path: '/our-rooms'
   },
   {

@@ -98,7 +98,7 @@ export default async function Footer() {
             </ul>
           </div>
         </div>
-        <div className='mt-8 border-t border-gray-700 pt-8 text-center'>
+        <div className='mt-8 border-t border-gray-100 pt-8 text-center'>
           <p className='text-gray-300'>
             &copy; {new Date().getFullYear()} Lavender Lane Guesthouse. All
             rights reserved.
