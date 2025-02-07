@@ -7,12 +7,15 @@ import { ExternalLink, Menu, X } from 'lucide-react'
 
 import Image from './image'
 import { NAV_LINKS } from '@/lib/config'
+import { Logo } from '@/payload/payload-types'
+import { extractImageProps } from '@/lib/utils'
 
 interface Props {
   bookingLink: string
+  logo: Logo
 }
 
-export default function Header({ bookingLink }: Props) {
+export default function Header({ bookingLink, logo }: Props) {
   const [isOpen, setIsOpen] = useState(false)
   const pathname = usePathname()
 
@@ -32,6 +35,8 @@ export default function Header({ bookingLink }: Props) {
     [bookingLink]
   )
 
+  const { url, alt } = extractImageProps(logo.logo)
+
   return (
     <header className='sticky top-0 z-50 bg-white shadow-sm'>
       <nav className='container mx-auto px-4 md:px-6 lg:px-8'>
@@ -43,8 +48,8 @@ export default function Header({ bookingLink }: Props) {
           >
             <div className='relative h-full w-32 sm:w-40'>
               <Image
-                src='/cms/api/media/file/logo-1.webp'
-                alt='logo'
+                src={url}
+                alt={alt}
                 fill
                 className='object-contain object-left'
                 sizes='10rem'

@@ -11,6 +11,7 @@ import { Gallery } from './globals/gallery'
 import { AboutUsPage } from './globals/about-us-page'
 import { BookingPlatform } from './globals/booking-platform'
 import { Pricing } from './globals/pricing'
+import { Logos } from './globals/logos'
 
 import { Users } from './collections/users'
 import { Media } from './collections/media'
@@ -51,7 +52,7 @@ export default buildConfig({
     Reviews,
     Beds
   ],
-  globals: [Pricing, HomePage, BookingPlatform, AboutUsPage, Gallery],
+  globals: [Pricing, Logos, HomePage, BookingPlatform, AboutUsPage, Gallery],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
