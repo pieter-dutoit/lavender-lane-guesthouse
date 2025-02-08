@@ -82,7 +82,7 @@ export default async function Footer() {
                 const { url } = extractImageProps(icon)
 
                 return (
-                  <li key={url} className='rounded-md bg-indigo-100 p-1'>
+                  <li key={url} className='rounded-xl bg-indigo-50 p-1'>
                     <Link href={link} target='_blank'>
                       <Image
                         height={30}

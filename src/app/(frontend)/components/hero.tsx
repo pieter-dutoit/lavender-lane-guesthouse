@@ -5,7 +5,7 @@ import {
   RichText
 } from '@payloadcms/richtext-lexical/react'
 
-import { fetchHomePageData } from '@/lib/data'
+import { fetchHomePageData, getBookingPlatform } from '@/lib/data'
 import { extractImageProps } from '@/lib/utils'
 
 import Image from './image'
@@ -30,6 +30,7 @@ const jsxConverters: JSXConvertersFunction = ({ defaultConverters }) => ({
 })
 
 export default async function Hero() {
+  const bookingPlatform = await getBookingPlatform()
   const data = await fetchHomePageData('hero')
   if (!data?.hero) return <></>
 
@@ -54,7 +55,7 @@ export default async function Hero() {
           <div className='mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start'>
             <div className='rounded-md shadow'>
               <Link
-                href='#'
+                href={bookingPlatform.url}
                 className='flex w-full items-center justify-center gap-2 rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 md:px-10 md:py-4 md:text-lg'
                 target='_blank'
               >

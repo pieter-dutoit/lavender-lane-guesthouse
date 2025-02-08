@@ -15,7 +15,7 @@ export default async function RootLayout({
   const logoData = await getLogo()
 
   return (
-    <html lang='en' className={`antialiased`}>
+    <html lang='en' className={`scroll-smooth antialiased`}>
       <body>
         <Header bookingLink={url} logo={logoData} />
         <main>{children}</main>

@@ -17,7 +17,7 @@ export default async function Pricing() {
   return (
     <section
       className='bg-gradient-to-b from-gray-50 to-gray-200 py-12 lg:py-20'
-      id='rooms'
+      id='pricing'
     >
       <div className='container mx-auto px-4 md:px-6 lg:px-8'>
         <SectionHeader
