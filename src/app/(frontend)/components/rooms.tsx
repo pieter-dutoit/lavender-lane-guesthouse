@@ -17,7 +17,7 @@ export default function Rooms() {
             href='/our-rooms'
             className='inline-block rounded bg-indigo-600 px-6 py-3 font-semibold text-white hover:bg-indigo-700'
           >
-            View All Rooms & Prices
+            View All Rooms
           </Link>
         </div>
 

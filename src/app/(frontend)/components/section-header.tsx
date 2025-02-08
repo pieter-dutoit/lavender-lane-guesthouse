@@ -12,7 +12,7 @@ export default function SectionHeader({ label, heading, description }: Props) {
           {label}
         </span>
       )}
-      <h2 className='mt-4 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl lg:text-5xl'>
+      <h2 className='mt-2 text-2xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl lg:mt-4 lg:text-5xl'>
         {heading}
       </h2>
       {description && (
