@@ -28,7 +28,7 @@ export default async function RoomList() {
                   return (
                     <div
                       key={url + index}
-                      className={`${index ? 'col-span-1' : 'col-span-2'} relative h-40 overflow-hidden rounded-lg bg-gray-200`}
+                      className={`${index ? 'col-span-1' : 'col-span-2'} relative h-52 overflow-hidden rounded-lg bg-gray-200`}
                     >
                       <Image
                         className='object-cover object-center'
