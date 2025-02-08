@@ -1,26 +1,28 @@
 import Link from 'next/link'
-import { ArrowRight, Users } from 'lucide-react'
+import { ExternalLink, Users } from 'lucide-react'
 
-import { getRooms } from '@/lib/data'
+import { getBookingPlatform, getRooms } from '@/lib/data'
 import { extractImageProps } from '@/lib/utils'
 
 import Image from './image'
 
 export default async function RoomList() {
   const rooms = await getRooms()
+  const bookingPlatform = await getBookingPlatform()
   return (
     <ul className='mt-12 grid gap-8 sm:grid-cols-2 xl:grid-cols-4'>
-      {rooms.map(({ id, name, slug, description, gallery, details }) => {
+      {rooms.map(({ id, name, description, gallery, details }) => {
         const { sleeps_adults, sleeps_children } = details
         return (
           <li
             key={id}
-            className='flex-col overflow-hidden rounded-lg bg-white shadow-lg'
+            className='flex-col overflow-hidden rounded-xl bg-white shadow-lg'
           >
-            <Link href={`/rooms/${slug}`}>
+            <div>
+              {/* <Link href={`/rooms/${slug}`}> */}
               {/* Images */}
-              <div className='grid grid-cols-3 gap-2 p-2'>
-                {gallery.slice(0, 2).map((image, index) => {
+              <div className='grid grid-cols-2 gap-2 p-2'>
+                {gallery.slice(0, 1).map((image, index) => {
                   const { url, alt } = extractImageProps(image)
 
                   return (
@@ -54,12 +56,17 @@ export default async function RoomList() {
                   </p>
                 </div>
                 <div className='mt-6 flex items-center justify-between'>
-                  <span className='under flex items-center gap-2 font-semibold text-indigo-600 underline-offset-2 hover:underline'>
-                    View details <ArrowRight />
-                  </span>
+                  <Link
+                    href={bookingPlatform.url}
+                    target='_blank'
+                    className='inline-flex items-center gap-2 rounded bg-indigo-600 px-4 py-2 font-semibold text-white hover:bg-indigo-700'
+                  >
+                    Book Now <ExternalLink size={14} />
+                  </Link>
                 </div>
               </div>
-            </Link>
+              {/* </Link> */}
+            </div>
           </li>
         )
       })}
