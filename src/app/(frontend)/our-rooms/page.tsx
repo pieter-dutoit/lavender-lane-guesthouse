@@ -1,5 +1,6 @@
 // import Pricing from './components/pricing'
 import Hero from '../about-us/components/hero'
+import Amenities from './components/amenities'
 import Rooms from './components/rooms'
 
 export default function OurRoomsPage() {
@@ -10,7 +11,9 @@ export default function OurRoomsPage() {
         description='Experience comfort and style in our thoughtfully designed rooms.'
         className='bg-gray-200'
       />
+      <Amenities />
       <Rooms />
+
       {/* <Pricing /> */}
     </>
   )

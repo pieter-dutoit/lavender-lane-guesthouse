@@ -16,7 +16,6 @@ export interface Config {
     'seo-media': SeoMedia;
     'contact-persons': ContactPerson;
     'social-media-platforms': SocialMediaPlatform;
-    'richtext-sections': RichtextSection;
     amenities: Amenity;
     facilities: Facility;
     rooms: Room;
@@ -33,7 +32,6 @@ export interface Config {
     'seo-media': SeoMediaSelect<false> | SeoMediaSelect<true>;
     'contact-persons': ContactPersonsSelect<false> | ContactPersonsSelect<true>;
     'social-media-platforms': SocialMediaPlatformsSelect<false> | SocialMediaPlatformsSelect<true>;
-    'richtext-sections': RichtextSectionsSelect<false> | RichtextSectionsSelect<true>;
     amenities: AmenitiesSelect<false> | AmenitiesSelect<true>;
     facilities: FacilitiesSelect<false> | FacilitiesSelect<true>;
     rooms: RoomsSelect<false> | RoomsSelect<true>;
@@ -50,16 +48,16 @@ export interface Config {
     pricing: Pricing;
     logos: Logo;
     'home-page': HomePage;
+    'room-amenities': RoomAmenity;
     'booking-platform': BookingPlatform;
-    'about-us-page': AboutUsPage;
     gallery: Gallery;
   };
   globalsSelect: {
     pricing: PricingSelect<false> | PricingSelect<true>;
     logos: LogosSelect<false> | LogosSelect<true>;
     'home-page': HomePageSelect<false> | HomePageSelect<true>;
+    'room-amenities': RoomAmenitiesSelect<false> | RoomAmenitiesSelect<true>;
     'booking-platform': BookingPlatformSelect<false> | BookingPlatformSelect<true>;
-    'about-us-page': AboutUsPageSelect<false> | AboutUsPageSelect<true>;
     gallery: GallerySelect<false> | GallerySelect<true>;
   };
   locale: null;
@@ -204,31 +202,6 @@ export interface SocialMediaPlatform {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "richtext-sections".
- */
-export interface RichtextSection {
-  id: string;
-  heading: string;
-  content: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "amenities".
  */
 export interface Amenity {
@@ -269,7 +242,6 @@ export interface Room {
       id?: string | null;
     }[];
   };
-  amenities: (string | Amenity)[];
   gallery: (string | Media)[];
   updatedAt: string;
   createdAt: string;
@@ -328,10 +300,6 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'social-media-platforms';
         value: string | SocialMediaPlatform;
-      } | null)
-    | ({
-        relationTo: 'richtext-sections';
-        value: string | RichtextSection;
       } | null)
     | ({
         relationTo: 'amenities';
@@ -514,16 +482,6 @@ export interface SocialMediaPlatformsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "richtext-sections_select".
- */
-export interface RichtextSectionsSelect<T extends boolean = true> {
-  heading?: T;
-  content?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "amenities_select".
  */
 export interface AmenitiesSelect<T extends boolean = true> {
@@ -565,7 +523,6 @@ export interface RoomsSelect<T extends boolean = true> {
               id?: T;
             };
       };
-  amenities?: T;
   gallery?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -755,37 +712,23 @@ export interface TwitterField {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "booking-platform".
+ * via the `definition` "room-amenities".
  */
-export interface BookingPlatform {
+export interface RoomAmenity {
   id: string;
-  name: 'NightsBridge';
-  url: string;
+  amenities: (string | Amenity)[];
   _status?: ('draft' | 'published') | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "about-us-page".
+ * via the `definition` "booking-platform".
  */
-export interface AboutUsPage {
+export interface BookingPlatform {
   id: string;
-  hero: {
-    heading: string;
-    sub_heading: string;
-  };
-  overview: {
-    title: string;
-    description: string;
-    image: string | Media;
-  };
-  subsections?: (string | RichtextSection)[] | null;
-  seo: {
-    meta: MetadataField;
-    open_graph: OpenGraphField;
-    twitter?: TwitterField;
-  };
+  name: 'NightsBridge';
+  url: string;
   _status?: ('draft' | 'published') | null;
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -906,11 +849,10 @@ export interface TwitterFieldSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "booking-platform_select".
+ * via the `definition` "room-amenities_select".
  */
-export interface BookingPlatformSelect<T extends boolean = true> {
-  name?: T;
-  url?: T;
+export interface RoomAmenitiesSelect<T extends boolean = true> {
+  amenities?: T;
   _status?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -918,30 +860,11 @@ export interface BookingPlatformSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "about-us-page_select".
+ * via the `definition` "booking-platform_select".
  */
-export interface AboutUsPageSelect<T extends boolean = true> {
-  hero?:
-    | T
-    | {
-        heading?: T;
-        sub_heading?: T;
-      };
-  overview?:
-    | T
-    | {
-        title?: T;
-        description?: T;
-        image?: T;
-      };
-  subsections?: T;
-  seo?:
-    | T
-    | {
-        meta?: T | MetadataFieldSelect<T>;
-        open_graph?: T | OpenGraphFieldSelect<T>;
-        twitter?: T | TwitterFieldSelect<T>;
-      };
+export interface BookingPlatformSelect<T extends boolean = true> {
+  name?: T;
+  url?: T;
   _status?: T;
   updatedAt?: T;
   createdAt?: T;

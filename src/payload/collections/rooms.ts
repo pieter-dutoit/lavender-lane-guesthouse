@@ -105,16 +105,6 @@ export const Rooms: CollectionConfig = {
     },
     RoomDetails,
     {
-      name: 'amenities',
-      label: 'Amenities',
-      type: 'relationship',
-      relationTo: 'amenities',
-      hasMany: true,
-      required: true,
-      minRows: 1,
-      maxRows: 100
-    },
-    {
       name: 'gallery',
       label: 'Gallery',
       type: 'upload',
