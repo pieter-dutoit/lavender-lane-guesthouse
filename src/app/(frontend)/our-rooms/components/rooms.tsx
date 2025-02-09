@@ -20,26 +20,30 @@ export default async function Rooms() {
         <SectionHeader label='Choose Your Space' heading='Our Rooms' />
 
         {/* CTAs */}
-        <div className='mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start'>
-          <div className='mx-auto flex flex-col items-center gap-2 sm:gap-4'>
-            <Link
-              href={bookingPlatform.url}
-              className='flex items-center justify-center gap-2 rounded-md border border-transparent bg-indigo-600 px-6 py-2 text-base font-medium text-white hover:bg-indigo-700 md:px-8 md:py-3 md:text-lg'
-              target='_blank'
-            >
-              Check Availability <ExternalLink size={16} />
-            </Link>
-            {/* <Link
-              href='#pricing'
-              className='flex items-center justify-center gap-2 px-6 py-2 text-base font-medium text-indigo-600 underline-offset-2 hover:underline md:px-8 md:py-3 md:text-lg'
-            >
-              View Prices
-            </Link> */}
-          </div>
+        <div className='mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row lg:mt-16'>
+          <Link
+            href={bookingPlatform.url}
+            className='flex items-center justify-center gap-2 rounded-md bg-indigo-600 px-6 py-3 text-lg font-medium text-white hover:bg-indigo-700'
+            target='_blank'
+          >
+            Check Availability <ExternalLink size={16} />
+          </Link>
+          {/* <Link
+            href='#pricing'
+            className='flex items-center justify-center gap-2 px-6 py-3 text-lg font-medium text-indigo-600 underline-offset-2 hover:underline'
+          >
+            View Prices
+          </Link> */}
+          <Link
+            href='#amenities'
+            className='flex items-center justify-center gap-2 px-6 py-3 text-lg font-medium text-indigo-600 underline-offset-2 hover:underline'
+          >
+            View Amenities
+          </Link>
         </div>
 
         {/* Rooms */}
-        <ul className='mt-12 grid gap-8 lg:grid-cols-2'>
+        <ul className='mx-auto mt-12 grid max-w-6xl gap-8 lg:mt-20 lg:grid-cols-2 lg:gap-16'>
           {rooms.map(({ id, name, description, gallery, details }) => {
             const { sleeps_adults, sleeps_children, bed_count } = details
             const { url, alt } = extractImageProps(gallery[0])
@@ -52,7 +56,7 @@ export default async function Rooms() {
                 <div>
                   {/* Images */}
                   <div className='grid p-2'>
-                    <div className='relative aspect-16/7 overflow-hidden rounded-lg bg-gray-200'>
+                    <div className='relative aspect-4/3 overflow-hidden rounded-lg bg-gray-200'>
                       <Image
                         className='object-cover object-center'
                         src={url}

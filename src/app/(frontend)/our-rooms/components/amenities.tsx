@@ -9,8 +9,11 @@ export default async function Amenities() {
   const { amenities = [] } = data
 
   return (
-    <div className='bg-gradient-to-b from-white to-gray-50 py-16'>
-      <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
+    <section
+      className='bg-gradient-to-b from-white to-gray-50 py-12 lg:py-20'
+      id='amenities'
+    >
+      <div className='container mx-auto px-4 md:px-6 lg:px-8'>
         <SectionHeader
           label='Amenities'
           heading='Room Features & Amenities'
@@ -41,6 +44,6 @@ export default async function Amenities() {
           })}
         </ul>
       </div>
-    </div>
+    </section>
   )
 }
