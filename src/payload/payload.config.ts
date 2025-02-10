@@ -6,13 +6,13 @@ import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
 
-import { HomePage } from './globals/home-page'
 import { Gallery } from './globals/gallery'
-
 import { BookingPlatform } from './globals/booking-platform'
 import { Pricing } from './globals/pricing'
 import { Logos } from './globals/logos'
 import { RoomAmenities } from './globals/room-amenities'
+import { FeaturesAndAmenties } from './globals/features-and-amenities'
+import { Hero } from './globals/hero'
 
 import { Users } from './collections/users'
 import { Media } from './collections/media'
@@ -24,6 +24,7 @@ import { Rooms } from './collections/rooms'
 import { Beds } from './collections/beds'
 import { Facilities } from './collections/facilities'
 import { Reviews } from './collections/reviews'
+import { SEO } from './collections/seo'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -49,9 +50,18 @@ export default buildConfig({
     Facilities,
     Rooms,
     Reviews,
-    Beds
+    Beds,
+    SEO
   ],
-  globals: [Pricing, Logos, HomePage, RoomAmenities, BookingPlatform, Gallery],
+  globals: [
+    Pricing,
+    Logos,
+    FeaturesAndAmenties,
+    Hero,
+    RoomAmenities,
+    BookingPlatform,
+    Gallery
+  ],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

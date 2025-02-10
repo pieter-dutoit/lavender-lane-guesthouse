@@ -21,6 +21,7 @@ export interface Config {
     rooms: Room;
     reviews: Review;
     beds: Bed;
+    seo: Seo;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -37,6 +38,7 @@ export interface Config {
     rooms: RoomsSelect<false> | RoomsSelect<true>;
     reviews: ReviewsSelect<false> | ReviewsSelect<true>;
     beds: BedsSelect<false> | BedsSelect<true>;
+    seo: SeoSelect<false> | SeoSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -47,7 +49,8 @@ export interface Config {
   globals: {
     pricing: Pricing;
     logos: Logo;
-    'home-page': HomePage;
+    'features-and-amenities': FeaturesAndAmenity;
+    hero: Hero;
     'room-amenities': RoomAmenity;
     'booking-platform': BookingPlatform;
     gallery: Gallery;
@@ -55,7 +58,8 @@ export interface Config {
   globalsSelect: {
     pricing: PricingSelect<false> | PricingSelect<true>;
     logos: LogosSelect<false> | LogosSelect<true>;
-    'home-page': HomePageSelect<false> | HomePageSelect<true>;
+    'features-and-amenities': FeaturesAndAmenitiesSelect<false> | FeaturesAndAmenitiesSelect<true>;
+    hero: HeroSelect<false> | HeroSelect<true>;
     'room-amenities': RoomAmenitiesSelect<false> | RoomAmenitiesSelect<true>;
     'booking-platform': BookingPlatformSelect<false> | BookingPlatformSelect<true>;
     gallery: GallerySelect<false> | GallerySelect<true>;
@@ -276,6 +280,46 @@ export interface Review {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "seo".
+ */
+export interface Seo {
+  id: string;
+  page: 'home' | 'gallery' | 'rooms' | 'about' | 'contact-us';
+  meta: MetadataField;
+  open_graph: OpenGraphField;
+  twitter?: TwitterField;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MetadataField".
+ */
+export interface MetadataField {
+  title: string;
+  description: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "OpenGraphField".
+ */
+export interface OpenGraphField {
+  site_name: string;
+  title: string;
+  description: string;
+  image: string | SeoMedia;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TwitterField".
+ */
+export interface TwitterField {
+  creator?: string | null;
+  creatorId?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -320,6 +364,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'beds';
         value: string | Bed;
+      } | null)
+    | ({
+        relationTo: 'seo';
+        value: string | Seo;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -555,6 +603,45 @@ export interface BedsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "seo_select".
+ */
+export interface SeoSelect<T extends boolean = true> {
+  page?: T;
+  meta?: T | MetadataFieldSelect<T>;
+  open_graph?: T | OpenGraphFieldSelect<T>;
+  twitter?: T | TwitterFieldSelect<T>;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MetadataField_select".
+ */
+export interface MetadataFieldSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "OpenGraphField_select".
+ */
+export interface OpenGraphFieldSelect<T extends boolean = true> {
+  site_name?: T;
+  title?: T;
+  description?: T;
+  image?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TwitterField_select".
+ */
+export interface TwitterFieldSelect<T extends boolean = true> {
+  creator?: T;
+  creatorId?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents_select".
  */
 export interface PayloadLockedDocumentsSelect<T extends boolean = true> {
@@ -618,97 +705,38 @@ export interface Logo {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "home-page".
+ * via the `definition` "features-and-amenities".
  */
-export interface HomePage {
+export interface FeaturesAndAmenity {
   id: string;
-  hero: {
-    background_image: string | Media;
-    heading: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    };
-    subheading: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    };
-  };
-  facilities: {
-    heading: string;
-    description: string;
-    facility_groups?:
-      | {
-          heading: string;
-          icon: string | Media;
-          facilities?: (string | Facility)[] | null;
-          id?: string | null;
-        }[]
-      | null;
-    amenity_groups?:
-      | {
-          heading: string;
-          icon: string | Media;
-          amenities?: (string | Amenity)[] | null;
-          id?: string | null;
-        }[]
-      | null;
-  };
-  seo: {
-    meta: MetadataField;
-    open_graph: OpenGraphField;
-    twitter?: TwitterField;
-  };
+  facility_groups?:
+    | {
+        heading: string;
+        facilities?: (string | Facility)[] | null;
+        id?: string | null;
+      }[]
+    | null;
+  amenity_groups?:
+    | {
+        heading: string;
+        amenities?: (string | Amenity)[] | null;
+        id?: string | null;
+      }[]
+    | null;
   _status?: ('draft' | 'published') | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "MetadataField".
+ * via the `definition` "hero".
  */
-export interface MetadataField {
-  title: string;
-  description: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "OpenGraphField".
- */
-export interface OpenGraphField {
-  site_name: string;
-  title: string;
-  description: string;
-  image: string | SeoMedia;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "TwitterField".
- */
-export interface TwitterField {
-  creator?: string | null;
-  creatorId?: string | null;
+export interface Hero {
+  id: string;
+  background_image: string | Media;
+  _status?: ('draft' | 'published') | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -777,44 +805,22 @@ export interface LogosSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "home-page_select".
+ * via the `definition` "features-and-amenities_select".
  */
-export interface HomePageSelect<T extends boolean = true> {
-  hero?:
-    | T
-    | {
-        background_image?: T;
-        heading?: T;
-        subheading?: T;
-      };
-  facilities?:
+export interface FeaturesAndAmenitiesSelect<T extends boolean = true> {
+  facility_groups?:
     | T
     | {
         heading?: T;
-        description?: T;
-        facility_groups?:
-          | T
-          | {
-              heading?: T;
-              icon?: T;
-              facilities?: T;
-              id?: T;
-            };
-        amenity_groups?:
-          | T
-          | {
-              heading?: T;
-              icon?: T;
-              amenities?: T;
-              id?: T;
-            };
+        facilities?: T;
+        id?: T;
       };
-  seo?:
+  amenity_groups?:
     | T
     | {
-        meta?: T | MetadataFieldSelect<T>;
-        open_graph?: T | OpenGraphFieldSelect<T>;
-        twitter?: T | TwitterFieldSelect<T>;
+        heading?: T;
+        amenities?: T;
+        id?: T;
       };
   _status?: T;
   updatedAt?: T;
@@ -823,29 +829,14 @@ export interface HomePageSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "MetadataField_select".
+ * via the `definition` "hero_select".
  */
-export interface MetadataFieldSelect<T extends boolean = true> {
-  title?: T;
-  description?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "OpenGraphField_select".
- */
-export interface OpenGraphFieldSelect<T extends boolean = true> {
-  site_name?: T;
-  title?: T;
-  description?: T;
-  image?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "TwitterField_select".
- */
-export interface TwitterFieldSelect<T extends boolean = true> {
-  creator?: T;
-  creatorId?: T;
+export interface HeroSelect<T extends boolean = true> {
+  background_image?: T;
+  _status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

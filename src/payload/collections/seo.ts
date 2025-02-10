@@ -1,4 +1,7 @@
-import { GroupField } from 'payload'
+import { CollectionConfig, GroupField } from 'payload'
+
+import { DEFAULT_COLLECTION_ACCESS } from '../access/default-config'
+import revalidateCache from '../hooks/collections/revalidate-cache'
 
 const MetadataField: GroupField = {
   interfaceName: 'MetadataField',
@@ -90,5 +93,42 @@ const TwitterField: GroupField = {
   ]
 }
 
-const SEOFields = [MetadataField, OpenGraphField, TwitterField]
-export default SEOFields
+export const SEO: CollectionConfig = {
+  slug: 'seo',
+  admin: {
+    useAsTitle: 'page'
+  },
+  versions: {
+    drafts: true
+  },
+  labels: {
+    singular: 'SEO Configuration',
+    plural: 'SEO Configurations'
+  },
+  hooks: {
+    afterChange: [revalidateCache('seo')]
+  },
+  access: DEFAULT_COLLECTION_ACCESS,
+  fields: [
+    {
+      admin: {
+        position: 'sidebar'
+      },
+      name: 'page',
+      label: 'Page',
+      type: 'select',
+      options: [
+        { label: 'Home', value: 'home' },
+        { label: 'Gallery', value: 'gallery' },
+        { label: 'Rooms', value: 'rooms' },
+        { label: 'About', value: 'about' },
+        { label: 'Contact Us', value: 'contact-us' }
+      ],
+      unique: true,
+      required: true
+    },
+    MetadataField,
+    OpenGraphField,
+    TwitterField
+  ]
+}
