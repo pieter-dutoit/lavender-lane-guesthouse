@@ -13,6 +13,8 @@ export default async function RoomList() {
     <ul className='mt-12 grid gap-8 sm:grid-cols-2 xl:grid-cols-4'>
       {rooms.map(({ id, name, description, gallery, details }) => {
         const { sleeps_adults, sleeps_children } = details
+        const { url, alt } = extractImageProps(gallery[0])
+
         return (
           <li
             key={id}
@@ -21,24 +23,16 @@ export default async function RoomList() {
             <div>
               {/* <Link href={`/rooms/${slug}`}> */}
               {/* Images */}
-              <div className='grid grid-cols-2 gap-2 p-2'>
-                {gallery.slice(0, 1).map((image, index) => {
-                  const { url, alt } = extractImageProps(image)
-
-                  return (
-                    <div
-                      key={url + index}
-                      className={`${index ? 'col-span-1' : 'col-span-2'} relative h-52 overflow-hidden rounded-lg bg-gray-200`}
-                    >
-                      <Image
-                        className='object-cover object-center'
-                        src={url}
-                        alt={alt}
-                        fill
-                      />
-                    </div>
-                  )
-                })}
+              <div className='grid p-2'>
+                <div className='relative h-52 overflow-hidden rounded-lg bg-gray-200'>
+                  <Image
+                    className='object-cover object-center'
+                    src={url}
+                    alt={alt}
+                    fill
+                    sizes='(max-width: 640px) 90vw 20rem'
+                  />
+                </div>
               </div>
 
               {/* Details */}

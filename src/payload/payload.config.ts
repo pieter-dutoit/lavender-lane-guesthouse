@@ -8,15 +8,15 @@ import sharp from 'sharp'
 
 import { HomePage } from './globals/home-page'
 import { Gallery } from './globals/gallery'
-import { AboutUsPage } from './globals/about-us-page'
+
 import { BookingPlatform } from './globals/booking-platform'
 import { Pricing } from './globals/pricing'
 import { Logos } from './globals/logos'
+import { RoomAmenities } from './globals/room-amenities'
 
 import { Users } from './collections/users'
 import { Media } from './collections/media'
 import { ContactPersons } from './collections/contact-persons'
-import { RichtextSections } from './collections/richtext-section'
 import { SEOMedia } from './collections/seo-media'
 import { SocialMediaPlatforms } from './collections/social-media-platforms'
 import { Amenities } from './collections/amenities'
@@ -45,14 +45,13 @@ export default buildConfig({
     SEOMedia,
     ContactPersons,
     SocialMediaPlatforms,
-    RichtextSections,
     Amenities,
     Facilities,
     Rooms,
     Reviews,
     Beds
   ],
-  globals: [Pricing, Logos, HomePage, BookingPlatform, AboutUsPage, Gallery],
+  globals: [Pricing, Logos, HomePage, RoomAmenities, BookingPlatform, Gallery],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

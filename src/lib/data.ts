@@ -10,8 +10,26 @@ import {
   Pricing,
   Review,
   Room,
+  RoomAmenity,
   SocialMediaPlatform
 } from '@/payload/payload-types'
+
+export const getRoomAmenities = unstable_cache(
+  async (): Promise<RoomAmenity> => {
+    const payload = await getPayload({ config })
+    const res = await payload.findGlobal({
+      slug: 'room-amenities',
+      depth: 2
+    })
+    if (!res) {
+      throw new Error('Failed to fetch room amenties.')
+    }
+    return res
+  },
+
+  [],
+  { revalidate: false, tags: ['room-amenities'] }
+)
 
 export const getGallery = unstable_cache(
   async (): Promise<Gallery> => {
@@ -21,7 +39,7 @@ export const getGallery = unstable_cache(
       depth: 1
     })
     if (!res) {
-      throw new Error('Failed to gallery images')
+      throw new Error('Failed to fetch gallery images')
     }
     return res
   },
