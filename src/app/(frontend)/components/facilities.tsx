@@ -1,8 +1,8 @@
-import { fetchHomePageData } from '@/lib/data'
 import { extractImageProps } from '@/lib/utils'
 
 import Image from './image'
 import SectionHeader from './section-header'
+import { getFeaturesAndAmenities } from '@/lib/data'
 
 interface Props {
   id?: string
@@ -22,11 +22,8 @@ function SubSection({ id, heading, children }: Props) {
 }
 
 export default async function Amenities() {
-  const data = await fetchHomePageData('facilities')
-  if (!data?.facilities) return <></>
-
-  const { heading, description, facility_groups, amenity_groups } =
-    data.facilities
+  const data = await getFeaturesAndAmenities()
+  const { facility_groups, amenity_groups } = data
 
   return (
     <section
@@ -36,8 +33,8 @@ export default async function Amenities() {
       <div className='container mx-auto px-4 md:px-6 lg:px-8'>
         <SectionHeader
           label='Stay In Comfort'
-          heading={heading}
-          description={description}
+          heading='Facilities & Amenities'
+          description="We've thought of every detail to make your stay as enjoyable as possible."
         />
 
         {facility_groups?.map(({ heading, facilities }) => {

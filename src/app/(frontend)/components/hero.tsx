@@ -1,44 +1,16 @@
 import Link from 'next/link'
 import { ExternalLink } from 'lucide-react'
-import {
-  type JSXConvertersFunction,
-  RichText
-} from '@payloadcms/richtext-lexical/react'
 
-import { fetchHomePageData, getBookingPlatform } from '@/lib/data'
+import { getBookingPlatform, getHeroData } from '@/lib/data'
 import { extractImageProps } from '@/lib/utils'
 
 import Image from './image'
 
-const jsxConverters: JSXConvertersFunction = ({ defaultConverters }) => ({
-  ...defaultConverters,
-  heading: (h) => {
-    if (h.node.tag === 'h1') {
-      return (
-        <h1 className='[&_em]: text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl md:text-6xl [&_em]:text-indigo-600 [&_em]:not-italic'>
-          {h.nodesToJSX({ nodes: h.node.children })}
-        </h1>
-      )
-    }
-    return h.nodesToJSX({ nodes: h.node.children })
-  },
-  paragraph: (h) => (
-    <p className='mt-3 text-base text-gray-600 sm:mx-auto sm:mt-5 sm:max-w-xl sm:text-lg md:mt-8 md:text-xl lg:mx-0 [&_strong]:font-extrabold'>
-      {h.nodesToJSX({ nodes: h.node.children })}
-    </p>
-  )
-})
-
 export default async function Hero() {
   const bookingPlatform = await getBookingPlatform()
-  const data = await fetchHomePageData('hero')
-  if (!data?.hero) return <></>
+  const hero = await getHeroData()
 
-  const {
-    hero: { background_image, heading, subheading }
-  } = data
-
-  const { url, alt } = extractImageProps(background_image)
+  const { url, alt } = extractImageProps(hero.background_image)
 
   return (
     <section className='relative w-full overflow-hidden'>
@@ -46,10 +18,19 @@ export default async function Hero() {
       <div className='container mx-auto px-4 md:px-6 lg:px-8'>
         <div className='relative z-10 my-8 w-full bg-white sm:my-16 sm:text-center lg:mt-20 lg:mb-0 lg:w-11/20 lg:py-20 lg:text-left'>
           {/* Heading */}
-          <RichText data={heading} converters={jsxConverters} />
+          <h1 className='[&_span]: text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl md:text-6xl [&_span]:text-indigo-600 [&_span]:not-italic'>
+            Welcome to <br />
+            <span>Lavender Lane Guesthouse</span> in Kathu
+          </h1>
 
           {/* Sub heading */}
-          <RichText data={subheading} converters={jsxConverters} />
+
+          <p className='mt-3 text-base text-gray-600 sm:mx-auto sm:mt-5 sm:max-w-xl sm:text-lg md:mt-8 md:text-xl lg:mx-0 [&_strong]:font-extrabold'>
+            <strong>Your Home Away from Home</strong>
+            <br />
+            Experience Comfort and Warm Hospitality in Our Centrally Located Bed
+            & Breakfast.
+          </p>
 
           {/* CTAs */}
           <div className='mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start'>
