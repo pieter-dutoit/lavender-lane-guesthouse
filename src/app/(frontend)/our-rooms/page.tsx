@@ -11,9 +11,8 @@ export default function OurRoomsPage() {
         description='Experience comfort and style in our thoughtfully designed rooms.'
         className='bg-gray-200'
       />
-
-      <Rooms />
       <Amenities />
+      <Rooms />
 
       {/* <Pricing /> */}
     </>

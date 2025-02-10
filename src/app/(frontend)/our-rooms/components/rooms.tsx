@@ -34,12 +34,6 @@ export default async function Rooms() {
           >
             View Prices
           </Link> */}
-          <Link
-            href='#amenities'
-            className='flex items-center justify-center gap-2 px-6 py-3 text-lg font-medium text-indigo-600 underline-offset-2 hover:underline'
-          >
-            View Amenities
-          </Link>
         </div>
 
         {/* Rooms */}
