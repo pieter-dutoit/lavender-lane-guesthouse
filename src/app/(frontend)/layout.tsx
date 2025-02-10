@@ -1,8 +1,17 @@
-import { getBookingPlatform, getLogo } from '@/lib/data'
-import Header from './components/header'
 import './globals.css'
+
+import { getBookingPlatform, getLogo, getSEOConfig } from '@/lib/data'
+
+import Header from './components/header'
 import Footer from './components/footer'
-// import { playfair } from '@/fonts'
+import { Metadata } from 'next'
+import createMetadataConfig from '@/lib/utils/create-metadata-config'
+
+export async function generateMetadata(): Promise<Metadata> {
+  const data = await getSEOConfig('home')
+  if (!data) return {}
+  return createMetadataConfig(data)
+}
 
 export default async function RootLayout({
   children
@@ -15,7 +24,7 @@ export default async function RootLayout({
   const logoData = await getLogo()
 
   return (
-    <html lang='en' className={`scroll-smooth antialiased`}>
+    <html lang='en' className='scroll-smooth antialiased'>
       <body>
         <Header bookingLink={url} logo={logoData} />
         <main>{children}</main>

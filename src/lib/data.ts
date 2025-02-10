@@ -4,13 +4,15 @@ import config from '@payload-config'
 import {
   BookingPlatform,
   ContactPerson,
+  FeaturesAndAmenity,
   Gallery,
-  HomePage,
+  Hero,
   Logo,
   Pricing,
   Review,
   Room,
   RoomAmenity,
+  Seo,
   SocialMediaPlatform
 } from '@/payload/payload-types'
 
@@ -82,24 +84,36 @@ export const getPrices = unstable_cache(
   { revalidate: false, tags: ['pricing'] }
 )
 
-type HomePageData = Partial<HomePage>
-
-export const fetchHomePageData = unstable_cache(
-  async (field?: string): Promise<HomePageData> => {
+export const getHeroData = unstable_cache(
+  async (): Promise<Hero> => {
     const payload = await getPayload({ config })
     const res = await payload.findGlobal({
-      slug: 'home-page',
-      depth: 2,
-      ...(field && { select: { [field]: true } })
+      slug: 'hero',
+      depth: 1
     })
     if (!res) {
       throw new Error('Failed to fetch home page data')
     }
     return res
   },
-
   [],
-  { revalidate: false, tags: ['home-page'] }
+  { revalidate: false, tags: ['hero'] }
+)
+
+export const getFeaturesAndAmenities = unstable_cache(
+  async (): Promise<FeaturesAndAmenity> => {
+    const payload = await getPayload({ config })
+    const res = await payload.findGlobal({
+      slug: 'features-and-amenities',
+      depth: 2
+    })
+    if (!res) {
+      throw new Error('Failed to fetch home page data')
+    }
+    return res
+  },
+  [],
+  { revalidate: false, tags: ['features-and-amenities'] }
 )
 
 export const getBookingPlatform = unstable_cache(
@@ -224,4 +238,32 @@ export const getSocials = unstable_cache(
   },
   [],
   { revalidate: false, tags: ['social-media-platforms'] }
+)
+
+export const getSEOConfig = unstable_cache(
+  async (page: string): Promise<Seo> => {
+    const payload = await getPayload({ config })
+    const res = await payload.find({
+      draft: false,
+      collection: 'seo',
+      depth: 2,
+      pagination: false,
+      where: {
+        page: {
+          equals: page
+        },
+        _status: {
+          equals: 'published'
+        }
+      }
+    })
+
+    if (!res) {
+      throw new Error('Failed to fetch contact persons data')
+    }
+
+    return res.docs[0]
+  },
+  [],
+  { revalidate: false, tags: ['seo'] }
 )

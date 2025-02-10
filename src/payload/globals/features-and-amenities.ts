@@ -1,26 +1,23 @@
-import { GroupField } from 'payload'
+import type { GlobalConfig } from 'payload'
 
-const Facilities: GroupField = {
-  name: 'facilities',
-  type: 'group',
-  label: 'General Facilities & Amenities',
+import { isLoggedInOrIsPublished } from '@/payload/access/is-logged-in-or-is-published'
+import { isLoggedIn } from '@/payload/access/is-logged-in'
+
+import revalidateCache from '../hooks/globals/revalidate-cache'
+
+export const FeaturesAndAmenties: GlobalConfig = {
+  slug: 'features-and-amenities',
+  versions: {
+    drafts: true
+  },
+  hooks: {
+    afterChange: [revalidateCache('features-and-amenities')]
+  },
+  access: {
+    read: isLoggedInOrIsPublished,
+    update: isLoggedIn
+  },
   fields: [
-    {
-      name: 'heading',
-      label: 'Heading',
-      type: 'text',
-      minLength: 3,
-      maxLength: 100,
-      required: true
-    },
-    {
-      name: 'description',
-      label: 'Description',
-      type: 'textarea',
-      required: true,
-      minLength: 3,
-      maxLength: 1000
-    },
     {
       name: 'facility_groups',
       type: 'array',
@@ -32,13 +29,6 @@ const Facilities: GroupField = {
           required: true,
           minLength: 3,
           maxLength: 100
-        },
-        {
-          name: 'icon',
-          label: 'Icon',
-          type: 'upload',
-          relationTo: 'media',
-          required: true
         },
         {
           name: 'facilities',
@@ -62,13 +52,6 @@ const Facilities: GroupField = {
           maxLength: 100
         },
         {
-          name: 'icon',
-          label: 'Icon',
-          type: 'upload',
-          relationTo: 'media',
-          required: true
-        },
-        {
           name: 'amenities',
           type: 'relationship',
           relationTo: 'amenities',
@@ -79,5 +62,3 @@ const Facilities: GroupField = {
     }
   ]
 }
-
-export default Facilities
