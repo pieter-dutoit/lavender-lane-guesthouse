@@ -45,7 +45,7 @@ export function getBaseUrl(): string {
   const env = process.env.VERCEL_ENV || ''
 
   if (env === 'production') {
-    return `https://${process.env.VERCEL_URL}`
+    return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
   }
 
   if (['development', 'preview'].includes(env)) {
