@@ -42,10 +42,14 @@ export function extractContactDetails(contacts: ContactPerson[] | undefined): {
 }
 
 export function getBaseUrl(): string {
-  const vercelURL =
-    process.env.VERCEL_PROJECT_PRODUCTION_URL ||
-    process.env.VERCEL_URL ||
-    process.env.VERCEL_BRANCH_URL
+  const env = process.env.VERCEL_ENV || ''
 
-  return vercelURL ? `https://${vercelURL}` : 'http://localhost:3000'
+  return (
+    {
+      production: process.env.VERCEL_PROJECT_PRODUCTION_URL
+    }[env] ||
+    process.env.VERCEL_URL ||
+    process.env.VERCEL_BRANCH_URL ||
+    'http://localhost:3000'
+  )
 }
