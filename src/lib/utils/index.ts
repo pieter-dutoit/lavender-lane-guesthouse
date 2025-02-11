@@ -44,12 +44,13 @@ export function extractContactDetails(contacts: ContactPerson[] | undefined): {
 export function getBaseUrl(): string {
   const env = process.env.VERCEL_ENV || ''
 
-  return (
-    {
-      production: process.env.VERCEL_PROJECT_PRODUCTION_URL
-    }[env] ||
-    process.env.VERCEL_URL ||
-    process.env.VERCEL_BRANCH_URL ||
-    'http://localhost:3000'
-  )
+  if (env === 'production') {
+    return `https://${process.env.VERCEL_URL}`
+  }
+
+  if (['development', 'preview'].includes(env)) {
+    return `https://${process.env.VERCEL_URL || process.env.VERCEL_BRANCH_URL}`
+  }
+
+  return 'http://localhost:3000'
 }

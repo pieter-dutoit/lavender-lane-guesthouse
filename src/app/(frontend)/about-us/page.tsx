@@ -26,7 +26,6 @@ export default function AboutPage() {
       <Overview />
       <Story />
       <Team />
-
       <ContactUs />
     </>
   )
