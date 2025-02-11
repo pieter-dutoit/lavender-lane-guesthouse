@@ -69,6 +69,7 @@ export default async function ContactDetails() {
             <h3 className='text-xl font-semibold'>Location</h3>
             <div className='aspect-w-16 aspect-h-9 mt-4'>
               <iframe
+                title='Guesthouse Map Location'
                 src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3532.713546327411!2d23.049549075467016!3d-27.695247076189478!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1e9e412976e47095%3A0xef41f10a6cf9bd04!2sLavender%20Lane!5e0!3m2!1sen!2sau!4v1738724043279!5m2!1sen!2sau'
                 width='600'
                 height='300'

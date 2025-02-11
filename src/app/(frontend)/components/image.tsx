@@ -55,7 +55,7 @@ export default function Image(props: Props) {
   } = props
 
   const filename = src.split('/').pop()
-  const imagePath = `/images/${filename}`
+  const imagePath = `/api/images/${filename}`
 
   const defaultStyles = fill ? 'absolute inset-0 size-full' : ''
 

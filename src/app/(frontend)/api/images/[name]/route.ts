@@ -1,7 +1,10 @@
 // Cache response
 export const dynamic = 'force-static'
+import {
+  ALLOWED_SIZES,
+  calculatePortraitHeight
+} from '@/app/(frontend)/components/image'
 import sharp from 'sharp'
-import { ALLOWED_SIZES, calculatePortraitHeight } from '../../components/image'
 
 const FORMAT_REGEX = /.(\w+)$/i
 const SIZE_PARAMS_REGEX = /-(\d+x\d+)\..+$/i
