@@ -21,7 +21,7 @@ export default async function Amenities() {
             your comfort.'
         />
 
-        <ul className='mt-12 grid grid-cols-2 gap-8 sm:grid-cols-3 md:grid-cols-4 lg:mt-16 lg:grid-cols-5 xl:grid-cols-6'>
+        <ul className='mt-12 grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 md:gap-4 lg:mt-16 lg:grid-cols-5 lg:gap-8 xl:grid-cols-6'>
           {amenities.map((amenity) => {
             if (typeof amenity === 'string') return null
             const { name, icon, id } = amenity
