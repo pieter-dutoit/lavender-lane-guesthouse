@@ -22,7 +22,8 @@ async function getLastModified(
       .flatMap((result) => (Array.isArray(result) ? result : [result]))
       .sort(
         (a, b) =>
-          new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
+          new Date(b?.updatedAt || null).getTime() -
+          new Date(a?.updatedAt || null).getTime()
       )
 
     return new Date(standardResults[0].updatedAt).toISOString()
