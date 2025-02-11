@@ -60,7 +60,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'yearly',
       priority: 0.8
     },
-    // About page
+    // Rooms page
     {
       url: baseURL + '/our-rooms',
       lastModified: await getLastModified([
@@ -78,7 +78,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'yearly',
       priority: 0.7
     },
-    // About page
+    // Contact page
     {
       url: baseURL + '/contact-us',
       lastModified: await getLastModified([

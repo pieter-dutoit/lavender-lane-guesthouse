@@ -12,7 +12,7 @@ import ContactUs from '../components/contact-us'
 export async function generateMetadata(): Promise<Metadata> {
   const data = await getSEOConfig('about')
   if (!data) return {}
-  return createMetadataConfig(data)
+  return createMetadataConfig({ ...data, path: '/about-us' })
 }
 
 export default function AboutPage() {
@@ -26,7 +26,6 @@ export default function AboutPage() {
       <Overview />
       <Story />
       <Team />
-
       <ContactUs />
     </>
   )

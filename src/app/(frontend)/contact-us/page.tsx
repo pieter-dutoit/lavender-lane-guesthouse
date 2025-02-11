@@ -9,7 +9,7 @@ import SocialMedia from './components/social-media'
 export async function generateMetadata(): Promise<Metadata> {
   const data = await getSEOConfig('contact-us')
   if (!data) return {}
-  return createMetadataConfig(data)
+  return createMetadataConfig({ ...data, path: '/contact-us' })
 }
 
 export default function ContactUsPage() {

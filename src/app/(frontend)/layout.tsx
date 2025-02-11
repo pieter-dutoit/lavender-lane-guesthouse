@@ -10,7 +10,7 @@ import createMetadataConfig from '@/lib/utils/create-metadata-config'
 export async function generateMetadata(): Promise<Metadata> {
   const data = await getSEOConfig('home')
   if (!data) return {}
-  return createMetadataConfig(data)
+  return createMetadataConfig({ ...data, path: '/' })
 }
 
 export default async function RootLayout({

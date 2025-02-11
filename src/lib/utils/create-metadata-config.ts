@@ -9,13 +9,14 @@ import {
 import { extractImageProps, getBaseUrl } from '.'
 
 interface SEO {
+  path: string
   meta: MetadataField
   open_graph: OpenGraphField
   twitter?: TwitterField
 }
 
 export default function createMetadataConfig(seo: SEO): Metadata {
-  const { meta, open_graph, twitter } = seo
+  const { path, meta, open_graph, twitter } = seo
 
   const {
     url: ogURL,
@@ -27,6 +28,9 @@ export default function createMetadataConfig(seo: SEO): Metadata {
   return {
     // Basic fields:
     metadataBase: new URL(getBaseUrl()),
+    alternates: {
+      canonical: path
+    },
     generator: 'Next.js',
     applicationName: 'Lavender Lane Guesthouse',
     referrer: 'strict-origin-when-cross-origin',

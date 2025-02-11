@@ -9,7 +9,7 @@ import Hero from '../about-us/components/hero'
 export async function generateMetadata(): Promise<Metadata> {
   const data = await getSEOConfig('gallery')
   if (!data) return {}
-  return createMetadataConfig(data)
+  return createMetadataConfig({ ...data, path: '/gallery' })
 }
 
 export default async function GalleryPage() {

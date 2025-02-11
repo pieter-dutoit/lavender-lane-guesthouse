@@ -11,7 +11,7 @@ import Rooms from './components/rooms'
 export async function generateMetadata(): Promise<Metadata> {
   const data = await getSEOConfig('rooms')
   if (!data) return {}
-  return createMetadataConfig(data)
+  return createMetadataConfig({ ...data, path: '/our-rooms' })
 }
 
 export default function OurRoomsPage() {
