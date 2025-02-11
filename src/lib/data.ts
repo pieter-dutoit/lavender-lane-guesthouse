@@ -92,7 +92,7 @@ export const getHeroData = unstable_cache(
       depth: 1
     })
     if (!res) {
-      throw new Error('Failed to fetch home page data')
+      throw new Error('Failed to fetch hero data')
     }
     return res
   },
@@ -108,7 +108,7 @@ export const getFeaturesAndAmenities = unstable_cache(
       depth: 2
     })
     if (!res) {
-      throw new Error('Failed to fetch home page data')
+      throw new Error('Failed to fetch features data')
     }
     return res
   },

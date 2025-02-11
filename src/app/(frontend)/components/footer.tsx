@@ -19,9 +19,9 @@ export default async function Footer() {
         <div className='grid grid-cols-1 gap-8 md:grid-cols-3'>
           {/* Left-hand content */}
           <div>
-            <h3 className='mb-4 text-lg font-semibold sm:text-xl'>
+            <h2 className='mb-4 text-lg font-semibold sm:text-xl'>
               Lavender Lane Guesthouse
-            </h3>
+            </h2>
 
             {/* Address */}
             <div className='mt-4 flex flex-col gap-4'>
