@@ -43,7 +43,7 @@ export default async function RoomTypePage({ params }: Props) {
         ]}
       />
       <PageHeading
-        className='bg-gray-200 pb-4 lg:pb-6'
+        className='bg-white pb-4 text-left lg:pb-6'
         description={`Sleeps ${details.sleeps_adults + details.sleeps_children}`}
       >
         <span>{name}</span>
