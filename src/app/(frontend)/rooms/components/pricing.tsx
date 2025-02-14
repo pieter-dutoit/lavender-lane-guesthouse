@@ -2,7 +2,7 @@ import { Check, Users } from 'lucide-react'
 
 import { getPrices } from '@/lib/data'
 
-import SectionHeader from '../../components/section-header'
+import SectionHeading from '../../components/section-heading'
 
 const includedAmenities = [
   'Free WiFi',
@@ -20,7 +20,7 @@ export default async function Pricing() {
       id='pricing'
     >
       <div className='container mx-auto px-4 md:px-6 lg:px-8'>
-        <SectionHeader
+        <SectionHeading
           label='Fees'
           heading='Pricing Information'
           description='Transparent pricing for a comfortable stay.'

@@ -284,7 +284,16 @@ export interface Review {
  */
 export interface Seo {
   id: string;
-  page: 'home' | 'gallery' | 'rooms' | 'about' | 'contact-us';
+  page:
+    | 'home'
+    | 'gallery'
+    | 'rooms'
+    | 'double-room'
+    | 'twin-room'
+    | 'three-quarter-bed-room'
+    | 'family-room'
+    | 'about'
+    | 'contact-us';
   meta: MetadataField;
   open_graph: OpenGraphField;
   twitter?: TwitterField;

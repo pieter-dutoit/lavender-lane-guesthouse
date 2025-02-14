@@ -4,7 +4,7 @@ import { extractImageProps } from '@/lib/utils'
 import { getSocials } from '@/lib/data'
 
 import Image from '../../components/image'
-import SectionHeader from '../../components/section-header'
+import SectionHeading from '../../components/section-heading'
 
 export default async function SocialMedia() {
   const socialData = await getSocials()
@@ -12,7 +12,7 @@ export default async function SocialMedia() {
   return (
     <section className='bg-gradient-to-b from-white to-gray-200 py-12 lg:py-20'>
       <div className='container mx-auto px-4 md:px-6 lg:px-8'>
-        <SectionHeader label='Social Media' heading='Follow Us' />
+        <SectionHeading label='Social Media' heading='Follow Us' />
 
         <ul className='mt-8 flex flex-wrap justify-center gap-8 lg:mt-12'>
           {socialData.map((social) => {

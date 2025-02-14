@@ -4,7 +4,7 @@ import { Bed, ExternalLink, ShowerHead, Users } from 'lucide-react'
 import { extractImageProps } from '@/lib/utils'
 import { getBookingPlatform, getRooms } from '@/lib/data'
 
-import SectionHeader from '../../components/section-header'
+import SectionHeading from '../../components/section-heading'
 import Image from '../../components/image'
 
 export default async function Rooms() {
@@ -17,7 +17,7 @@ export default async function Rooms() {
       id='rooms'
     >
       <div className='container mx-auto px-4 md:px-6 lg:px-8'>
-        <SectionHeader label='Choose Your Space' heading='Our Rooms' />
+        <SectionHeading label='Choose Your Space' heading='Our Rooms' />
 
         {/* CTAs */}
         <div className='mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row lg:mt-16'>
@@ -38,7 +38,7 @@ export default async function Rooms() {
 
         {/* Rooms */}
         <ul className='mx-auto mt-12 grid max-w-6xl gap-8 lg:mt-20 lg:grid-cols-2 lg:gap-16'>
-          {rooms.map(({ id, name, description, gallery, details }) => {
+          {rooms.map(({ id, name, description, gallery, details, slug }) => {
             const { sleeps_adults, sleeps_children, bed_count } = details
             const { url, alt } = extractImageProps(gallery[0])
 
@@ -99,7 +99,7 @@ export default async function Rooms() {
                       </ul>
 
                       {/* Overivew */}
-                      <p className='mt-3 text-base text-gray-500'>
+                      <p className='mt-3 line-clamp-4 min-h-[6em] text-base text-gray-500'>
                         {description}
                       </p>
                     </div>
@@ -110,6 +110,12 @@ export default async function Rooms() {
                         className='inline-flex items-center gap-2 rounded bg-indigo-600 px-4 py-2 font-semibold text-white hover:bg-indigo-700'
                       >
                         Book Now <ExternalLink size={14} />
+                      </Link>
+                      <Link
+                        href={`/rooms/${slug}`}
+                        className='rounded px-4 py-2 font-semibold text-indigo-600 underline-offset-2 hover:underline'
+                      >
+                        View Details
                       </Link>
                     </div>
                   </div>

@@ -159,6 +159,35 @@ export const getRooms = unstable_cache(
   { revalidate: false, tags: ['rooms'] }
 )
 
+export const getRoom = unstable_cache(
+  async (slug: string): Promise<Room> => {
+    const payload = await getPayload({ config })
+    const res = await payload.find({
+      draft: false,
+      collection: 'rooms',
+      depth: 3,
+      pagination: false,
+      sort: '-name',
+      where: {
+        slug: {
+          equals: slug
+        },
+        _status: {
+          equals: 'published'
+        }
+      }
+    })
+
+    if (!res) {
+      throw new Error('Failed to fetch room data')
+    }
+
+    return res.docs[0]
+  },
+  [],
+  { revalidate: false, tags: ['rooms'] }
+)
+
 export const getReviews = unstable_cache(
   async (query?: Where): Promise<Review[]> => {
     const payload = await getPayload({ config })

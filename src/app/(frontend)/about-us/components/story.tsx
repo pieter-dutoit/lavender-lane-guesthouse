@@ -1,10 +1,10 @@
-import SectionHeader from '../../components/section-header'
+import SectionHeading from '../../components/section-heading'
 
 export default function Story() {
   return (
     <section className='bg-gradient-to-b from-gray-100 to-indigo-50 py-12 lg:py-20'>
       <div className='container mx-auto px-4 md:px-6 lg:px-8'>
-        <SectionHeader heading='Our Story' label='About Us' />
+        <SectionHeading heading='Our Story' label='About Us' />
         <div className='text-md mx-auto mt-10 flex max-w-3xl flex-col gap-4 font-light md:text-lg lg:mt-16 lg:leading-7'>
           <p>
             Lavender Lane was born out of a passion for hospitality and a desire

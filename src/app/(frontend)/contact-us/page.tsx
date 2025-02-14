@@ -5,6 +5,7 @@ import createMetadataConfig from '@/lib/utils/create-metadata-config'
 
 import ContactDetails from './components/contact-details'
 import SocialMedia from './components/social-media'
+import PageHeading from '../components/page-heading'
 
 export async function generateMetadata(): Promise<Metadata> {
   const data = await getSEOConfig('contact-us')
@@ -15,7 +16,9 @@ export async function generateMetadata(): Promise<Metadata> {
 export default function ContactUsPage() {
   return (
     <>
-      <h1 className='sr-only'>We&apos;d love to hear from you</h1>
+      <PageHeading className='sr-only bg-gradient-to-b from-white to-gray-100'>
+        We&apos;d love to <span>hear from you</span>
+      </PageHeading>
       <ContactDetails />
       <SocialMedia />
     </>

@@ -9,10 +9,12 @@ import {
   getRooms,
   getGallery,
   getRoomAmenities,
-  getContacts
+  getContacts,
+  getRoom
 } from '@/lib/data'
 
 async function getLastModified(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   fetchers: (() => Promise<any>)[]
 ): Promise<string | undefined> {
   // Fetch data from all functions
@@ -35,6 +37,7 @@ async function getLastModified(
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseURL = getBaseUrl()
+  const rooms = await getRooms()
 
   return [
     // Home Page
@@ -47,7 +50,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         getFeaturesAndAmenities,
         getRooms
       ]),
-      changeFrequency: 'yearly',
+      changeFrequency: 'yearly' as const,
       priority: 1
     },
     // Gallery Page
@@ -57,25 +60,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         async () => getSEOConfig('gallery'),
         getGallery
       ]),
-      changeFrequency: 'yearly',
-      priority: 0.8
-    },
-    // Rooms page
-    {
-      url: baseURL + '/our-rooms',
-      lastModified: await getLastModified([
-        async () => getSEOConfig('rooms'),
-        getRooms,
-        getRoomAmenities
-      ]),
-      changeFrequency: 'yearly',
-      priority: 0.9
+      changeFrequency: 'yearly' as const,
+      priority: 0.7
     },
     // About page
     {
       url: baseURL + '/about-us',
       lastModified: await getLastModified([async () => getSEOConfig('about')]),
-      changeFrequency: 'yearly',
+      changeFrequency: 'yearly' as const,
       priority: 0.7
     },
     // Contact page
@@ -86,8 +78,31 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         getContacts,
         getSocials
       ]),
-      changeFrequency: 'yearly',
+      changeFrequency: 'monthly' as const,
       priority: 0.8
-    }
+    },
+    // Rooms page
+    {
+      url: baseURL + '/rooms',
+      lastModified: await getLastModified([
+        async () => getSEOConfig('rooms'),
+        getRooms,
+        getRoomAmenities
+      ]),
+      changeFrequency: 'monthly' as const,
+      priority: 0.9
+    },
+    // Room Details
+    ...(await Promise.all(
+      rooms.map(async ({ slug }) => ({
+        url: baseURL + '/rooms/' + slug,
+        lastModified: await getLastModified([
+          async () => getRoom(slug || ''),
+          getRoomAmenities
+        ]),
+        priority: 0.7,
+        changeFrequency: 'monthly' as const
+      }))
+    ))
   ]
 }

@@ -60,7 +60,8 @@ export default function Header({ bookingLink, logo }: Props) {
           {/* Desktop Menu */}
           <ul className='hidden lg:ml-6 lg:flex lg:space-x-8'>
             {LINKS.map(({ path, name, external }) => {
-              const isActive = path === pathname
+              const isActive =
+                path === '/' ? pathname === '/' : pathname.startsWith(path)
 
               return (
                 <li key={path} className='h-full'>
@@ -89,9 +90,9 @@ export default function Header({ bookingLink, logo }: Props) {
             >
               <span className='sr-only'>Open main menu</span>
               {isOpen ? (
-                <X className='block h-6 w-6' aria-hidden='true' />
+                <X className='block size-6' aria-hidden='true' />
               ) : (
-                <Menu className='block h-6 w-6' aria-hidden='true' />
+                <Menu className='block size-6' aria-hidden='true' />
               )}
             </button>
           </div>
@@ -106,7 +107,8 @@ export default function Header({ bookingLink, logo }: Props) {
       >
         <ul className='space-y-1 pt-2 pb-3'>
           {LINKS.map(({ path, name, external }) => {
-            const isActive = path === pathname
+            const isActive =
+              path === '/' ? pathname === '/' : pathname.startsWith(path)
 
             return (
               <li key={path} onClick={toggleMenu}>

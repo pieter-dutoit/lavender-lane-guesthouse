@@ -4,7 +4,7 @@ import { getGallery, getSEOConfig } from '@/lib/data'
 import createMetadataConfig from '@/lib/utils/create-metadata-config'
 
 import ImageGrid from './components/grid'
-import Hero from '../about-us/components/hero'
+import PageHeading from '../components/page-heading'
 
 export async function generateMetadata(): Promise<Metadata> {
   const data = await getSEOConfig('gallery')
@@ -17,10 +17,9 @@ export default async function GalleryPage() {
 
   return (
     <>
-      <Hero
-        heading='Gallery'
-        description='Take a look at our rooms and facilities.'
-      />
+      <PageHeading description='Take a look at our rooms and facilities.'>
+        View our <span>Gallery</span>
+      </PageHeading>
       <ImageGrid gallery={gallery} />
     </>
   )

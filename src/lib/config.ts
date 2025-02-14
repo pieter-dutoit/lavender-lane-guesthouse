@@ -15,10 +15,10 @@ export const NAV_LINKS: NavLink[] = [
   },
   {
     name: 'Rooms',
-    path: '/our-rooms'
+    path: '/rooms'
   },
   {
-    name: 'About',
+    name: 'About Us',
     path: '/about-us'
   },
   {
