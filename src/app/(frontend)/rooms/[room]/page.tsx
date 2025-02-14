@@ -1,11 +1,22 @@
 import { notFound } from 'next/navigation'
+import { Metadata } from 'next'
 
-import { getRoom, getRooms } from '@/lib/data'
+import { getRoom, getRooms, getSEOConfig } from '@/lib/data'
+import createMetadataConfig from '@/lib/utils/create-metadata-config'
 
 import PageHeading from '../../components/page-heading'
 import RoomDetails from './components/room-details'
 
 type Props = { params: Promise<{ room: string }> }
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { room: slug } = await params
+  console.log({ slug })
+  const data = await getSEOConfig(slug)
+  console.log({ data })
+  if (!data) return {}
+  return createMetadataConfig({ ...data, path: `/rooms/${slug}` })
+}
 
 export async function generateStaticParams() {
   const rooms = await getRooms()
