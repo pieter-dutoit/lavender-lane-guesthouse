@@ -6,7 +6,7 @@ import createMetadataConfig from '@/lib/utils/create-metadata-config'
 import PageHeading from '../components/page-heading'
 import Amenities from './components/amenities'
 import Rooms from './components/rooms'
-import Pricing from './components/pricing'
+// import Pricing from './components/pricing'
 
 export async function generateMetadata(): Promise<Metadata> {
   const data = await getSEOConfig('rooms')
@@ -26,7 +26,7 @@ export default function OurRoomsPage() {
       </PageHeading>
       <Amenities />
       <Rooms />
-      <Pricing />
+      {/* <Pricing /> */}
     </>
   )
 }
