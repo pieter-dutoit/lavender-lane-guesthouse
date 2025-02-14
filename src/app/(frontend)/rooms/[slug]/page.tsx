@@ -21,7 +21,7 @@ export async function generateStaticParams() {
   const rooms = await getRooms()
 
   return rooms.map((room) => ({
-    room: room.slug
+    slug: room.slug
   }))
 }
 
