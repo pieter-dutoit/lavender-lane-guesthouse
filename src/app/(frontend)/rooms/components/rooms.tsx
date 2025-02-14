@@ -13,7 +13,7 @@ export default async function Rooms() {
 
   return (
     <section
-      className='bg-gradient-to-b from-gray-100 to-gray-200 py-12 lg:py-20'
+      className='bg-gradient-to-b from-white to-gray-200 py-12 lg:py-20'
       id='rooms'
     >
       <div className='container mx-auto px-4 md:px-6 lg:px-8'>
@@ -50,7 +50,7 @@ export default async function Rooms() {
                 <div>
                   {/* Images */}
                   <div className='grid p-2'>
-                    <div className='relative aspect-4/3 overflow-hidden rounded-lg bg-gray-200'>
+                    <div className='relative aspect-2/1 overflow-hidden rounded-lg bg-gray-200'>
                       <Image
                         className='object-cover object-center'
                         src={url}

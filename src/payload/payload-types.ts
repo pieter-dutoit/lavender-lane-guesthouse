@@ -290,7 +290,7 @@ export interface Seo {
     | 'rooms'
     | 'double-room'
     | 'twin-room'
-    | 'three-quarter-bed-room'
+    | 'single-room'
     | 'family-room'
     | 'about'
     | 'contact-us';

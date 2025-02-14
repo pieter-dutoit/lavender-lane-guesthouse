@@ -6,11 +6,12 @@ import createMetadataConfig from '@/lib/utils/create-metadata-config'
 
 import PageHeading from '../../components/page-heading'
 import RoomDetails from './components/room-details'
+import Breadcrumbs from '../../components/breadcrumbs'
 
-type Props = { params: Promise<{ room: string }> }
+type Props = { params: Promise<{ slug: string }> }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { room: slug } = await params
+  const { slug } = await params
   const data = await getSEOConfig(slug)
   if (!data) return {}
   return createMetadataConfig({ ...data, path: `/rooms/${slug}` })
@@ -25,7 +26,7 @@ export async function generateStaticParams() {
 }
 
 export default async function RoomTypePage({ params }: Props) {
-  const { room: slug } = await params
+  const { slug } = await params
   const room = await getRoom(slug)
   if (!room) {
     notFound()
@@ -35,11 +36,17 @@ export default async function RoomTypePage({ params }: Props) {
 
   return (
     <>
+      <Breadcrumbs
+        items={[
+          { label: 'Rooms', href: '/rooms' },
+          { label: room.name, href: `/rooms/${room.slug}` }
+        ]}
+      />
       <PageHeading
-        className='bg-indigo-100 py-8 lg:py-12'
+        className='bg-gray-200 pb-4 lg:pb-6'
         description={`Sleeps ${details.sleeps_adults + details.sleeps_children}`}
       >
-        {name}
+        <span>{name}</span>
       </PageHeading>
       <RoomDetails room={room} />
     </>

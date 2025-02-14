@@ -123,7 +123,7 @@ export const SEO: CollectionConfig = {
         { label: 'All Rooms', value: 'rooms' },
         { label: 'Double Room', value: 'double-room' },
         { label: 'Twin Room', value: 'twin-room' },
-        { label: 'Three Quarter Room', value: 'three-quarter-bed-room' },
+        { label: 'Single Room', value: 'single-room' },
         { label: 'Family Room', value: 'family-room' },
         { label: 'About', value: 'about' },
         { label: 'Contact Us', value: 'contact-us' }
