@@ -1,10 +1,10 @@
-import SectionHeader from '../../components/section-header'
+import SectionHeading from '../../components/section-heading'
 
 export default function Team() {
   return (
     <section className='bg-gradient-to-b from-indigo-50 to-gray-100 py-12 lg:py-20'>
       <div className='container mx-auto px-4 md:px-6 lg:px-8'>
-        <SectionHeader
+        <SectionHeading
           label='Who we are'
           heading='Meet Our Team'
           description="The heart of Lavender Lane's hospitality"

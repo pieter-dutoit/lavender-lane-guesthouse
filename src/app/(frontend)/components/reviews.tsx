@@ -1,5 +1,5 @@
 import { getReviews } from '@/lib/data'
-import SectionHeader from './section-header'
+import SectionHeading from './section-heading'
 import Link from 'next/link'
 import { ExternalLink } from 'lucide-react'
 
@@ -10,7 +10,7 @@ export default async function Reviews() {
   return (
     <section className='bg-white py-12 lg:py-20' id='reviews'>
       <div className='container mx-auto px-4 md:px-6 lg:px-8'>
-        <SectionHeader
+        <SectionHeading
           label='What Our Guests Say'
           heading='Reviews from Satisfied Visitors'
           description='Authentic reviews from platforms like Booking.com, Google, and LekkeSlaap.'

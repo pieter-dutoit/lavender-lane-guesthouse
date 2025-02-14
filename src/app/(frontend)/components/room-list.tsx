@@ -11,7 +11,7 @@ export default async function RoomList() {
   const bookingPlatform = await getBookingPlatform()
   return (
     <ul className='mt-12 grid gap-8 sm:grid-cols-2 xl:grid-cols-4'>
-      {rooms.map(({ id, name, description, gallery, details }) => {
+      {rooms.map(({ id, name, description, gallery, details, slug }) => {
         const { sleeps_adults, sleeps_children } = details
         const { url, alt } = extractImageProps(gallery[0])
 
@@ -56,6 +56,12 @@ export default async function RoomList() {
                     className='inline-flex items-center gap-2 rounded bg-indigo-600 px-4 py-2 font-semibold text-white hover:bg-indigo-700'
                   >
                     Book Now <ExternalLink size={14} />
+                  </Link>
+                  <Link
+                    href={`/rooms/${slug}`}
+                    className='rounded px-4 py-2 font-semibold text-indigo-600 underline-offset-2 hover:underline'
+                  >
+                    View Details
                   </Link>
                 </div>
               </div>

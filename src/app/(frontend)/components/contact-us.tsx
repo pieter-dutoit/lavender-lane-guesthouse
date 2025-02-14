@@ -1,7 +1,7 @@
 import { ArrowRight, Mail, MapPin, Phone } from 'lucide-react'
 import Link from 'next/link'
 
-import SectionHeader from './section-header'
+import SectionHeading from './section-heading'
 import { getContacts } from '@/lib/data'
 import { extractContactDetails } from '@/lib/utils'
 
@@ -12,7 +12,7 @@ export default async function ContactUs() {
   return (
     <section className='bg-gray-100 py-12 lg:py-20' id='contact-us'>
       <div className='container mx-auto px-4 md:px-6 lg:px-8'>
-        <SectionHeader
+        <SectionHeading
           label='Get in touch'
           heading='Contact Us'
           description='Reach out to book your stay or for any inquiries.'

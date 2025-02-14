@@ -4,7 +4,7 @@ interface Props {
   description?: string
 }
 
-export default function SectionHeader({ label, heading, description }: Props) {
+export default function SectionHeading({ label, heading, description }: Props) {
   return (
     <div className='text-center'>
       {label && (

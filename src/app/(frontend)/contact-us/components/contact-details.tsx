@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 import { getContacts } from '@/lib/data'
 import { extractContactDetails } from '@/lib/utils'
-import SectionHeader from '../../components/section-header'
+import SectionHeading from '../../components/section-heading'
 
 export default async function ContactDetails() {
   const data = await getContacts()
@@ -12,7 +12,7 @@ export default async function ContactDetails() {
   return (
     <section className='bg-gradient-to-b from-gray-200 to-white py-12 lg:py-20'>
       <div className='container mx-auto px-4 md:px-6 lg:px-8'>
-        <SectionHeader
+        <SectionHeading
           label='Get in touch'
           heading='Contact Us'
           description='Get in touch with us for bookings or any inquiries.'

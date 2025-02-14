@@ -1,7 +1,7 @@
 import { extractImageProps } from '@/lib/utils'
 
 import Image from './image'
-import SectionHeader from './section-header'
+import SectionHeading from './section-heading'
 import { getFeaturesAndAmenities } from '@/lib/data'
 
 interface Props {
@@ -31,7 +31,7 @@ export default async function Amenities() {
       id='facilities'
     >
       <div className='container mx-auto px-4 md:px-6 lg:px-8'>
-        <SectionHeader
+        <SectionHeading
           label='Stay In Comfort'
           heading='Facilities & Amenities'
           description="We've thought of every detail to make your stay as enjoyable as possible."

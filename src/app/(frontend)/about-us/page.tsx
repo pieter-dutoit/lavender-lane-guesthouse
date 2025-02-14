@@ -3,7 +3,7 @@ import { Metadata } from 'next'
 import { getSEOConfig } from '@/lib/data'
 import createMetadataConfig from '@/lib/utils/create-metadata-config'
 
-import Hero from './components/hero'
+import PageHeading from '../components/page-heading'
 import Overview from './components/overview'
 import Story from './components/story'
 import Team from './components/team'
@@ -18,11 +18,12 @@ export async function generateMetadata(): Promise<Metadata> {
 export default function AboutPage() {
   return (
     <>
-      <Hero
-        heading='About Lavender Lane'
+      <PageHeading
         description='Your home away from home in the heart of Kathu.'
-        className='bg-gray-200'
-      />
+        className='bg-gray-100'
+      >
+        About <span>Lavender Lane</span>
+      </PageHeading>
       <Overview />
       <Story />
       <Team />
