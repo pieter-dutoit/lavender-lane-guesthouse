@@ -22,64 +22,65 @@ export default async function RoomDetails({ room }: Props) {
   const bookingPlatform = await getBookingPlatform()
 
   return (
-    <section
-      className='bg-gradient-to-b from-gray-200 to-white pb-12 lg:pb-20'
-      id='amenities'
-    >
+    <section className='bg-gradient-to-b from-gray-200 to-white pb-12 lg:pb-20'>
       <div className='container mx-auto px-4 md:px-6 lg:px-8'>
-        {/* Room Features */}
-        <h2 className='sr-only'>Room features</h2>
-        <ul className='mx-auto flex max-w-9/10 flex-wrap items-center justify-center gap-2 md:gap-4 lg:gap-6'>
-          {bed_count.map(({ bed, quantity }) => {
-            if (typeof bed === 'string') return null
-            return (
-              <li key={bed.id} className='flex items-center space-x-3'>
-                <Bed className='size-4 text-indigo-600 md:size-6' />
-                <span className='text-sm text-gray-700 md:text-base'>
-                  {quantity} x {bed.name} Bed{quantity === 1 ? '' : 's'}
-                </span>
-              </li>
-            )
-          })}
-
-          <li className='flex items-center space-x-3'>
-            <Users className='size-4 text-indigo-600 md:size-6' />
-            <span className='text-sm text-gray-700 md:text-base'>
-              Sleeps {sleeps_adults + sleeps_children}
-            </span>
-          </li>
-        </ul>
-
-        {/* Image Gallery */}
-        <h2 className='sr-only'>Room Gallery</h2>
-        <ul className='mt-12 grid grid-cols-2 gap-4 md:grid-cols-4 lg:mt-20'>
-          {room.gallery.slice(0, 4).map((image) => {
-            if (typeof image === 'string') return null
-            const { url, alt } = extractImageProps(image)
-            return (
-              <li
-                key={image.id}
-                className='relative aspect-[4/3] overflow-hidden rounded-lg bg-indigo-200'
-              >
-                <Image
-                  src={url}
-                  alt={alt}
-                  fill
-                  className='object-cover'
-                  sizes='(max-width: 768px) 40vw, 19rem'
-                />
-              </li>
-            )
-          })}
-        </ul>
-
         {/* Main Content */}
-        <div className='mt-6 grid grid-cols-1 gap-12 lg:mt-12 lg:grid-cols-3'>
+        <div className='mt-6 grid grid-cols-1 gap-12 pt-8 sm:pt-12 lg:mt-12 lg:grid-cols-3 lg:pt-20'>
           <div className='lg:col-span-2'>
-            <h2 className='text-xl font-bold text-gray-900 md:text-3xl'>
+            <h2 className='text-2xl font-bold text-gray-900 md:text-3xl'>
               Room Overview
             </h2>
             <p className='mt-4 text-gray-600 md:text-lg'>{description}</p>
+
+            {/* Image Gallery */}
+            <h3 className='sr-only'>Room Gallery</h3>
+            <ul className='mt-8 grid grid-cols-2 gap-4'>
+              {room.gallery.slice(0, 4).map((image) => {
+                if (typeof image === 'string') return null
+                const { url, alt } = extractImageProps(image)
+                return (
+                  <li
+                    key={image.id}
+                    className='relative aspect-[4/3] overflow-hidden rounded-lg bg-indigo-200'
+                  >
+                    <Image
+                      src={url}
+                      alt={alt}
+                      fill
+                      className='object-cover'
+                      sizes='(max-width: 768px) 40vw, 24rem'
+                    />
+                  </li>
+                )
+              })}
+            </ul>
+
+            {/* Room Features */}
+            <div className='mt-4 md:mt-8'>
+              <h3 className='text-lg font-bold text-gray-900 md:text-2xl'>
+                Features
+              </h3>
+              <ul className='mt-6 flex flex-wrap items-center gap-2 md:gap-4 lg:gap-6'>
+                {bed_count.map(({ bed, quantity }) => {
+                  if (typeof bed === 'string') return null
+                  return (
+                    <li key={bed.id} className='flex items-center space-x-3'>
+                      <Bed className='size-4 text-indigo-600 md:size-6' />
+                      <span className='text-sm text-gray-700 md:text-base'>
+                        {quantity} x {bed.name} Bed{quantity === 1 ? '' : 's'}
+                      </span>
+                    </li>
+                  )
+                })}
+
+                <li className='flex items-center space-x-3'>
+                  <Users className='size-4 text-indigo-600 md:size-6' />
+                  <span className='text-sm text-gray-700 md:text-base'>
+                    Sleeps {sleeps_adults + sleeps_children}
+                  </span>
+                </li>
+              </ul>
+            </div>
 
             {/* Amenities */}
             <div className='mt-4 md:mt-8'>
@@ -103,7 +104,7 @@ export default async function RoomDetails({ room }: Props) {
                           alt={alt}
                           height={20}
                           width={20}
-                          className='size-4 md:size-6'
+                          className='size-4 min-w-4 md:size-6'
                         />
                       </div>
 
