@@ -3,8 +3,6 @@ import { withPayload } from '@payloadcms/next/withPayload'
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   async redirects() {
-    // family-room
-    // double-bed-room
     return [
       {
         source: '/accommodation',
@@ -14,6 +12,11 @@ const nextConfig = {
       {
         source: '/accommodation/double-bed-room',
         destination: '/rooms/double-room',
+        permanent: true
+      },
+      {
+        source: '/rooms/three-quarter-bed-room',
+        destination: '/rooms/single-room',
         permanent: true
       },
       {

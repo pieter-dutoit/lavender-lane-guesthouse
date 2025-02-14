@@ -6,6 +6,7 @@ import createMetadataConfig from '@/lib/utils/create-metadata-config'
 import PageHeading from '../components/page-heading'
 import Amenities from './components/amenities'
 import Rooms from './components/rooms'
+import Breadcrumbs from '../components/breadcrumbs'
 // import Pricing from './components/pricing'
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -17,6 +18,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default function OurRoomsPage() {
   return (
     <>
+      <Breadcrumbs items={[{ label: 'Rooms', href: '/rooms' }]} />
       <PageHeading
         description='Experience comfort and style in our thoughtfully designed rooms.'
         className='bg-gray-100 whitespace-pre-line'
@@ -26,6 +28,7 @@ export default function OurRoomsPage() {
       </PageHeading>
       <Amenities />
       <Rooms />
+
       {/* <Pricing /> */}
     </>
   )
