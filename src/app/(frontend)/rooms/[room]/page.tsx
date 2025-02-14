@@ -11,9 +11,7 @@ type Props = { params: Promise<{ room: string }> }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { room: slug } = await params
-  console.log({ slug })
   const data = await getSEOConfig(slug)
-  console.log({ data })
   if (!data) return {}
   return createMetadataConfig({ ...data, path: `/rooms/${slug}` })
 }
