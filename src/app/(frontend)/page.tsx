@@ -154,7 +154,7 @@ export default async function Page() {
     audience: [
       {
         '@type': 'TouristAudience',
-        audienceType: 'Leisure Travelers',
+        audienceType: 'Leisure Travellers',
         geographicArea: {
           '@type': 'Country',
           name: 'South Africa'

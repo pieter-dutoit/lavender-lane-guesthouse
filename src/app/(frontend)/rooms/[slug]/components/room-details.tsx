@@ -49,6 +49,7 @@ export default async function RoomDetails({ room }: Props) {
                       fill
                       className='object-cover'
                       sizes='(max-width: 768px) 40vw, 24rem'
+                      priority
                     />
                   </li>
                 )
