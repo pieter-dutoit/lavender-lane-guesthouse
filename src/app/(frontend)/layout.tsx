@@ -1,5 +1,6 @@
 import './globals.css'
 
+import { Metadata } from 'next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { GoogleTagManager } from '@next/third-parties/google'
 
@@ -7,7 +8,7 @@ import { getBookingPlatform, getLogo, getSEOConfig } from '@/lib/data'
 
 import Header from './components/header'
 import Footer from './components/footer'
-import { Metadata } from 'next'
+
 import createMetadataConfig from '@/lib/utils/create-metadata-config'
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -24,18 +25,14 @@ export default async function RootLayout({
   const bookingPlatform = await getBookingPlatform()
   const logoData = await getLogo()
 
-  const enableAnalytics = process.env.NEXT_PUBLIC_ANALYTICS === 'true'
-  const gtmId = process.env.NEXT_PUBLIC_GTM_ID
+  const enableAnalytics = process.env.ENABLE_ANALYTICS === 'true'
+  const gtmId = process.env.GTM_ID
 
   return (
     <html lang='en' className='scroll-smooth antialiased'>
-      {enableAnalytics && (
-        <>
-          {gtmId && <GoogleTagManager gtmId={gtmId} />}
-          <SpeedInsights />
-        </>
-      )}
+      {enableAnalytics && gtmId && <GoogleTagManager gtmId={gtmId} />}
       <body>
+        {enableAnalytics && <SpeedInsights />}
         <Header bookingLink={bookingPlatform.url} logo={logoData} />
         <main>{children}</main>
         <Footer />

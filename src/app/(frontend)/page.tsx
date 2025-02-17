@@ -34,7 +34,7 @@ function getImagePath(cmsPath: string): string {
 }
 
 export default async function Page() {
-  // Gero Image
+  // Hero Image
   const heroData = await getHeroData()
   const { background_image } = heroData
   const heroImageUrl = extractImageProps(background_image).url
@@ -42,8 +42,6 @@ export default async function Page() {
   // Logo
   const logo = await getLogo()
   const logoUrl = extractImageProps(logo.logo).url
-
-  console.log({ logoUrl })
 
   // Facilities
   const { amenity_groups, facility_groups } = await getFeaturesAndAmenities()
