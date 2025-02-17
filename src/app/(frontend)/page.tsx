@@ -28,6 +28,11 @@ function extractNames(groups: any) {
   )
 }
 
+function getImagePath(cmsPath: string): string {
+  const filename = cmsPath.split('/').pop()
+  return `${getBaseUrl()}/api/images/${filename}`
+}
+
 export default async function Page() {
   // Gero Image
   const heroData = await getHeroData()
@@ -37,6 +42,8 @@ export default async function Page() {
   // Logo
   const logo = await getLogo()
   const logoUrl = extractImageProps(logo.logo).url
+
+  console.log({ logoUrl })
 
   // Facilities
   const { amenity_groups, facility_groups } = await getFeaturesAndAmenities()
@@ -57,9 +64,9 @@ export default async function Page() {
     '@type': 'BedAndBreakfast',
     name: 'Lavender Lane Guesthouse',
     slogan: 'Your home away from home',
-    logo: getBaseUrl() + logoUrl,
+    logo: getImagePath(logoUrl),
     url: getBaseUrl(),
-    image: getBaseUrl() + heroImageUrl,
+    image: getImagePath(heroImageUrl),
     description:
       'Experience Comfort and Warm Hospitality in Our Centrally Located Bed & Breakfast.',
     address: {
@@ -121,7 +128,7 @@ export default async function Page() {
         details: { bed_count, sleeps_adults, sleeps_children }
       }) => ({
         '@type': ['HotelRoom'], // Todo: Add product and price ['HotelRoom', 'Product']
-        image: getBaseUrl() + extractImageProps(gallery[0]).url,
+        image: getImagePath(extractImageProps(gallery[0]).url),
         name,
         description,
         bed: bed_count.map(({ bed, quantity }) => {
