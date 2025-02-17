@@ -1,5 +1,8 @@
 import './globals.css'
 
+import { SpeedInsights } from '@vercel/speed-insights/next'
+import { GoogleTagManager } from '@next/third-parties/google'
+
 import { getBookingPlatform, getLogo, getSEOConfig } from '@/lib/data'
 
 import Header from './components/header'
@@ -19,14 +22,21 @@ export default async function RootLayout({
   children: React.ReactNode
 }) {
   const bookingPlatform = await getBookingPlatform()
-  const { url } = bookingPlatform
-
   const logoData = await getLogo()
+
+  const enableAnalytics = process.env.NEXT_PUBLIC_ANALYTICS === 'true'
+  const gtmId = process.env.NEXT_PUBLIC_GTM_ID
 
   return (
     <html lang='en' className='scroll-smooth antialiased'>
+      {enableAnalytics && (
+        <>
+          {gtmId && <GoogleTagManager gtmId={gtmId} />}
+          <SpeedInsights />
+        </>
+      )}
       <body>
-        <Header bookingLink={url} logo={logoData} />
+        <Header bookingLink={bookingPlatform.url} logo={logoData} />
         <main>{children}</main>
         <Footer />
       </body>
