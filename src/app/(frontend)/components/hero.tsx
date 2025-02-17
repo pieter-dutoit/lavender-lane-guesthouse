@@ -16,20 +16,21 @@ export default async function Hero() {
     <section className='relative w-full overflow-hidden'>
       {/* Container */}
       <div className='container mx-auto px-4 md:px-6 lg:px-8'>
-        <div className='relative z-10 my-8 w-full bg-white sm:my-16 sm:text-center lg:mt-20 lg:mb-0 lg:w-11/20 lg:py-20 lg:text-left'>
+        <div className='relative z-10 my-8 w-full bg-white pr-2 sm:my-16 sm:text-center lg:mt-20 lg:mb-0 lg:w-11/20 lg:py-20 lg:text-left'>
           {/* Heading */}
           <h1 className='text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl md:text-6xl [&_span]:text-indigo-600 [&_span]:not-italic'>
-            Welcome to <br />
-            <span>Lavender Lane Guesthouse</span> in Kathu
+            <span>Lavender Lane Guesthouse</span> –
+            <br />
+            Comfortable Stay in Kathu
           </h1>
 
           {/* Sub heading */}
 
           <p className='mt-3 text-base text-gray-600 sm:mx-auto sm:mt-5 sm:max-w-xl sm:text-lg md:mt-8 md:text-xl lg:mx-0 [&_strong]:font-extrabold'>
-            <strong>Your Home Away from Home</strong>
+            <strong>Your Home Away From Home</strong>
             <br />
-            Experience Comfort and Warm Hospitality in Our Centrally Located Bed
-            & Breakfast.
+            Experience a relaxing and comfortable stay at our centrally located
+            bed & breakfast in Kathu.
           </p>
 
           {/* CTAs */}
