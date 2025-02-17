@@ -19,9 +19,9 @@ export default async function Hero() {
         <div className='relative z-10 my-8 w-full bg-white pr-2 sm:my-16 sm:text-center lg:mt-20 lg:mb-0 lg:w-11/20 lg:py-20 lg:text-left'>
           {/* Heading */}
           <h1 className='text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl md:text-6xl [&_span]:text-indigo-600 [&_span]:not-italic'>
-            <span>Lavender Lane Guesthouse</span> –
+            Welcome to
             <br />
-            Comfortable Stay in Kathu
+            <span>Lavender Lane Guesthouse</span> in Kathu
           </h1>
 
           {/* Sub heading */}
