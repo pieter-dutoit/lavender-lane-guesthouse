@@ -75,6 +75,7 @@ export default async function Page() {
       latitude: -27.69515640283518,
       longitude: 23.052512766502804
     },
+    hasMap: 'https://maps.app.goo.gl/SYXQQj1XBv1WPPTb7',
     telephone: '+27673558676',
     email: 'info@lavenderlanekathu.co.za',
     checkinTime: '08:00',
@@ -82,9 +83,31 @@ export default async function Page() {
     openingHours: 'Mo-Su 08:00-17:00',
     petsAllowed: 'No',
     currenciesAccepted: 'ZAR',
-    availableLanguage: ['English', 'Afrikaans'],
+    availableLanguage: [
+      {
+        '@type': 'Language',
+        name: 'English',
+        alternateName: 'en'
+      },
+      {
+        '@type': 'Language',
+        name: 'Afrikaans',
+        alternateName: 'af'
+      }
+    ],
     numberOfRooms: roomCount,
     priceRange: '$$',
+    starRating: {
+      '@type': 'Rating',
+      ratingValue: '3',
+      bestRating: '5',
+      worstRating: '1',
+      author: {
+        '@type': 'Organization',
+        name: 'Tourism Grading Council of South Africa',
+        url: 'https://www.tourismgrading.co.za/'
+      }
+    },
     amenityFeature: amenities.map((name) => ({
       '@type': 'LocationFeatureSpecification',
       name,
