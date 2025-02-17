@@ -47,7 +47,7 @@ export default async function Page() {
 
   // Rooms
   const rooms = await getRooms()
-  const roomCount = rooms.reduce((current, { count }) => current + count, 0)
+  // const roomCount = rooms.reduce((current, { count }) => current + count, 0)
 
   // Socials
   const socials = await getSocials()
@@ -95,7 +95,7 @@ export default async function Page() {
         alternateName: 'af'
       }
     ],
-    numberOfRooms: roomCount,
+    numberOfRooms: 15,
     priceRange: '$$',
     starRating: {
       '@type': 'Rating',
