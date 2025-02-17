@@ -76,6 +76,16 @@ export const Rooms: CollectionConfig = {
   access: DEFAULT_COLLECTION_ACCESS,
   fields: [
     {
+      name: 'count',
+      label: 'Number of rooms',
+      type: 'number',
+      min: 1,
+      max: 100,
+      unique: false,
+      required: true,
+      defaultValue: 1
+    },
+    {
       name: 'name',
       label: 'Room Name',
       type: 'text',
