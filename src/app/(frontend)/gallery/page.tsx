@@ -18,7 +18,6 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function GalleryPage() {
-  // Business JSON-LD
   const businessData = await getBusinessStructuredData()
   const metadata = await getSEOConfig('gallery')
   const gallery = await getGallery()
@@ -44,7 +43,7 @@ export default async function GalleryPage() {
         type='application/ld+json'
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <PageHeading description='Take a look at our rooms and facilities.'>
+      <PageHeading description='Browse our photo gallery showcasing our cozy rooms, modern amenities, relaxing outdoor spaces, and welcoming atmosphere. See why guests love staying with us!'>
         View our <span>Gallery</span>
       </PageHeading>
       <ImageGrid gallery={gallery} />
