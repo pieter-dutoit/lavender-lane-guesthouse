@@ -3,6 +3,10 @@ import { Metadata } from 'next'
 
 import { getRoom, getRooms, getSEOConfig } from '@/lib/data'
 import createMetadataConfig from '@/lib/utils/create-metadata-config'
+import {
+  getBusinessStructuredData,
+  getRoomStructuredData
+} from '@/lib/utils/create-structured-data'
 
 import PageHeading from '../../components/page-heading'
 import RoomDetails from './components/room-details'
@@ -34,9 +38,20 @@ export default async function RoomTypePage({ params }: Props) {
   }
 
   const { name, details } = room
+  const roomData = await getRoomStructuredData(slug)
+  const businessData = await getBusinessStructuredData()
+
+  const jsonLd = {
+    ...businessData,
+    containsPlace: roomData
+  }
 
   return (
     <>
+      <script
+        type='application/ld+json'
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Breadcrumbs
         items={[
           { label: 'Rooms', href: '/rooms' },

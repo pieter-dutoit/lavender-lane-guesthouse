@@ -1,8 +1,16 @@
 import { createSourceSet } from '@/app/(frontend)/components/image'
-import { Media } from '@/payload/payload-types'
+import { Media, Room } from '@/payload/payload-types'
 
-import { extractImageProps, getBaseUrl } from '.'
-import { getHeroData, getLogo, getRooms, getSocials } from '../data'
+import { extractContactDetails, extractImageProps, getBaseUrl } from '.'
+import {
+  getContacts,
+  getHeroData,
+  getLogo,
+  getRoom,
+  getRoomAmenities,
+  getRooms,
+  getSocials
+} from '../data'
 
 const BUSINESS_AUDIENCE = [
   {
@@ -146,6 +154,10 @@ export async function getBusinessStructuredData() {
   // Socials
   const socials = await getSocials()
 
+  // Contact data
+  const contactsData = await getContacts()
+  const contacts = extractContactDetails(contactsData)
+
   return {
     '@context': 'https://schema.org',
     '@type': 'BedAndBreakfast',
@@ -156,8 +168,8 @@ export async function getBusinessStructuredData() {
     address: ADDRESS,
     geo: COORDINATES,
     hasMap: 'https://maps.app.goo.gl/SYXQQj1XBv1WPPTb7',
-    telephone: '+27673558676',
-    email: 'info@lavenderlanekathu.co.za',
+    telephone: `+27${contacts[0].phoneLink}`,
+    email: contacts[0].email,
     checkinTime: '08:00',
     checkoutTime: '10:00',
     openingHours: 'Mo-Su 08:00-17:00',
@@ -171,42 +183,75 @@ export async function getBusinessStructuredData() {
   }
 }
 
-export async function getRoomsStructuredData() {
-  // Rooms
-  const rooms = await getRooms()
-  // const roomCount = rooms.reduce((current, { count }) => current + count, 0)
+async function createRoomStructuredData(
+  room: Room,
+  {
+    withAmenities = false
+  }: {
+    withAmenities?: boolean
+  } = {}
+) {
+  const roomAmenities = await getRoomAmenities()
+  const amenities = roomAmenities.amenities
+    .filter((room) => typeof room !== 'string')
+    .map(({ name }) => name)
+  const amenityFeature = withAmenities ? createAmenitiesList(amenities) : []
 
-  return rooms.map(
-    ({
-      gallery,
-      name,
-      description,
-      details: { bed_count, sleeps_adults, sleeps_children }
-    }) => ({
-      '@type': ['HotelRoom'], // Todo: Add product and price ['HotelRoom', 'Product']
-      image: createAbsoluteImagePath(extractImageProps(gallery[0]).url),
-      name,
-      description,
-      bed: bed_count.map(({ bed, quantity }) => {
-        if (typeof bed === 'string') return
-        const { name } = bed
+  const BED_TYPE_MAP: { [key: string]: string } = {
+    'Three-Quarter': 'Single'
+  }
 
-        return {
-          '@type': 'BedDetails',
-          typeOfBed: name,
-          numberOfBeds: quantity
-        }
-      }),
-      occupancy: {
-        '@type': 'QuantitativeValue',
-        value: sleeps_adults + sleeps_children,
-        unitCode: 'C62'
+  const {
+    gallery,
+    name,
+    description,
+    details: { bed_count, sleeps_adults, sleeps_children }
+  } = room
+
+  return {
+    '@type': ['HotelRoom'], // Todo: Add product and price ['HotelRoom', 'Product']
+    image: createAbsoluteImagePath(extractImageProps(gallery[0]).url),
+    name,
+    description,
+    bed: bed_count.map(({ bed, quantity }) => {
+      if (typeof bed === 'string') return
+      const { name } = bed
+
+      return {
+        '@type': 'BedDetails',
+        typeOfBed: (BED_TYPE_MAP[name] || name).toUpperCase(),
+        numberOfBeds: quantity
       }
-      // offers: {
-      //   '@type': 'Offer',
-      //   url: getBaseUrl() + '/' + slug,
-      //   availability: 'https://schema.org/InStock'
-      // }
-    })
+    }),
+    occupancy: {
+      '@type': 'QuantitativeValue',
+      value: sleeps_adults + sleeps_children,
+      unitCode: 'C62'
+    },
+    ...(withAmenities && { amenityFeature })
+    // offers: {
+    //   '@type': 'Offer',
+    //   url: getBaseUrl() + '/' + slug,
+    //   availability: 'https://schema.org/InStock'
+    // }
+  }
+}
+
+export async function getRoomsStructuredData({
+  withAmenities = false
+}: { withAmenities?: boolean } = {}) {
+  const rooms = await getRooms()
+  const roomDataPromises = rooms.map((room) =>
+    createRoomStructuredData(room, { withAmenities })
   )
+  return Promise.all(roomDataPromises)
+}
+
+export async function getRoomStructuredData(roomSlug: string) {
+  const room = await getRoom(roomSlug)
+  if (typeof room === 'string') return {}
+  const roomData = await createRoomStructuredData(room, {
+    withAmenities: true
+  })
+  return roomData
 }
