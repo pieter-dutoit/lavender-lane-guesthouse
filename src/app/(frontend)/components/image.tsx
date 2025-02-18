@@ -23,7 +23,7 @@ export function calculatePortraitHeight(width: number): number {
 
 const MOBILE_BREAK = 900
 
-function createSourceSet(src: string, portrait: boolean): string {
+export function createSourceSet(src: string, portrait: boolean): string {
   const pathSections = src.split('.')
   const extension = pathSections[pathSections.length - 1]
   const name = pathSections.slice(0, pathSections.length - 1).join('.')

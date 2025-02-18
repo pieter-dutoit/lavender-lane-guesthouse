@@ -28,6 +28,7 @@ export async function generateStaticParams() {
 export default async function RoomTypePage({ params }: Props) {
   const { slug } = await params
   const room = await getRoom(slug)
+
   if (!room) {
     notFound()
   }
