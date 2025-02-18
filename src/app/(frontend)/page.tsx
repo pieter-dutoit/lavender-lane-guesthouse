@@ -1,4 +1,4 @@
-import { getFeaturesAndAmenities } from '@/lib/data'
+import { getFeaturesAndAmenities, getSEOConfig } from '@/lib/data'
 import { getBaseUrl } from '@/lib/utils'
 import {
   createAmenitiesList,
@@ -17,20 +17,19 @@ export default async function Page() {
   // Business JSON-LD
   const businessData = await getBusinessStructuredData()
   const roomsData = await getRoomsStructuredData()
-
   // Facilities
   const { amenity_groups, facility_groups } = await getFeaturesAndAmenities()
   const amenities = [
     ...extractFacilityNames(amenity_groups),
     ...extractFacilityNames(facility_groups)
   ]
+  // Meta data
+  const metadata = await getSEOConfig('home')
 
   const jsonLd = {
     ...businessData,
     url: getBaseUrl(),
-
-    description:
-      'Experience a relaxing and comfortable stay at our centrally located bed & breakfast in Kathu.',
+    description: metadata.meta.description,
     amenityFeature: createAmenitiesList(amenities),
     containsPlace: roomsData,
     numberOfRooms: 15
