@@ -2,11 +2,11 @@ import { Bed, ExternalLink, Users } from 'lucide-react'
 import Link from 'next/link'
 
 import Image from '@/app/(frontend)/components/image'
+import AmenityItem from '@/app/(frontend)/components/amenity-item'
 import { Room } from '@/payload/payload-types'
 
 import { getBookingPlatform, getPrices, getRoomAmenities } from '@/lib/data'
 import { extractImageProps } from '@/lib/utils'
-import AmenityItem from '@/app/(frontend)/components/amenity-item'
 
 interface Props {
   room: Room
@@ -92,7 +92,11 @@ export default async function RoomDetails({ room }: Props) {
               </h3>
               <ul className='mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-3'>
                 {amenties?.amenities.map((amenity, index) => (
-                  <AmenityItem key={'amenity' + index} amenity={amenity} />
+                  <AmenityItem
+                    key={'amenity' + index}
+                    amenity={amenity}
+                    variant='minimal'
+                  />
                 ))}
               </ul>
             </div>
@@ -102,7 +106,7 @@ export default async function RoomDetails({ room }: Props) {
           <div className='lg:col-span-1'>
             <h3 className='sr-only'>Booking and Contact Details</h3>
             <ul className='sticky top-8 rounded-lg bg-white p-6 shadow-lg'>
-              <li className='text-left'>
+              <li className='mb-4 text-left'>
                 <p className='flex flex-col text-gray-500'>
                   {sleeps_count > 1 && 'from'}
                   <span className='text-4xl font-bold text-gray-900'>
@@ -110,12 +114,18 @@ export default async function RoomDetails({ room }: Props) {
                   </span>
                   per night, for one person
                 </p>
-                {sleeps_count > 1 && (
-                  <p className='mt-4 font-bold'>
-                    R{prices.additional_guest} per additional guest per night
-                  </p>
-                )}
               </li>
+
+              {sleeps_count > 1 && (
+                <>
+                  <li className='mt-2 text-sm font-semibold'>
+                    R{prices.additional_guest} per additional guest per night
+                  </li>
+                  <li className='mt-2 text-sm font-semibold'>
+                    Children under 7 stay for free
+                  </li>
+                </>
+              )}
 
               <li className='mt-8'>
                 <Link
@@ -137,12 +147,7 @@ export default async function RoomDetails({ room }: Props) {
               </li>
 
               <li className='mt-8 text-sm text-gray-500'>
-                <p className='mb-2'>• Prices are per room per night</p>
-                <p className='mb-2'>• Additional guest charges may apply</p>
-                {/* <p className='mb-2'>
-                • Free cancellation up to 48 hours before check-in
-              </p>
-              <p>• Check-in: 2:00 PM, Check-out: 10:00 AM</p> */}
+                Check-in: 2:00 PM, Check-out: 10:00 AM
               </li>
             </ul>
           </div>

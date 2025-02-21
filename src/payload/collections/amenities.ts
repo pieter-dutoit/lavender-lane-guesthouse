@@ -92,6 +92,13 @@ export const Amenities: CollectionConfig = {
           type: 'text',
           label: 'Unit Type (e.g. per person)',
           required: false
+        },
+        {
+          name: 'on_request',
+          label: 'POA',
+          required: false,
+          defaultValue: false,
+          type: 'checkbox'
         }
       ]
     }

@@ -8,6 +8,18 @@ interface Props {
   withImage?: boolean
 }
 
+function Price({ price }: Partial<Amenity>) {
+  const { unit_price, unit_type, on_request } = price || {}
+
+  return (
+    (on_request || unit_price) && (
+      <p className='mt-1 rounded-sm bg-green-600/30 px-2 text-sm font-semibold text-green-900'>
+        {on_request ? 'Price on request' : `R${unit_price} ${unit_type}`}
+      </p>
+    )
+  )
+}
+
 export default function AmenityItem({
   amenity,
   variant = 'default',
@@ -15,7 +27,6 @@ export default function AmenityItem({
 }: Props) {
   if (typeof amenity === 'string') return null
   const { id, name, description, icon, image, price } = amenity
-  const { unit_price, unit_type } = price || {}
   const { url, alt } = extractImageProps(image || icon)
 
   if (withImage && image)
@@ -34,19 +45,17 @@ export default function AmenityItem({
           />
         </div>
         <div className='flex flex-col items-start pl-4'>
-          <h4 className='text-lg font-medium text-gray-900 sm:text-xl'>
+          <h4 className='text-base font-medium text-gray-900 sm:text-lg'>
             {name}
           </h4>
 
           {variant !== 'minimal' && (
-            <p className='mt-1 text-base text-gray-700'>{description}</p>
-          )}
-
-          {unit_price && unit_type && (
-            <p className='mt-2 rounded-sm bg-green-600/30 px-2 font-semibold text-green-800'>
-              R{unit_price} {unit_type}
+            <p className='mt-1 mb-auto text-sm leading-tight text-gray-700'>
+              {description}
             </p>
           )}
+
+          <Price price={price} />
         </div>
       </li>
     )
@@ -89,11 +98,7 @@ export default function AmenityItem({
           <p className='mt-1 text-base text-gray-700'>{description}</p>
         )}
 
-        {unit_price && unit_type && (
-          <p className='mt-1 rounded-sm bg-green-600/30 px-2 font-semibold text-green-900'>
-            R{unit_price} {unit_type}
-          </p>
-        )}
+        <Price price={price} />
       </div>
     </li>
   )

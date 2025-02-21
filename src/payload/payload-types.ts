@@ -272,6 +272,7 @@ export interface Amenity {
   price?: {
     unit_price?: number | null;
     unit_type?: string | null;
+    on_request?: boolean | null;
   };
   updatedAt: string;
   createdAt: string;
@@ -600,6 +601,7 @@ export interface AmenitiesSelect<T extends boolean = true> {
     | {
         unit_price?: T;
         unit_type?: T;
+        on_request?: T;
       };
   updatedAt?: T;
   createdAt?: T;

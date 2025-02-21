@@ -1,26 +1,7 @@
-import { extractImageProps } from '@/lib/utils'
-
-import Image from './image'
-import SectionHeading from './section-heading'
 import { getGeneralAmenities } from '@/lib/data'
+
+import SectionHeading from './section-heading'
 import AmenityItem from './amenity-item'
-
-interface Props {
-  id?: string
-  heading: string
-  children: React.ReactNode
-}
-
-function SubSection({ id, heading, children }: Props) {
-  return (
-    <div className='mt-12 flex flex-col gap-4 lg:mt-16' id={id}>
-      <h3 className='mb-6 text-center text-xl font-semibold text-gray-900'>
-        {heading}
-      </h3>
-      {children}
-    </div>
-  )
-}
 
 export default async function Amenities() {
   const data = await getGeneralAmenities()
@@ -38,10 +19,13 @@ export default async function Amenities() {
           description="We've thought of every detail to make your stay as enjoyable as possible."
         />
 
-        {amenity_groups?.map(({ heading, amenities }) => {
+        {amenity_groups?.map(({ id, heading, amenities }) => {
           return (
-            <SubSection key={heading} heading={heading} id='amenities'>
-              <ul className='gap-x-8 space-y-10 md:grid md:grid-cols-2 xl:grid-cols-4'>
+            <div className='mt-12 flex flex-col gap-4 lg:mt-16' key={id}>
+              <h3 className='mb-6 text-center text-xl font-semibold text-gray-900'>
+                {heading}
+              </h3>
+              <ul className='grid gap-8 md:grid-cols-2 xl:grid-cols-4'>
                 {amenities?.map((amenity, index) => (
                   <AmenityItem
                     key={'amenity' + index}
@@ -50,7 +34,7 @@ export default async function Amenities() {
                   />
                 ))}
               </ul>
-            </SubSection>
+            </div>
           )
         })}
       </div>
