@@ -5,7 +5,7 @@ import {
   getSEOConfig,
   getSocials,
   getHeroData,
-  getFeaturesAndAmenities,
+  getGeneralAmenities,
   getRooms,
   getGallery,
   getRoomAmenities,
@@ -47,10 +47,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         async () => getSEOConfig('home'),
         getSocials,
         getHeroData,
-        getFeaturesAndAmenities,
+        getGeneralAmenities,
         getRooms
       ]),
-      changeFrequency: 'yearly' as const,
+      changeFrequency: 'monthly' as const,
       priority: 1
     },
     // Gallery Page

@@ -71,7 +71,6 @@ export interface Config {
     'contact-persons': ContactPerson;
     'social-media-platforms': SocialMediaPlatform;
     amenities: Amenity;
-    facilities: Facility;
     rooms: Room;
     reviews: Review;
     beds: Bed;
@@ -88,7 +87,6 @@ export interface Config {
     'contact-persons': ContactPersonsSelect<false> | ContactPersonsSelect<true>;
     'social-media-platforms': SocialMediaPlatformsSelect<false> | SocialMediaPlatformsSelect<true>;
     amenities: AmenitiesSelect<false> | AmenitiesSelect<true>;
-    facilities: FacilitiesSelect<false> | FacilitiesSelect<true>;
     rooms: RoomsSelect<false> | RoomsSelect<true>;
     reviews: ReviewsSelect<false> | ReviewsSelect<true>;
     beds: BedsSelect<false> | BedsSelect<true>;
@@ -103,7 +101,7 @@ export interface Config {
   globals: {
     pricing: Pricing;
     logos: Logo;
-    'features-and-amenities': FeaturesAndAmenity;
+    'general-amenities': GeneralAmenity;
     hero: Hero;
     'room-amenities': RoomAmenity;
     'booking-platform': BookingPlatform;
@@ -112,7 +110,7 @@ export interface Config {
   globalsSelect: {
     pricing: PricingSelect<false> | PricingSelect<true>;
     logos: LogosSelect<false> | LogosSelect<true>;
-    'features-and-amenities': FeaturesAndAmenitiesSelect<false> | FeaturesAndAmenitiesSelect<true>;
+    'general-amenities': GeneralAmenitiesSelect<false> | GeneralAmenitiesSelect<true>;
     hero: HeroSelect<false> | HeroSelect<true>;
     'room-amenities': RoomAmenitiesSelect<false> | RoomAmenitiesSelect<true>;
     'booking-platform': BookingPlatformSelect<false> | BookingPlatformSelect<true>;
@@ -264,21 +262,18 @@ export interface SocialMediaPlatform {
  */
 export interface Amenity {
   id: string;
+  slug?: string | null;
+  featured: boolean;
   name: string;
+  googleName?: string | null;
   description?: string | null;
-  icon: string | Media;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "facilities".
- */
-export interface Facility {
-  id: string;
-  name: string;
-  description?: string | null;
-  image: string | Media;
+  icon?: (string | null) | Media;
+  image?: (string | null) | Media;
+  price?: {
+    unit_price?: number | null;
+    unit_type?: string | null;
+    on_request?: boolean | null;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -289,6 +284,7 @@ export interface Facility {
 export interface Room {
   id: string;
   count: number;
+  base_price: number;
   name: string;
   slug?: string | null;
   description: string;
@@ -412,10 +408,6 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'amenities';
         value: string | Amenity;
-      } | null)
-    | ({
-        relationTo: 'facilities';
-        value: string | Facility;
       } | null)
     | ({
         relationTo: 'rooms';
@@ -597,20 +589,20 @@ export interface SocialMediaPlatformsSelect<T extends boolean = true> {
  * via the `definition` "amenities_select".
  */
 export interface AmenitiesSelect<T extends boolean = true> {
+  slug?: T;
+  featured?: T;
   name?: T;
+  googleName?: T;
   description?: T;
   icon?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "facilities_select".
- */
-export interface FacilitiesSelect<T extends boolean = true> {
-  name?: T;
-  description?: T;
   image?: T;
+  price?:
+    | T
+    | {
+        unit_price?: T;
+        unit_type?: T;
+        on_request?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }
@@ -620,6 +612,7 @@ export interface FacilitiesSelect<T extends boolean = true> {
  */
 export interface RoomsSelect<T extends boolean = true> {
   count?: T;
+  base_price?: T;
   name?: T;
   slug?: T;
   description?: T;
@@ -743,16 +736,7 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  */
 export interface Pricing {
   id: string;
-  base_price?: number | null;
-  additional_guest?: number | null;
-  price_items?:
-    | {
-        item_name: string;
-        item_price: number;
-        unit_type?: string | null;
-        id?: string | null;
-      }[]
-    | null;
+  additional_guest: number;
   _status?: ('draft' | 'published') | null;
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -770,17 +754,10 @@ export interface Logo {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "features-and-amenities".
+ * via the `definition` "general-amenities".
  */
-export interface FeaturesAndAmenity {
+export interface GeneralAmenity {
   id: string;
-  facility_groups?:
-    | {
-        heading: string;
-        facilities?: (string | Facility)[] | null;
-        id?: string | null;
-      }[]
-    | null;
   amenity_groups?:
     | {
         heading: string;
@@ -842,16 +819,7 @@ export interface Gallery {
  * via the `definition` "pricing_select".
  */
 export interface PricingSelect<T extends boolean = true> {
-  base_price?: T;
   additional_guest?: T;
-  price_items?:
-    | T
-    | {
-        item_name?: T;
-        item_price?: T;
-        unit_type?: T;
-        id?: T;
-      };
   _status?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -870,16 +838,9 @@ export interface LogosSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "features-and-amenities_select".
+ * via the `definition` "general-amenities_select".
  */
-export interface FeaturesAndAmenitiesSelect<T extends boolean = true> {
-  facility_groups?:
-    | T
-    | {
-        heading?: T;
-        facilities?: T;
-        id?: T;
-      };
+export interface GeneralAmenitiesSelect<T extends boolean = true> {
   amenity_groups?:
     | T
     | {

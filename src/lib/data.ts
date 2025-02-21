@@ -2,10 +2,11 @@ import { unstable_cache } from 'next/cache'
 import { getPayload, Where } from 'payload'
 import config from '@payload-config'
 import {
+  Amenity,
   BookingPlatform,
   ContactPerson,
-  FeaturesAndAmenity,
   Gallery,
+  GeneralAmenity,
   Hero,
   Logo,
   Pricing,
@@ -100,20 +101,45 @@ export const getHeroData = unstable_cache(
   { revalidate: false, tags: ['hero'] }
 )
 
-export const getFeaturesAndAmenities = unstable_cache(
-  async (): Promise<FeaturesAndAmenity> => {
+export const getAddOns = unstable_cache(
+  async (): Promise<Amenity[]> => {
+    const payload = await getPayload({ config })
+    const res = await payload.find({
+      collection: 'amenities',
+      depth: 2,
+      pagination: false,
+      sort: '-name',
+      where: {
+        'price.unit_price': {
+          exists: true
+        }
+      }
+    })
+
+    if (!res) {
+      throw new Error('Failed to fetch rooms data')
+    }
+
+    return res.docs
+  },
+  [],
+  { revalidate: false, tags: ['add-ons'] }
+)
+
+export const getGeneralAmenities = unstable_cache(
+  async (): Promise<GeneralAmenity> => {
     const payload = await getPayload({ config })
     const res = await payload.findGlobal({
-      slug: 'features-and-amenities',
+      slug: 'general-amenities',
       depth: 2
     })
     if (!res) {
-      throw new Error('Failed to fetch features data')
+      throw new Error('Failed to fetch general amenity group data')
     }
     return res
   },
   [],
-  { revalidate: false, tags: ['features-and-amenities'] }
+  { revalidate: false, tags: ['general-amenities'] }
 )
 
 export const getBookingPlatform = unstable_cache(

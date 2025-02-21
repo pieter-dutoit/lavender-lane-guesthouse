@@ -11,8 +11,8 @@ import { BookingPlatform } from './globals/booking-platform'
 import { Pricing } from './globals/pricing'
 import { Logos } from './globals/logos'
 import { RoomAmenities } from './globals/room-amenities'
-import { FeaturesAndAmenties } from './globals/features-and-amenities'
 import { Hero } from './globals/hero'
+import { GeneralAmenities } from './globals/general-amenities'
 
 import { Users } from './collections/users'
 import { Media } from './collections/media'
@@ -22,7 +22,6 @@ import { SocialMediaPlatforms } from './collections/social-media-platforms'
 import { Amenities } from './collections/amenities'
 import { Rooms } from './collections/rooms'
 import { Beds } from './collections/beds'
-import { Facilities } from './collections/facilities'
 import { Reviews } from './collections/reviews'
 import { SEO } from './collections/seo'
 
@@ -47,7 +46,7 @@ export default buildConfig({
     ContactPersons,
     SocialMediaPlatforms,
     Amenities,
-    Facilities,
+
     Rooms,
     Reviews,
     Beds,
@@ -56,7 +55,7 @@ export default buildConfig({
   globals: [
     Pricing,
     Logos,
-    FeaturesAndAmenties,
+    GeneralAmenities,
     Hero,
     RoomAmenities,
     BookingPlatform,

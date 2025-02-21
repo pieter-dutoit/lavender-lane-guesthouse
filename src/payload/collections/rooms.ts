@@ -86,6 +86,15 @@ export const Rooms: CollectionConfig = {
       defaultValue: 1
     },
     {
+      name: 'base_price',
+      label: 'Base Room Price',
+      type: 'number',
+      min: 0,
+      max: 10000,
+      defaultValue: 800,
+      required: true
+    },
+    {
       name: 'name',
       label: 'Room Name',
       type: 'text',

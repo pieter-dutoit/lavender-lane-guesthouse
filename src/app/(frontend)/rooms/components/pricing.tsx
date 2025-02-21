@@ -12,7 +12,7 @@ const includedAmenities = [
 ]
 
 export default async function Pricing() {
-  const { base_price, additional_guest, price_items } = await getPrices()
+  const { additional_guest } = await getPrices()
 
   return (
     <section
@@ -26,11 +26,12 @@ export default async function Pricing() {
           description='Transparent pricing for a comfortable stay.'
         />
 
-        <div className='mt-12 overflow-hidden rounded-lg bg-gray-50 shadow-lg'>
+        {/* Room prices */}
+        <div className='mt-12 overflow-hidden rounded-lg border-2 border-gray-50 bg-white shadow-lg'>
           <div className='px-6 py-8 sm:p-10 sm:pb-6'>
             <div className='flex items-center justify-center'>
               <span className='text-5xl font-extrabold text-gray-900'>
-                R{base_price}
+                {/* R{base_price} */}
               </span>
               <span className='ml-3 text-xl font-medium text-gray-500'>
                 /night
@@ -73,7 +74,7 @@ export default async function Pricing() {
             Additional Services
           </h3>
           <div className='overflow-hidden bg-white shadow sm:rounded-md'>
-            <ul className='divide-y divide-gray-200'>
+            {/* <ul className='divide-y divide-gray-200'>
               {price_items?.map(({ item_name, item_price, unit_type }) => (
                 <li key={item_name}>
                   <div className='px-4 py-4 sm:px-6'>
@@ -83,14 +84,16 @@ export default async function Pricing() {
                       </p>
                       <div className='ml-2 flex flex-shrink-0'>
                         <p className='inline-flex rounded-full bg-green-100 px-2 text-sm leading-5 font-semibold text-green-800'>
-                          R{item_price} {unit_type}
+                          {item_price
+                            ? `R${item_price} ${unit_type}`
+                            : `Price available on request`}
                         </p>
                       </div>
                     </div>
                   </div>
                 </li>
               ))}
-            </ul>
+            </ul> */}
           </div>
         </div>
       </div>

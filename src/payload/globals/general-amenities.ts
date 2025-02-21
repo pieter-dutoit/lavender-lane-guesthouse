@@ -5,40 +5,19 @@ import { isLoggedIn } from '@/payload/access/is-logged-in'
 
 import revalidateCache from '../hooks/globals/revalidate-cache'
 
-export const FeaturesAndAmenties: GlobalConfig = {
-  slug: 'features-and-amenities',
+export const GeneralAmenities: GlobalConfig = {
+  slug: 'general-amenities',
   versions: {
     drafts: true
   },
   hooks: {
-    afterChange: [revalidateCache('features-and-amenities')]
+    afterChange: [revalidateCache('general-amenities')]
   },
   access: {
     read: isLoggedInOrIsPublished,
     update: isLoggedIn
   },
   fields: [
-    {
-      name: 'facility_groups',
-      type: 'array',
-      fields: [
-        {
-          name: 'heading',
-          label: 'Group name',
-          type: 'text',
-          required: true,
-          minLength: 3,
-          maxLength: 100
-        },
-        {
-          name: 'facilities',
-          type: 'relationship',
-          relationTo: 'facilities',
-          hasMany: true,
-          minRows: 1
-        }
-      ]
-    },
     {
       name: 'amenity_groups',
       type: 'array',

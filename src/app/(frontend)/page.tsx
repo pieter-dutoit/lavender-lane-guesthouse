@@ -1,4 +1,4 @@
-import { getFeaturesAndAmenities, getSEOConfig } from '@/lib/data'
+import { getGeneralAmenities, getSEOConfig } from '@/lib/data'
 import { getBaseUrl } from '@/lib/utils'
 import {
   createAmenitiesList,
@@ -16,13 +16,12 @@ import Rooms from './components/rooms'
 export default async function Page() {
   // Business JSON-LD
   const businessData = await getBusinessStructuredData()
-  const roomsData = await getRoomsStructuredData()
+  const roomsData = await getRoomsStructuredData({ withAmenities: true })
+
   // Facilities
-  const { amenity_groups, facility_groups } = await getFeaturesAndAmenities()
-  const amenities = [
-    ...extractFacilityNames(amenity_groups),
-    ...extractFacilityNames(facility_groups)
-  ]
+  const { amenity_groups } = await getGeneralAmenities()
+  const amenities = extractFacilityNames(amenity_groups)
+
   // Meta data
   const metadata = await getSEOConfig('home')
 
