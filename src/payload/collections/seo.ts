@@ -42,7 +42,8 @@ const OpenGraphField: GroupField = {
       type: 'text',
       minLength: 5,
       maxLength: 200,
-      required: true
+      required: true,
+      defaultValue: 'Lavender Lane Guesthouse'
     },
     {
       name: 'title',

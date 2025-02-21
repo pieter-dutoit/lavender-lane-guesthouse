@@ -1,12 +1,10 @@
 import { CollectionBeforeChangeHook } from 'payload'
+import { stringToSlug } from '@/lib/utils'
 
 const createSlug: CollectionBeforeChangeHook = async ({ data }) => {
   return {
     ...data,
-    slug: data.name
-      .toLowerCase()
-      .replace(/ /g, '-')
-      .replace(/[^a-z0-9-]/g, '')
+    slug: stringToSlug(data.name)
   }
 }
 

@@ -12,8 +12,6 @@ import Amenities from './components/amenities'
 import Rooms from './components/rooms'
 import Breadcrumbs from '../components/breadcrumbs'
 
-// import Pricing from './components/pricing'
-
 export async function generateMetadata(): Promise<Metadata> {
   const data = await getSEOConfig('rooms')
   if (!data) return {}
@@ -46,10 +44,9 @@ export default async function RoomsPage() {
         Find your {`\n`}
         <span>home away from home</span>
       </PageHeading>
-      <Amenities />
-      <Rooms />
 
-      {/* <Pricing /> */}
+      <Rooms />
+      <Amenities />
     </>
   )
 }

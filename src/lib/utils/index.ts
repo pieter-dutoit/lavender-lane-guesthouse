@@ -1,19 +1,24 @@
 import { ContactPerson, Media, SeoMedia } from '@/payload/payload-types'
 
+export function stringToSlug(item: string): string {
+  return item
+    .toLowerCase()
+    .replace(/ /g, '-')
+    .replace(/[^a-z0-9-]/g, '')
+}
+
 export function extractImageProps(
-  image: Media | string | SeoMedia | undefined
+  image: Media | string | SeoMedia | undefined | null
 ): {
   url: string
   alt: string
   width: number
   height: number
 } {
-  if (typeof image === 'string')
-    return { url: image, alt: '', width: 0, height: 0 }
-  const { url, alt, height, width } =
-    typeof image === 'object'
-      ? image
-      : { url: '', alt: '', height: 0, width: 0 }
+  if (!image || image === null || typeof image === 'string') {
+    return { url: '', alt: '', height: 0, width: 0 }
+  }
+  const { url, alt, height, width } = image
   return {
     url: url ?? '',
     alt: alt ?? '',

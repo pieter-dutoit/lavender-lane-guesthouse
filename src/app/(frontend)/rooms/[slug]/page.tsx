@@ -4,6 +4,7 @@ import { Metadata } from 'next'
 import { getRoom, getRooms, getSEOConfig } from '@/lib/data'
 import createMetadataConfig from '@/lib/utils/create-metadata-config'
 import {
+  createBreadCrumbs,
   getBusinessStructuredData,
   getRoomStructuredData
 } from '@/lib/utils/create-structured-data'
@@ -41,10 +42,26 @@ export default async function RoomTypePage({ params }: Props) {
   const roomData = await getRoomStructuredData(slug)
   const businessData = await getBusinessStructuredData()
 
-  const jsonLd = {
-    ...businessData,
-    containsPlace: roomData
-  }
+  const jsonLd = [
+    {
+      ...businessData,
+      containsPlace: roomData
+    },
+    createBreadCrumbs([
+      {
+        name: 'Home',
+        item: '/'
+      },
+      {
+        name: 'Rooms',
+        item: '/rooms'
+      },
+      {
+        name,
+        item: `/rooms/${room.slug}`
+      }
+    ])
+  ]
 
   return (
     <>
