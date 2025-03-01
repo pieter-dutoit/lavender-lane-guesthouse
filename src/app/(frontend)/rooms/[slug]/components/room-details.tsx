@@ -113,7 +113,7 @@ export default async function RoomDetails({ room }: Props) {
           <div className='lg:col-span-1'>
             <h3 className='sr-only'>Booking and Contact Details</h3>
             <ul className='sticky top-20 rounded-lg bg-white p-6 shadow-lg'>
-              <li className='mb-4 text-left'>
+              {/* <li className='mb-4 text-left'>
                 <p className='flex flex-col text-gray-500'>
                   {sleeps_count > 1 && 'from'}
                   <span className='text-4xl font-bold text-gray-900'>
@@ -121,9 +121,9 @@ export default async function RoomDetails({ room }: Props) {
                   </span>
                   per night, for one person
                 </p>
-              </li>
+              </li> */}
 
-              {sleeps_count > 1 && (
+              {/* {sleeps_count > 1 && (
                 <>
                   <li className='mt-2 text-sm font-semibold'>
                     R{prices.additional_guest} per additional guest per night
@@ -132,7 +132,7 @@ export default async function RoomDetails({ room }: Props) {
                     Children under 7 stay for free
                   </li>
                 </>
-              )}
+              )} */}
 
               <li className='mt-8'>
                 <Link
