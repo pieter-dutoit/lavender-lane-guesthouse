@@ -43,8 +43,8 @@ export default async function RoomDetails({ room }: Props) {
 
             {/* Image Gallery */}
             <h3 className='sr-only'>Room Gallery</h3>
-            <ul className='mt-8 grid grid-cols-2 gap-4'>
-              {room.gallery.slice(0, 4).map((image) => {
+            <ul className='mt-8 grid grid-cols-2 gap-4 md:grid-cols-3'>
+              {room.gallery.slice(0, 6).map((image) => {
                 if (typeof image === 'string') return null
                 const { url, alt } = extractImageProps(image)
                 return (
@@ -154,7 +154,7 @@ export default async function RoomDetails({ room }: Props) {
               </li>
 
               <li className='mt-8 font-bold text-indigo-500'>
-                <Link href={`tel:${contactDetails[0].phoneLink}`}>
+                <Link href={`tel:+27${contactDetails[0].phoneLink}`}>
                   {contactDetails[0].phone}
                 </Link>
               </li>
