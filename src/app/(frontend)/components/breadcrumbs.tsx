@@ -3,7 +3,7 @@ import { ChevronRight } from 'lucide-react'
 
 interface BreadcrumbItem {
   name: string
-  item?: string
+  item: string
 }
 
 interface Props {
