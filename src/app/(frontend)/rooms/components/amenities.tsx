@@ -1,8 +1,7 @@
 import { getRoomAmenities } from '@/lib/data'
-import { extractImageProps } from '@/lib/utils'
 
 import SectionHeading from '../../components/section-heading'
-import Image from '../../components/image'
+import AmenityItem from '../../components/amenity-item'
 
 export default async function Amenities() {
   const data = await getRoomAmenities()
@@ -21,25 +20,14 @@ export default async function Amenities() {
             your comfort.'
         />
 
-        <ul className='mt-12 grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 md:gap-4 lg:mt-16 lg:grid-cols-5 lg:gap-8 xl:grid-cols-6'>
-          {amenities.map((amenity) => {
-            if (typeof amenity === 'string') return null
-            const { name, icon, id } = amenity
-            const { url, alt } = extractImageProps(icon)
-
+        <ul className='mt-12 grid grid-cols-2 gap-2 md:grid-cols-3 md:gap-4 lg:mt-16 lg:grid-cols-4 lg:gap-8 xl:grid-cols-5'>
+          {amenities.map((amenity, index) => {
             return (
-              <li key={id} className='flex items-center gap-2'>
-                <div className='relative flex size-10 items-center justify-center rounded-lg bg-indigo-100 p-2'>
-                  <Image
-                    src={url}
-                    alt={alt}
-                    height={20}
-                    width={20}
-                    className='size-8'
-                  />
-                </div>
-                <h3 className='font-medium text-gray-900'>{name}</h3>
-              </li>
+              <AmenityItem
+                key={'amenity' + index}
+                amenity={amenity}
+                variant='minimal'
+              />
             )
           })}
         </ul>

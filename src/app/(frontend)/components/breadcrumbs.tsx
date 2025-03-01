@@ -2,15 +2,15 @@ import Link from 'next/link'
 import { ChevronRight } from 'lucide-react'
 
 interface BreadcrumbItem {
-  label: string
-  href: string
+  name: string
+  item: string
 }
 
 interface Props {
-  items: BreadcrumbItem[]
+  crumbs: BreadcrumbItem[]
 }
 
-export default function Breadcrumbs({ items }: Props) {
+export default function Breadcrumbs({ crumbs }: Props) {
   return (
     <nav
       className='absolute top-18 right-0 left-0 flex w-full md:top-20'
@@ -25,15 +25,15 @@ export default function Breadcrumbs({ items }: Props) {
             Home
           </Link>
         </li>
-        {items.map((item, index) => (
-          <li key={index}>
+        {crumbs.map(({ name, item }, index) => (
+          <li key={index + name}>
             <div className='flex items-center'>
               <ChevronRight className='size-4 text-gray-400' />
               <Link
-                href={item.href}
-                className='ml-1 text-sm font-medium text-gray-700 hover:text-indigo-600 md:ml-2'
+                href={item}
+                className={`ml-1 text-sm font-medium ${index === crumbs.length - 1 ? 'text-indigo-600' : 'text-gray-700'} hover:text-indigo-600 md:ml-2`}
               >
-                {item.label}
+                {name}
               </Link>
             </div>
           </li>

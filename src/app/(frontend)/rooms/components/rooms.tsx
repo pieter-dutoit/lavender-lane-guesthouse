@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Bed, ExternalLink, ShowerHead, Users } from 'lucide-react'
+import { ArrowDown, Bed, ExternalLink, ShowerHead, Users } from 'lucide-react'
 
 import { extractImageProps } from '@/lib/utils'
 import { getBookingPlatform, getRooms } from '@/lib/data'
@@ -17,7 +17,11 @@ export default async function Rooms() {
       id='rooms'
     >
       <div className='container mx-auto px-4 md:px-6 lg:px-8'>
-        <SectionHeading label='Choose Your Space' heading='Our Rooms' />
+        <SectionHeading
+          label='Choose Your Space'
+          heading='Our Rooms'
+          description="Find the perfect room for your stay, whether you're traveling solo, with colleagues, or as a family. "
+        />
 
         {/* CTAs */}
         <div className='mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row lg:mt-16'>
@@ -28,19 +32,18 @@ export default async function Rooms() {
           >
             Check Availability <ExternalLink size={16} />
           </Link>
-          {/* <Link
-            href='#pricing'
+          <Link
+            href='#amenities'
             className='flex items-center justify-center gap-2 px-6 py-3 text-lg font-medium text-indigo-600 underline-offset-2 hover:underline'
           >
-            View Prices
-          </Link> */}
+            View Amenities <ArrowDown />
+          </Link>
         </div>
 
         {/* Rooms */}
         <ul className='mx-auto mt-12 grid max-w-6xl gap-8 lg:mt-20 lg:grid-cols-2 lg:gap-16'>
           {rooms.map(({ id, name, description, gallery, details, slug }) => {
             const { sleeps_adults, sleeps_children, bed_count } = details
-            const { url, alt } = extractImageProps(gallery[0])
 
             return (
               <li
@@ -50,15 +53,29 @@ export default async function Rooms() {
                 <div>
                   {/* Images */}
                   <div className='grid p-2'>
-                    <div className='relative aspect-2/1 overflow-hidden rounded-lg bg-gray-200'>
-                      <Image
-                        className='object-cover object-center'
-                        src={url}
-                        alt={alt}
-                        fill
-                        sizes='(max-width: 640px) 90vw 20rem'
-                      />
-                    </div>
+                    <ul className='grid aspect-2/1 grid-cols-3 gap-2'>
+                      {gallery.slice(0, 2).map((image, index) => {
+                        const { url, alt } = extractImageProps(image)
+                        const sizes = index
+                          ? '(max-width: 640px) 30vw 5rem'
+                          : '(max-width: 640px) 60vw 15rem'
+                        return (
+                          <li
+                            key={url + index}
+                            className={`relative ${index ? '' : 'col-span-2'} overflow-hidden rounded-lg bg-gray-200`}
+                          >
+                            <Image
+                              className='object-cover object-center'
+                              src={url}
+                              alt={alt}
+                              fill
+                              sizes={sizes}
+                              priority={!index}
+                            />
+                          </li>
+                        )
+                      })}
+                    </ul>
                   </div>
 
                   {/* Details */}
@@ -103,6 +120,11 @@ export default async function Rooms() {
                         {description}
                       </p>
                     </div>
+
+                    {/* <p className='text-lg font-extrabold md:text-xl lg:text-2xl'>
+                        from R{base_price} / night
+                      </p> */}
+
                     <div className='mt-6 flex items-center justify-between'>
                       <Link
                         href={bookingPlatform.url}

@@ -1,9 +1,11 @@
-import { getFeaturesAndAmenities, getSEOConfig } from '@/lib/data'
-import { getBaseUrl } from '@/lib/utils'
+import { getGeneralAmenities } from '@/lib/data'
+
 import {
   createAmenitiesList,
+  createBreadCrumbs,
   extractFacilityNames,
   getBusinessStructuredData,
+  getNumberOfRoomsStructuredData,
   getRoomsStructuredData
 } from '@/lib/utils/create-structured-data'
 
@@ -16,24 +18,22 @@ import Rooms from './components/rooms'
 export default async function Page() {
   // Business JSON-LD
   const businessData = await getBusinessStructuredData()
-  const roomsData = await getRoomsStructuredData()
-  // Facilities
-  const { amenity_groups, facility_groups } = await getFeaturesAndAmenities()
-  const amenities = [
-    ...extractFacilityNames(amenity_groups),
-    ...extractFacilityNames(facility_groups)
-  ]
-  // Meta data
-  const metadata = await getSEOConfig('home')
+  const roomsData = await getRoomsStructuredData({ withAmenities: true })
 
-  const jsonLd = {
-    ...businessData,
-    url: getBaseUrl(),
-    description: metadata.meta.description,
-    amenityFeature: createAmenitiesList(amenities),
-    containsPlace: roomsData,
-    numberOfRooms: 15
-  }
+  // Facilities
+  const { amenity_groups } = await getGeneralAmenities()
+  const amenities = extractFacilityNames(amenity_groups)
+  const roomCountData = await getNumberOfRoomsStructuredData()
+
+  const jsonLd = [
+    createBreadCrumbs(),
+    {
+      ...businessData,
+      amenityFeature: createAmenitiesList(amenities, true),
+      containsPlace: roomsData,
+      numberOfRooms: roomCountData
+    }
+  ]
 
   return (
     <>
@@ -42,8 +42,8 @@ export default async function Page() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <Hero />
-      <Facilities />
       <Rooms />
+      <Facilities />
       <Reviews />
       <ContactUs />
     </>

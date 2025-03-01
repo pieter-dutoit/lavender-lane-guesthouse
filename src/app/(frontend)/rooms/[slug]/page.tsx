@@ -4,6 +4,7 @@ import { Metadata } from 'next'
 import { getRoom, getRooms, getSEOConfig } from '@/lib/data'
 import createMetadataConfig from '@/lib/utils/create-metadata-config'
 import {
+  createBreadCrumbs,
   getBusinessStructuredData,
   getRoomStructuredData
 } from '@/lib/utils/create-structured-data'
@@ -41,10 +42,24 @@ export default async function RoomTypePage({ params }: Props) {
   const roomData = await getRoomStructuredData(slug)
   const businessData = await getBusinessStructuredData()
 
-  const jsonLd = {
-    ...businessData,
-    containsPlace: roomData
-  }
+  const crumbs = [
+    {
+      name: 'Rooms',
+      item: '/rooms'
+    },
+    {
+      name,
+      item: `/rooms/${room.slug}`
+    }
+  ]
+
+  const jsonLd = [
+    {
+      ...businessData,
+      containsPlace: roomData
+    },
+    createBreadCrumbs(crumbs)
+  ]
 
   return (
     <>
@@ -52,12 +67,7 @@ export default async function RoomTypePage({ params }: Props) {
         type='application/ld+json'
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <Breadcrumbs
-        items={[
-          { label: 'Rooms', href: '/rooms' },
-          { label: room.name, href: `/rooms/${room.slug}` }
-        ]}
-      />
+      <Breadcrumbs crumbs={crumbs} />
       <PageHeading
         className='bg-white pb-4 text-left lg:pb-6'
         description={`Sleeps ${details.sleeps_adults + details.sleeps_children}`}

@@ -2,23 +2,32 @@ import { Bed, ExternalLink, Users } from 'lucide-react'
 import Link from 'next/link'
 
 import Image from '@/app/(frontend)/components/image'
+import AmenityItem from '@/app/(frontend)/components/amenity-item'
 import { Room } from '@/payload/payload-types'
 
-import { getBookingPlatform, getRoomAmenities } from '@/lib/data'
-import { extractImageProps } from '@/lib/utils'
+import {
+  getBookingPlatform,
+  getContacts,
+  getPrices,
+  getRoomAmenities
+} from '@/lib/data'
+import { extractContactDetails, extractImageProps } from '@/lib/utils'
 
 interface Props {
   room: Room
 }
 
 export default async function RoomDetails({ room }: Props) {
+  const contacts = await getContacts()
+  const contactDetails = extractContactDetails(contacts)
   const {
     description,
     details: { sleeps_adults, sleeps_children, bed_count }
   } = room
+  const sleeps_count = sleeps_adults + sleeps_children
 
+  const prices = await getPrices()
   const amenties = await getRoomAmenities()
-
   const bookingPlatform = await getBookingPlatform()
 
   return (
@@ -34,8 +43,8 @@ export default async function RoomDetails({ room }: Props) {
 
             {/* Image Gallery */}
             <h3 className='sr-only'>Room Gallery</h3>
-            <ul className='mt-8 grid grid-cols-2 gap-4'>
-              {room.gallery.slice(0, 4).map((image) => {
+            <ul className='mt-8 grid grid-cols-2 gap-4 md:grid-cols-3'>
+              {room.gallery.slice(0, 6).map((image) => {
                 if (typeof image === 'string') return null
                 const { url, alt } = extractImageProps(image)
                 return (
@@ -77,7 +86,7 @@ export default async function RoomDetails({ room }: Props) {
                 <li className='flex items-center space-x-3'>
                   <Users className='size-4 text-indigo-600 md:size-6' />
                   <span className='text-sm text-gray-700 md:text-base'>
-                    Sleeps {sleeps_adults + sleeps_children}
+                    Sleeps {sleeps_count}
                   </span>
                 </li>
               </ul>
@@ -88,33 +97,14 @@ export default async function RoomDetails({ room }: Props) {
               <h3 className='text-lg font-bold text-gray-900 md:text-2xl'>
                 Amenities
               </h3>
-              <ul className='mt-6 grid grid-cols-2 gap-4 lg:grid-cols-3'>
-                {amenties?.amenities.map((amenity) => {
-                  if (typeof amenity === 'string') return null
-                  const { name, icon } = amenity
-                  const { url, alt } = extractImageProps(icon)
-
-                  return (
-                    <li
-                      key={amenity.id}
-                      className='flex items-center space-x-2'
-                    >
-                      <div className='rounded-xl bg-indigo-300 p-2'>
-                        <Image
-                          src={url}
-                          alt={alt}
-                          height={20}
-                          width={20}
-                          className='size-4 min-w-4 md:size-6'
-                        />
-                      </div>
-
-                      <h4 className='text-sm font-medium text-gray-900 md:text-base'>
-                        {name}
-                      </h4>
-                    </li>
-                  )
-                })}
+              <ul className='mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-3'>
+                {amenties?.amenities.map((amenity, index) => (
+                  <AmenityItem
+                    key={'amenity' + index}
+                    amenity={amenity}
+                    variant='minimal'
+                  />
+                ))}
               </ul>
             </div>
           </div>
@@ -122,13 +112,27 @@ export default async function RoomDetails({ room }: Props) {
           {/* Sidebar */}
           <div className='lg:col-span-1'>
             <h3 className='sr-only'>Booking and Contact Details</h3>
-            <ul className='sticky top-8 rounded-lg bg-white p-6 shadow-lg'>
-              {/* <li className='text-center'>
-              <p className='text-4xl font-bold text-gray-900'>
-                {room.basePrice}
-              </p>
-              <p className='text-gray-500'>per night</p>
-            </li> */}
+            <ul className='sticky top-20 rounded-lg bg-white p-6 shadow-lg'>
+              <li className='mb-4 text-left'>
+                <p className='flex flex-col text-gray-500'>
+                  {sleeps_count > 1 && 'from'}
+                  <span className='text-4xl font-bold text-gray-900'>
+                    R{room.base_price}
+                  </span>
+                  per night, for one person
+                </p>
+              </li>
+
+              {sleeps_count > 1 && (
+                <>
+                  <li className='mt-2 text-sm font-semibold'>
+                    R{prices.additional_guest} per additional guest per night
+                  </li>
+                  <li className='mt-2 text-sm font-semibold'>
+                    Children under 7 stay for free
+                  </li>
+                </>
+              )}
 
               <li className='mt-8'>
                 <Link
@@ -149,13 +153,20 @@ export default async function RoomDetails({ room }: Props) {
                 </Link>
               </li>
 
+              <li className='mt-8 font-bold text-indigo-500'>
+                <Link href={`tel:+27${contactDetails[0].phoneLink}`}>
+                  {contactDetails[0].phone}
+                </Link>
+              </li>
+
+              <li className='mt-2 font-bold text-indigo-500'>
+                <Link href={`mailto:${contactDetails[0].email}`}>
+                  {contactDetails[0].email}
+                </Link>
+              </li>
+
               <li className='mt-8 text-sm text-gray-500'>
-                <p className='mb-2'>• Prices are per room per night</p>
-                <p className='mb-2'>• Additional guest charges may apply</p>
-                {/* <p className='mb-2'>
-                • Free cancellation up to 48 hours before check-in
-              </p>
-              <p>• Check-in: 2:00 PM, Check-out: 10:00 AM</p> */}
+                Check-in: 2:00 PM, Check-out: 10:00 AM
               </li>
             </ul>
           </div>

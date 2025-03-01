@@ -3,7 +3,9 @@ import { Metadata } from 'next'
 import { getSEOConfig } from '@/lib/data'
 import createMetadataConfig from '@/lib/utils/create-metadata-config'
 import {
+  createBreadCrumbs,
   getBusinessStructuredData,
+  getNumberOfRoomsStructuredData,
   getRoomsStructuredData
 } from '@/lib/utils/create-structured-data'
 
@@ -12,7 +14,7 @@ import Amenities from './components/amenities'
 import Rooms from './components/rooms'
 import Breadcrumbs from '../components/breadcrumbs'
 
-// import Pricing from './components/pricing'
+const CRUMBS = [{ name: 'Rooms', item: '/rooms' }]
 
 export async function generateMetadata(): Promise<Metadata> {
   const data = await getSEOConfig('rooms')
@@ -25,12 +27,15 @@ export default async function RoomsPage() {
   const metadata = await getSEOConfig('rooms')
   const roomsData = await getRoomsStructuredData({ withAmenities: true })
 
-  const jsonLd = {
-    ...businessData,
-    description: metadata.meta.description,
-    containsPlace: roomsData,
-    numberOfRooms: 15
-  }
+  const jsonLd = [
+    createBreadCrumbs(CRUMBS),
+    {
+      ...businessData,
+      description: metadata.meta.description,
+      containsPlace: roomsData,
+      numberOfRooms: getNumberOfRoomsStructuredData()
+    }
+  ]
 
   return (
     <>
@@ -38,18 +43,17 @@ export default async function RoomsPage() {
         type='application/ld+json'
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <Breadcrumbs items={[{ label: 'Rooms', href: '/rooms' }]} />
+      <Breadcrumbs crumbs={CRUMBS} />
       <PageHeading
-        description='Experience comfort and style in our thoughtfully designed rooms.'
+        description='Solar Power, DSTV, Aircon, & Daily Cleaning Services. Stay in comfort at Lavender Lane Guesthouse.'
         className='bg-gray-100 whitespace-pre-line'
       >
         Find your {`\n`}
         <span>home away from home</span>
       </PageHeading>
-      <Amenities />
-      <Rooms />
 
-      {/* <Pricing /> */}
+      <Rooms />
+      <Amenities />
     </>
   )
 }

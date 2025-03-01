@@ -43,7 +43,12 @@ export default async function RoomList() {
                   {description}
                 </p>
               </div>
-              <div className='mt-6 flex flex-col items-start justify-between gap-2'>
+
+              {/* <p className='mt-6 text-lg font-extrabold md:text-xl'>
+                  from R{base_price} / night
+                </p> */}
+
+              <div className='mt-4 flex flex-wrap items-start justify-between gap-2'>
                 <Link
                   href={`/rooms/${slug}`}
                   className='rounded py-2 font-semibold text-indigo-600 underline-offset-2 hover:underline'
@@ -53,7 +58,7 @@ export default async function RoomList() {
                 <Link
                   href={bookingPlatform.url}
                   target='_blank'
-                  className='inline-flex items-center gap-2 rounded bg-indigo-600 px-4 py-2 font-semibold text-white hover:bg-indigo-700'
+                  className='inline-flex items-center gap-2 rounded bg-indigo-600 px-3 py-2 font-semibold text-white hover:bg-indigo-700'
                 >
                   Book Now <ExternalLink size={14} />
                 </Link>
