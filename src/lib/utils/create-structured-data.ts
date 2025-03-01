@@ -6,6 +6,7 @@ import { extractContactDetails, extractImageProps, getBaseUrl } from '.'
 
 import {
   getAddOns,
+  getBookingPlatform,
   getContacts,
   getHeroData,
   getLogo,
@@ -111,18 +112,30 @@ export function createAbsoluteImagePath(cmsPath: string): string {
   return `${getBaseUrl()}/api/images/${filename}`
 }
 
-export function createAmenitiesList(amenities: string[]) {
+export function createAmenitiesList(
+  amenities: string[],
+  includeDefault: boolean = false
+) {
   return [
-    {
-      '@type': 'LocationFeatureSpecification',
-      name: 'InternetType',
-      value: 'FREE'
-    },
-    {
-      '@type': 'LocationFeatureSpecification',
-      name: 'ParkingType',
-      value: 'FREE'
-    },
+    ...(includeDefault
+      ? [
+          {
+            '@type': 'LocationFeatureSpecification',
+            name: 'InstantBookable',
+            value: true
+          },
+          {
+            '@type': 'LocationFeatureSpecification',
+            name: 'InternetType',
+            value: 'FREE'
+          },
+          {
+            '@type': 'LocationFeatureSpecification',
+            name: 'ParkingType',
+            value: 'FREE'
+          }
+        ]
+      : []),
     ...amenities.map((name) => ({
       '@type': 'LocationFeatureSpecification',
       name,
@@ -131,7 +144,7 @@ export function createAmenitiesList(amenities: string[]) {
   ]
 }
 
-export function createMediaObject(image: Media) {
+export function createMediaObject(image: Media | string) {
   const { url, alt } = extractImageProps(image)
   const contentUrl = createAbsoluteImagePath(url)
   const thumbnailUrl = createSourceSet(contentUrl, false)
@@ -143,27 +156,38 @@ export function createMediaObject(image: Media) {
     contentUrl,
     thumbnailUrl,
     caption: alt,
-    creditText: 'Lavender Lane Guesthouse',
+    creditText: 'The Grand Collection',
     creator: {
       '@type': 'Organization',
-      name: 'Lavender Lane Guesthouse'
+      '@id': getBaseUrl() + '/#organization',
+      name: 'The Grand Collection'
     },
-    copyrightNotice: `© ${currentYear} Lavender Lane Guesthouse. All Rights Reserved.`,
-    license: 'https://lavenderlanekathu.co.za/contact',
-    acquireLicensePage: getBaseUrl() + '/contact'
+    copyrightNotice: `© ${currentYear} The Grand Collection. All Rights Reserved.`,
+    license: getBaseUrl(),
+    acquireLicensePage: getBaseUrl()
   }
 }
 
-export function createBreadCrumbs(crumbs: { name: string; item?: string }[]) {
+export function createBreadCrumbs(
+  crumbs: { name: string; item?: string }[] = []
+) {
   return {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
-    itemListElement: crumbs.map(({ name, item }, index) => ({
-      '@type': 'ListItem',
-      position: index + 1,
-      name,
-      ...(item && { item: getBaseUrl() + item })
-    }))
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: getBaseUrl()
+      },
+      ...crumbs.map(({ name, item }, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        name,
+        ...(item && { item: getBaseUrl() + item })
+      }))
+    ]
   }
 }
 
@@ -186,8 +210,12 @@ export async function getBusinessStructuredData() {
   return {
     '@context': 'https://schema.org',
     '@type': 'BedAndBreakfast',
-    name: 'Lavender Lane Guesthouse',
+    '@id': getBaseUrl() + '/#BedAndBreakfast',
     identifier: 'lavender-lane-guesthouse-kathu',
+    url: getBaseUrl(),
+    name: 'Lavender Lane Guesthouse',
+    description:
+      'Enjoy a relaxing stay at one of 15 comfortable rooms with DSTV, air-conditioning, and free Wi-Fi.',
     slogan: 'Your home away from home',
     logo: createAbsoluteImagePath(logoUrl),
     image: createAbsoluteImagePath(heroImageUrl),
@@ -217,10 +245,9 @@ async function createRoomStructuredData(
   } = {}
 ) {
   const { additional_guest } = await getPrices()
-
   const roomAmenities = await getRoomAmenities()
-
   const addOns = await getAddOns()
+  const bookingPlatform = await getBookingPlatform()
 
   const amenityFeature = withAmenities
     ? createAmenitiesList(
@@ -249,13 +276,16 @@ async function createRoomStructuredData(
 
   return {
     '@type': ['HotelRoom', 'Product'],
-    image: createAbsoluteImagePath(extractImageProps(gallery[0]).url),
+    '@id': getBaseUrl() + '/rooms/' + slug,
+    url: getBaseUrl() + '/rooms/' + slug,
+    identifier: slug,
     name,
     description,
-    identifier: slug,
+    image: gallery.map((media) => createMediaObject(media)),
     offers: {
       '@type': ['Offer', 'LodgingReservation'],
       identifier: slug + '-standard-rate',
+      url: bookingPlatform.url,
       checkinTime: BUSINESS_HOURS.checkin,
       checkoutTime: BUSINESS_HOURS.checkout,
       availability: 'https://schema.org/InStock',
@@ -294,8 +324,7 @@ async function createRoomStructuredData(
     }),
     occupancy: {
       '@type': 'QuantitativeValue',
-      value: sleepsCount,
-      unitCode: 'C62'
+      value: sleepsCount
     },
     ...(withAmenities && { amenityFeature })
   }
@@ -319,4 +348,13 @@ export async function getRoomStructuredData(roomSlug: string) {
     withAmenities: true
   })
   return roomData
+}
+
+export async function getNumberOfRoomsStructuredData() {
+  const rooms = await getRooms()
+  return rooms.map((room) => ({
+    '@type': 'QuantitativeValue',
+    value: room.count,
+    unitText: room.name
+  }))
 }

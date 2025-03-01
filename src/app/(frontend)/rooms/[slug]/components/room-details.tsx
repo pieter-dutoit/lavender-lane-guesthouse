@@ -5,14 +5,21 @@ import Image from '@/app/(frontend)/components/image'
 import AmenityItem from '@/app/(frontend)/components/amenity-item'
 import { Room } from '@/payload/payload-types'
 
-import { getBookingPlatform, getPrices, getRoomAmenities } from '@/lib/data'
-import { extractImageProps } from '@/lib/utils'
+import {
+  getBookingPlatform,
+  getContacts,
+  getPrices,
+  getRoomAmenities
+} from '@/lib/data'
+import { extractContactDetails, extractImageProps } from '@/lib/utils'
 
 interface Props {
   room: Room
 }
 
 export default async function RoomDetails({ room }: Props) {
+  const contacts = await getContacts()
+  const contactDetails = extractContactDetails(contacts)
   const {
     description,
     details: { sleeps_adults, sleeps_children, bed_count }
@@ -105,7 +112,7 @@ export default async function RoomDetails({ room }: Props) {
           {/* Sidebar */}
           <div className='lg:col-span-1'>
             <h3 className='sr-only'>Booking and Contact Details</h3>
-            <ul className='sticky top-8 rounded-lg bg-white p-6 shadow-lg'>
+            <ul className='sticky top-20 rounded-lg bg-white p-6 shadow-lg'>
               <li className='mb-4 text-left'>
                 <p className='flex flex-col text-gray-500'>
                   {sleeps_count > 1 && 'from'}
@@ -143,6 +150,18 @@ export default async function RoomDetails({ room }: Props) {
                   className='block w-full rounded-md border border-indigo-600 bg-white py-3 text-center font-semibold text-indigo-600 transition-colors duration-300 hover:bg-indigo-50'
                 >
                   Contact Us
+                </Link>
+              </li>
+
+              <li className='mt-8 font-bold text-indigo-500'>
+                <Link href={`tel:${contactDetails[0].phoneLink}`}>
+                  {contactDetails[0].phone}
+                </Link>
+              </li>
+
+              <li className='mt-2 font-bold text-indigo-500'>
+                <Link href={`mailto:${contactDetails[0].email}`}>
+                  {contactDetails[0].email}
                 </Link>
               </li>
 

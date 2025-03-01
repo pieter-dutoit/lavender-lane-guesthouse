@@ -2,7 +2,10 @@ import { Metadata } from 'next'
 
 import { getContacts, getSEOConfig } from '@/lib/data'
 import createMetadataConfig from '@/lib/utils/create-metadata-config'
-import { getBusinessStructuredData } from '@/lib/utils/create-structured-data'
+import {
+  createBreadCrumbs,
+  getBusinessStructuredData
+} from '@/lib/utils/create-structured-data'
 import { extractContactDetails } from '@/lib/utils'
 
 import PageHeading from '../components/page-heading'
@@ -10,6 +13,9 @@ import Overview from './components/overview'
 import Story from './components/story'
 import Team from './components/team'
 import ContactUs from '../components/contact-us'
+import Breadcrumbs from '../components/breadcrumbs'
+
+const CRUMBS = [{ name: 'About Us', item: '/about-us' }]
 
 export async function generateMetadata(): Promise<Metadata> {
   const data = await getSEOConfig('about')
@@ -22,33 +28,36 @@ export default async function AboutPage() {
   const contactsData = await getContacts()
   const contacts = extractContactDetails(contactsData)
 
-  const jsonLd = {
-    ...businessData,
-    founder: [
-      {
+  const jsonLd = [
+    createBreadCrumbs(CRUMBS),
+    {
+      ...businessData,
+      founder: [
+        {
+          '@type': 'Person',
+          name: 'Mienie du Toit',
+          jobTitle: 'Owner'
+        },
+        {
+          '@type': 'Person',
+          name: 'Madeleine de Waal',
+          jobTitle: 'Owner'
+        }
+      ],
+      employee: {
         '@type': 'Person',
-        name: 'Mienie du Toit',
-        jobTitle: 'Owner'
+        name: 'Izandri Janse van Vuuren',
+        jobTitle: 'Administration'
       },
-      {
-        '@type': 'Person',
-        name: 'Madeleine de Waal',
-        jobTitle: 'Owner'
+      contactPoint: {
+        '@type': 'ContactPoint',
+        telephone: `+27${contacts[0].phoneLink}`,
+        email: contacts[0].email,
+        contactType: 'customer service',
+        availableLanguage: ['English', 'Afrikaans']
       }
-    ],
-    employee: {
-      '@type': 'Person',
-      name: 'Izandri Janse van Vuuren',
-      jobTitle: 'Administration'
-    },
-    contactPoint: {
-      '@type': 'ContactPoint',
-      telephone: `+27${contacts[0].phoneLink}`,
-      email: contacts[0].email,
-      contactType: 'customer service',
-      availableLanguage: ['English', 'Afrikaans']
     }
-  }
+  ]
 
   return (
     <>
@@ -56,6 +65,7 @@ export default async function AboutPage() {
         type='application/ld+json'
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      <Breadcrumbs crumbs={CRUMBS} />
       <PageHeading
         description='Your home away from home in the heart of Kathu.'
         className='bg-gray-100'

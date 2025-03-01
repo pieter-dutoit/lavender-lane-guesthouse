@@ -32,7 +32,7 @@ export default async function Footer() {
                 target='_blank'
               >
                 <MapPin className='size-4' />
-                Find us on Maps
+                Get Directions
               </Link>
             </div>
 

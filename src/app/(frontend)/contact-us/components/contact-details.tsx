@@ -59,7 +59,7 @@ export default async function ContactDetails() {
                 target='_blank'
               >
                 <MapPin className='size-6' />
-                Find us on Maps
+                Get Directions
               </Link>
             </div>
           </div>

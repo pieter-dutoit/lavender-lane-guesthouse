@@ -42,25 +42,23 @@ export default async function RoomTypePage({ params }: Props) {
   const roomData = await getRoomStructuredData(slug)
   const businessData = await getBusinessStructuredData()
 
+  const crumbs = [
+    {
+      name: 'Rooms',
+      item: '/rooms'
+    },
+    {
+      name,
+      item: `/rooms/${room.slug}`
+    }
+  ]
+
   const jsonLd = [
     {
       ...businessData,
       containsPlace: roomData
     },
-    createBreadCrumbs([
-      {
-        name: 'Home',
-        item: '/'
-      },
-      {
-        name: 'Rooms',
-        item: '/rooms'
-      },
-      {
-        name,
-        item: `/rooms/${room.slug}`
-      }
-    ])
+    createBreadCrumbs(crumbs)
   ]
 
   return (
@@ -69,12 +67,7 @@ export default async function RoomTypePage({ params }: Props) {
         type='application/ld+json'
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <Breadcrumbs
-        items={[
-          { label: 'Rooms', href: '/rooms' },
-          { label: room.name, href: `/rooms/${room.slug}` }
-        ]}
-      />
+      <Breadcrumbs crumbs={crumbs} />
       <PageHeading
         className='bg-white pb-4 text-left lg:pb-6'
         description={`Sleeps ${details.sleeps_adults + details.sleeps_children}`}
