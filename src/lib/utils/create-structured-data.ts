@@ -5,12 +5,12 @@ import { Media, Room } from '@/payload/payload-types'
 import { extractContactDetails, extractImageProps, getBaseUrl } from '.'
 
 import {
-  getAddOns,
+  // getAddOns,
   getBookingPlatform,
   getContacts,
   getHeroData,
   getLogo,
-  getPrices,
+  // getPrices,
   getRoom,
   getRoomAmenities,
   getRooms,
@@ -183,9 +183,9 @@ export function createBreadCrumbs(
       },
       ...crumbs.map(({ name, item }, index) => ({
         '@type': 'ListItem',
-        position: index + 1,
+        position: index + 2,
         name,
-        ...(item && { item: getBaseUrl() + item })
+        item: getBaseUrl() + item
       }))
     ]
   }
@@ -244,9 +244,9 @@ async function createRoomStructuredData(
     withAmenities?: boolean
   } = {}
 ) {
-  const { additional_guest } = await getPrices()
+  // const { additional_guest } = await getPrices()
   const roomAmenities = await getRoomAmenities()
-  const addOns = await getAddOns()
+  // const addOns = await getAddOns()
   const bookingPlatform = await getBookingPlatform()
 
   const amenityFeature = withAmenities
@@ -266,13 +266,13 @@ async function createRoomStructuredData(
     slug,
     name,
     description,
-    base_price,
+    // base_price,
     gallery,
     details: { bed_count, sleeps_adults, sleeps_children }
   } = room
 
   const sleepsCount = sleeps_adults + sleeps_children
-  const maxPrice = base_price + additional_guest * (sleepsCount - 1)
+  // const maxPrice = base_price + additional_guest * (sleepsCount - 1)
 
   return {
     '@type': ['HotelRoom', 'Product'],
@@ -288,29 +288,29 @@ async function createRoomStructuredData(
       url: bookingPlatform.url,
       checkinTime: BUSINESS_HOURS.checkin,
       checkoutTime: BUSINESS_HOURS.checkout,
-      availability: 'https://schema.org/InStock',
-      priceSpecification: {
-        '@type': 'CompoundPriceSpecification',
-        price: base_price,
-        ...(base_price !== maxPrice && {
-          minPrice: base_price,
-          maxPrice
-        }),
-        priceCurrency: 'ZAR'
-      },
-      ...(addOns && {
-        addOn: addOns.map(({ name, slug, price }) => ({
-          '@type': 'Offer',
-          name,
-          identifier: slug + '-add-on',
-          priceSpecification: {
-            '@type': 'UnitPriceSpecification',
-            price: price?.unit_price,
-            priceCurrency: 'ZAR',
-            unitText: price?.unit_type
-          }
-        }))
-      })
+      availability: 'https://schema.org/InStock'
+      // priceSpecification: {
+      //   '@type': 'CompoundPriceSpecification',
+      //   price: base_price,
+      //   ...(base_price !== maxPrice && {
+      //     minPrice: base_price,
+      //     maxPrice
+      //   }),
+      //   priceCurrency: 'ZAR'
+      // },
+      // ...(addOns && {
+      //   addOn: addOns.map(({ name, slug, price }) => ({
+      //     '@type': 'Offer',
+      //     name,
+      //     identifier: slug + '-add-on',
+      //     priceSpecification: {
+      //       '@type': 'UnitPriceSpecification',
+      //       price: price?.unit_price,
+      //       priceCurrency: 'ZAR',
+      //       unitText: price?.unit_type
+      //     }
+      //   }))
+      // })
     },
     bed: bed_count.map(({ bed, quantity }) => {
       if (typeof bed === 'string') return
