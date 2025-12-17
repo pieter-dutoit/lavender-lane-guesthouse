@@ -8,7 +8,7 @@ import { Room } from '@/payload/payload-types'
 import {
   getBookingPlatform,
   getContacts,
-  getPrices,
+  // getPrices,
   getRoomAmenities
 } from '@/lib/data'
 import { extractContactDetails, extractImageProps } from '@/lib/utils'
@@ -26,7 +26,7 @@ export default async function RoomDetails({ room }: Props) {
   } = room
   const sleeps_count = sleeps_adults + sleeps_children
 
-  const prices = await getPrices()
+  // const prices = await getPrices()
   const amenties = await getRoomAmenities()
   const bookingPlatform = await getBookingPlatform()
 
