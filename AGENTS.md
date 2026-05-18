@@ -52,3 +52,12 @@ Use these alongside the Next DevTools MCP when a dev server is running.
   specific use case.
 - Prefer static generation for SEO pages; content changes infrequently, so avoid
   dynamic rendering unless a feature truly needs it.
+
+## Tailwind Guidelines
+
+- Prefer canonical Tailwind utilities over arbitrary values when they produce the
+  same CSS. Example: use `sm:w-34` instead of `sm:w-[136px]`.
+- Use arbitrary values only when there is no canonical utility, when using
+  `calc()`, CSS variables, precise one-off values, or externally dictated sizes.
+- Before finalizing UI edits, scan changed Tailwind class names for IntelliSense
+  canonical-class warnings and fix them.
