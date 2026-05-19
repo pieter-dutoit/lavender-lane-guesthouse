@@ -7,8 +7,14 @@ export type BookingPlatform = {
   url: AbsoluteHttpUrl;
 };
 
+export type ContactInfo = {
+  phone: string;
+  email: string;
+};
+
 export type SiteContent = {
   bookingPlatform: BookingPlatform;
+  primaryContact: ContactInfo;
 };
 
 const siteContent = {
@@ -16,8 +22,16 @@ const siteContent = {
     name: "NightsBridge",
     url: "https://book.nightsbridge.com/38107",
   },
+  primaryContact: {
+    phone: "067 355 8676",
+    email: "info@lavenderlanekathu.co.za",
+  },
 } satisfies SiteContent;
 
 export function getBookingPlatform(): BookingPlatform {
   return siteContent.bookingPlatform;
+}
+
+export function getPrimaryContact(): ContactInfo {
+  return siteContent.primaryContact;
 }

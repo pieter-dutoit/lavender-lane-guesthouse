@@ -2,7 +2,7 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #6b7280;
+  --foreground: #78716c;
 
   --brand-green-deep: #1f6f6a;
   --brand-green-mist: #9bc7c7;
@@ -26,8 +26,9 @@
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
   --font-sans: var(--font-noto-sans);
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    "Liberation Mono", "Courier New", monospace;
+  --font-mono:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
 }
 
 body {
