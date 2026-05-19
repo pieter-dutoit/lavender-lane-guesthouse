@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useSelectedLayoutSegment } from "next/navigation";
 
 import type { MainNavItem } from "@/constants/navigation";
+import { isMainNavItemActive } from "@/utils/navigation";
 
 type SiteHeaderNavLinkProps = {
   href: MainNavItem["href"];
@@ -12,8 +13,7 @@ type SiteHeaderNavLinkProps = {
 
 export function SiteHeaderNavLink({ href, children }: SiteHeaderNavLinkProps) {
   const segment = useSelectedLayoutSegment();
-  const activeSegment = href === "/" ? null : href.slice(1);
-  const isActive = segment === activeSegment;
+  const isActive = isMainNavItemActive(href, segment);
 
   return (
     <Link

@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { MAIN_NAV_ITEMS } from "@/constants/navigation";
+import { SiteHeaderMobileMenu } from "@/components/site-header-mobile-menu";
 import { SiteHeaderNavLink } from "@/components/site-header-nav-link";
 import { getBookingPlatform } from "@/content/site-content";
 
@@ -13,7 +14,7 @@ export function SiteHeader() {
     <header className="border-b border-secondary/40 bg-background">
       <nav
         aria-label="Primary"
-        className="container mx-auto flex min-h-16 flex-wrap items-stretch justify-between gap-x-4 px-4 sm:flex-nowrap sm:px-6 lg:px-8"
+        className="container mx-auto flex min-h-18 items-stretch justify-between gap-x-4 px-4 sm:px-6 md:min-h-16 lg:px-8"
       >
         <Link
           href="/"
@@ -24,13 +25,18 @@ export function SiteHeader() {
             alt="Lavender Lane Guesthouse"
             width={350}
             height={171}
-            sizes="(max-width: 640px) 112px, 120px"
+            sizes="(max-width: 767px) 112px, 120px"
             loading="eager"
-            className="h-auto w-28 sm:w-30"
+            className="h-auto w-28 md:w-30"
           />
         </Link>
 
-        <ul className="flex w-full justify-end self-stretch items-stretch gap-2 text-base font-medium text-foreground sm:w-auto sm:gap-4">
+        <SiteHeaderMobileMenu
+          navItems={MAIN_NAV_ITEMS}
+          bookingPlatform={bookingPlatform}
+        />
+
+        <ul className="hidden items-stretch justify-end self-stretch gap-4 text-base font-medium text-foreground md:flex">
           {MAIN_NAV_ITEMS.map((item) => (
             <li key={item.href} className="flex">
               <SiteHeaderNavLink href={item.href}>
