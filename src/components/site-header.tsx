@@ -11,7 +11,7 @@ export function SiteHeader() {
   const bookingPlatform = getBookingPlatform();
 
   return (
-    <header className="border-b border-secondary/40 bg-background">
+    <header className="sticky top-0 z-50 border-b border-secondary/40 bg-background">
       <nav
         aria-label="Primary"
         className="container mx-auto flex min-h-18 items-stretch justify-between gap-x-4 px-4 sm:px-6 md:min-h-16 lg:px-8"
@@ -25,9 +25,9 @@ export function SiteHeader() {
             alt="Lavender Lane Guesthouse"
             width={350}
             height={171}
-            sizes="(max-width: 767px) 112px, 120px"
+            sizes="112px"
             loading="eager"
-            className="h-auto w-28 md:w-30"
+            className="h-auto w-28"
           />
         </Link>
 
@@ -50,7 +50,7 @@ export function SiteHeader() {
               aria-label={`Book now on ${bookingPlatform.name}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="pt-1 flex h-full items-center gap-1.5 border-b-2 border-transparent px-2 font-extrabold text-primary transition-colors duration-200 ease-out motion-reduce:transition-none hover:border-gray-200 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent sm:px-3"
+              className="pt-1 flex h-full items-center gap-1.5 border-b-2 border-transparent px-2 font-extrabold text-accent transition-colors duration-200 ease-out motion-reduce:transition-none hover:border-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent sm:px-3"
             >
               Book Now
               <ExternalLink aria-hidden="true" className="size-5" />

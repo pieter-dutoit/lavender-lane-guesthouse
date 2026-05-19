@@ -21,7 +21,7 @@ export function SiteHeaderNavLink({ href, children }: SiteHeaderNavLinkProps) {
       aria-current={isActive ? "page" : undefined}
       className={`pt-1 font-semibold flex h-full items-center border-b-2 px-2 transition-colors duration-200 ease-out motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent sm:px-3 ${
         isActive
-          ? "border-primary text-foreground hover:border-primary"
+          ? "border-accent text-foreground hover:border-accent"
           : "border-transparent hover:border-gray-200 hover:text-foreground"
       }`}
     >

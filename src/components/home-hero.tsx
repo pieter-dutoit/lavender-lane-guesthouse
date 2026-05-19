@@ -59,9 +59,9 @@ export function HomeHero() {
                   href={bookingPlatform.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex h-10 items-center justify-center gap-2 rounded-md bg-primary px-4 py-2 text-base font-semibold text-primary-foreground shadow-sm transition-colors hover:bg-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
+                  className="inline-flex h-10 items-center justify-center gap-2 rounded-md bg-accent px-4 py-2 text-base font-semibold text-accent-foreground shadow-sm transition-colors hover:bg-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
                 >
-                  Book online
+                  Book Online
                   <ExternalLink aria-hidden="true" className="size-4" />
                 </a>
                 <em className="mt-1 inline-flex items-center gap-1 text-xs text-primary">

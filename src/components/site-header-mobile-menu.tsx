@@ -68,9 +68,9 @@ export function SiteHeaderMobileMenu({
                     href={item.href}
                     aria-current={isActive ? "page" : undefined}
                     onClick={closeMenu}
-                    className={`flex min-h-14 items-center border-l-4 px-5 transition-colors duration-200 ease-out focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent motion-reduce:transition-none ${
+                    className={`flex min-h-14 items-center border-b-2 px-5 transition-colors duration-200 ease-out focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent motion-reduce:transition-none ${
                       isActive
-                        ? "border-primary bg-primary/10 text-primary"
+                        ? "border-accent bg-primary/10 text-primary"
                         : "border-transparent text-foreground hover:bg-secondary/20 hover:text-primary"
                     }`}
                   >
@@ -88,7 +88,7 @@ export function SiteHeaderMobileMenu({
               target="_blank"
               rel="noopener noreferrer"
               onClick={closeMenu}
-              className="inline-flex min-h-13 w-full items-center justify-center gap-2 rounded-md bg-primary px-5 py-3 text-lg font-extrabold text-primary-foreground shadow-sm transition-colors duration-200 ease-out hover:bg-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent motion-reduce:transition-none"
+              className="inline-flex min-h-13 w-full items-center justify-center gap-2 rounded-md bg-accent px-5 py-3 text-lg font-extrabold text-accent-foreground shadow-sm transition-colors duration-200 ease-out hover:bg-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent motion-reduce:transition-none"
             >
               Book Now
               <ExternalLink aria-hidden="true" className="size-5" />
