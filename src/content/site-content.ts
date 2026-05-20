@@ -27,10 +27,33 @@ export type RoomsRatesRoom = {
   beds: ReadonlyArray<RoomsRatesBed>;
 };
 
+export type HomeAmenitySlug =
+  | "breakfast"
+  | "lunch-packs"
+  | "dinner-vouchers"
+  | "braai-area"
+  | "indoor-ourdoor-lounges"
+  | "solar-power-no-load-shedding"
+  | "borehole-water"
+  | "free-wifi"
+  | "air-conditioning"
+  | "dstv"
+  | "kitchenette"
+  | "laundry-services"
+  | "daily-room-cleaning"
+  | "off-street-parking"
+  | "secure-premises";
+
+export type HomeAmenity = {
+  slug: HomeAmenitySlug;
+  name: string;
+};
+
 export type SiteContent = {
   bookingPlatform: BookingPlatform;
   primaryContact: ContactInfo;
   roomsRatesRooms: ReadonlyArray<RoomsRatesRoom>;
+  homeAmenities: ReadonlyArray<HomeAmenity>;
 };
 
 const siteContent = {
@@ -108,6 +131,68 @@ const siteContent = {
       ],
     },
   ],
+  homeAmenities: [
+    {
+      slug: "breakfast",
+      name: "Free Breakfast",
+    },
+    {
+      slug: "lunch-packs",
+      name: "Lunch Packs (Price on request)",
+    },
+    {
+      slug: "dinner-vouchers",
+      name: "Dinner Vouchers (Price on request)",
+    },
+    {
+      slug: "braai-area",
+      name: "Braai Area",
+    },
+    {
+      slug: "indoor-ourdoor-lounges",
+      name: "Indoor & Outdoor Lounges",
+    },
+    {
+      slug: "solar-power-no-load-shedding",
+      name: "Solar Power & No Load-shedding",
+    },
+    {
+      slug: "borehole-water",
+      name: "Borehole Water",
+    },
+    {
+      slug: "free-wifi",
+      name: "Free WiFi",
+    },
+    {
+      slug: "air-conditioning",
+      name: "Air Conditioning",
+    },
+    {
+      slug: "dstv",
+      name: "DSTV",
+    },
+    {
+      slug: "kitchenette",
+      name: "Kitchenette",
+    },
+    {
+      slug: "laundry-services",
+      name: "Laundry Services",
+    },
+    {
+      slug: "daily-room-cleaning",
+      name: "Daily Room Cleaning",
+    },
+    {
+      slug: "off-street-parking",
+      name: "Off-Street Parking",
+    },
+    {
+      slug: "secure-premises",
+      name: "Secure Premises",
+    },
+  ],
 } satisfies SiteContent;
 
 export function getBookingPlatform(): BookingPlatform {
@@ -120,4 +205,8 @@ export function getPrimaryContact(): ContactInfo {
 
 export function getRoomsRatesRooms(): ReadonlyArray<RoomsRatesRoom> {
   return siteContent.roomsRatesRooms;
+}
+
+export function getHomeAmenities(): ReadonlyArray<HomeAmenity> {
+  return siteContent.homeAmenities;
 }

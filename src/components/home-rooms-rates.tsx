@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 
 import { AmenityChip } from "@/components/amenity-chip";
+import { SectionHeader } from "@/components/section-header";
 import {
   getBookingPlatform,
   getRoomsRatesRooms,
@@ -32,21 +33,12 @@ export function HomeRoomsRates() {
       <div id="rooms-rates" className="absolute -mt-32 md:-mt-36 lg:-mt-40" />
 
       <div className="container mx-auto flex flex-col gap-8 px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col gap-1">
-          <span className="text-sm font-extrabold text-primary">
-            Stay, Work, Recharge
-          </span>
-          <h2
-            id="rooms-rates-heading"
-            className="text-2xl font-semibold text-balance text-primary sm:text-3xl md:text-4xl"
-          >
-            Rooms &amp; Rates
-          </h2>
-          <p className="max-w-prose text-sm text-pretty text-foreground">
-            Find the perfect room for your stay, whether you&apos;re traveling
-            solo, with colleagues, or as a family.
-          </p>
-        </div>
+        <SectionHeader
+          headingId="rooms-rates-heading"
+          label="Stay, Work, Recharge"
+          title="Rooms & Rates"
+          description="Find the perfect room for your stay, whether you're traveling solo, with colleagues, or as a family."
+        />
 
         <ul className="grid grid-cols-1 gap-4">
           {rooms.map((room) => {
