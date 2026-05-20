@@ -5,10 +5,11 @@ import Link from "next/link";
 import { MAIN_NAV_ITEMS } from "@/constants/navigation";
 import { SiteHeaderMobileMenu } from "@/components/site-header-mobile-menu";
 import { SiteHeaderNavLink } from "@/components/site-header-nav-link";
-import { getBookingPlatform } from "@/content/site-content";
+import { getBookingPlatform, getSiteLogoImage } from "@/content/site-content";
 
 export function SiteHeader() {
   const bookingPlatform = getBookingPlatform();
+  const logoImage = getSiteLogoImage();
 
   return (
     <header className="sticky top-0 z-50 border-b border-secondary/40 bg-background">
@@ -21,10 +22,10 @@ export function SiteHeader() {
           className="flex shrink-0 items-center rounded-sm py-1.5 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
         >
           <Image
-            src="/Lavender Lane Logo.webp"
-            alt="Lavender Lane Guesthouse"
-            width={350}
-            height={171}
+            src={logoImage.src}
+            alt={logoImage.alt}
+            width={logoImage.width}
+            height={logoImage.height}
             sizes="112px"
             loading="eager"
             className="h-auto w-28"

@@ -3,6 +3,7 @@ import Image from "next/image";
 
 import {
   getBookingPlatform,
+  getHomeHeroImage,
   getLocation,
   getPrimaryContact,
 } from "@/content/site-content";
@@ -11,14 +12,15 @@ import { getEmailHref, getTelephoneHref } from "@/utils/contact-links";
 export function HomeHero() {
   const bookingPlatform = getBookingPlatform();
   const contact = getPrimaryContact();
+  const heroImage = getHomeHeroImage();
   const location = getLocation();
 
   return (
     <section className="relative overflow-hidden bg-[#edece8]">
       <div className="relative aspect-20/9 w-full bg-[#edece8] sm:absolute sm:inset-y-0 sm:right-0 sm:left-[40vw] sm:aspect-auto sm:h-full">
         <Image
-          src="/hero-placeholder-image.jpg"
-          alt="Guest room at Lavender Lane Guesthouse"
+          src={heroImage.src}
+          alt={heroImage.alt}
           fill
           preload
           sizes="(max-width: 640px) 100vw, 52vw"

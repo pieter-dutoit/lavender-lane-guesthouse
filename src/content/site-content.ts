@@ -4,6 +4,34 @@ import { siteData } from "@/content/site-data";
 
 type AbsoluteHttpUrl = `http://${string}` | `https://${string}`;
 
+const DEFAULT_R2_BUCKET_URL =
+  "https://pub-0f026b3e7ada40e1abeb4ecc6c3619e5.r2.dev";
+
+const r2BucketUrl =
+  process.env.NEXT_PUBLIC_R2_BUCKET_URL ?? DEFAULT_R2_BUCKET_URL;
+
+function isAbsoluteHttpUrl(value: string): value is AbsoluteHttpUrl {
+  return value.startsWith("http://") || value.startsWith("https://");
+}
+
+function getR2ImageSrc(path: string): AbsoluteHttpUrl {
+  const bucketUrl = `${r2BucketUrl.replace(/\/+$/, "")}/`;
+  const src = new URL(path, bucketUrl).href;
+
+  if (!isAbsoluteHttpUrl(src)) {
+    throw new Error(`Invalid R2 image URL: ${src}`);
+  }
+
+  return src;
+}
+
+export type SiteImage = {
+  src: AbsoluteHttpUrl;
+  alt: string;
+  width: number;
+  height: number;
+};
+
 export type BookingPlatform = {
   name: string;
   url: AbsoluteHttpUrl;
@@ -80,6 +108,8 @@ export type HomeFaqItem = {
 };
 
 export type SiteContent = {
+  siteLogoImage: SiteImage;
+  homeHeroImage: SiteImage;
   bookingPlatform: BookingPlatform;
   primaryContact: ContactInfo;
   contacts: ReadonlyArray<ContactInfo>;
@@ -92,6 +122,18 @@ export type SiteContent = {
 };
 
 const siteContent = {
+  siteLogoImage: {
+    src: getR2ImageSrc("Lavender%20Lane%20Logo.webp"),
+    alt: "Lavender Lane Guesthouse",
+    width: 350,
+    height: 171,
+  },
+  homeHeroImage: {
+    src: getR2ImageSrc("lavender-lane-kathu-hero.jpg"),
+    alt: "Double bed in a Lavender Lane Guesthouse room",
+    width: 2612,
+    height: 1960,
+  },
   bookingPlatform: {
     name: "NightsBridge",
     url: "https://book.nightsbridge.com/38107",
@@ -309,6 +351,14 @@ const siteContent = {
     },
   ],
 } satisfies SiteContent;
+
+export function getSiteLogoImage(): SiteImage {
+  return siteContent.siteLogoImage;
+}
+
+export function getHomeHeroImage(): SiteImage {
+  return siteContent.homeHeroImage;
+}
 
 export function getBookingPlatform(): BookingPlatform {
   return siteContent.bookingPlatform;
