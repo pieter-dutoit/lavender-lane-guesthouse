@@ -1,12 +1,17 @@
 import { ExternalLink, Lock, Mail, MapPin, Phone } from "lucide-react";
 import Image from "next/image";
 
-import { getBookingPlatform, getPrimaryContact } from "@/content/site-content";
+import {
+  getBookingPlatform,
+  getLocation,
+  getPrimaryContact,
+} from "@/content/site-content";
 import { getEmailHref, getTelephoneHref } from "@/utils/contact-links";
 
 export function HomeHero() {
   const bookingPlatform = getBookingPlatform();
   const contact = getPrimaryContact();
+  const location = getLocation();
 
   return (
     <section className="relative overflow-hidden bg-[#edece8]">
@@ -32,13 +37,15 @@ export function HomeHero() {
               Accommodation in Kathu, Northern Cape
             </p>
             <a
-              href="https://www.google.com/maps/search/?api=1&query=Lavender%20Lane%20Guesthouse%20Kathu%20Northern%20Cape"
+              href={location.mapsLink}
               target="_blank"
               rel="noopener noreferrer"
               className="mt-3 inline-flex items-center gap-1.5 text-sm font-medium text-primary underline underline-offset-4 transition-colors hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
             >
               <MapPin aria-hidden="true" className="size-4 shrink-0" />
-              <span>Kathu, Northern Cape</span>
+              <span>
+                {location.city}, {location.province}
+              </span>
               <strong className="font-bold">(Get Directions)</strong>
             </a>
           </div>

@@ -1,5 +1,7 @@
 import "server-only";
 
+import { siteData } from "@/content/site-data";
+
 type AbsoluteHttpUrl = `http://${string}` | `https://${string}`;
 
 export type BookingPlatform = {
@@ -10,6 +12,28 @@ export type BookingPlatform = {
 export type ContactInfo = {
   phone: string;
   email: string;
+  position?: string;
+};
+
+export type SocialLink = {
+  name: string;
+  link: string;
+};
+
+export type LocationInfo = {
+  street: string;
+  city: string;
+  province: string;
+  country: string;
+  postalCode: string;
+  formattedAddress: string;
+  mapsLink: AbsoluteHttpUrl;
+  mapsEmbedSrc: AbsoluteHttpUrl;
+};
+
+export type PolicyInfo = {
+  title: string;
+  description: string;
 };
 
 export type RoomsRatesBed = {
@@ -52,6 +76,10 @@ export type HomeAmenity = {
 export type SiteContent = {
   bookingPlatform: BookingPlatform;
   primaryContact: ContactInfo;
+  contacts: ReadonlyArray<ContactInfo>;
+  socialLinks: ReadonlyArray<SocialLink>;
+  location: LocationInfo;
+  policies: ReadonlyArray<PolicyInfo>;
   roomsRatesRooms: ReadonlyArray<RoomsRatesRoom>;
   homeAmenities: ReadonlyArray<HomeAmenity>;
 };
@@ -61,10 +89,34 @@ const siteContent = {
     name: "NightsBridge",
     url: "https://book.nightsbridge.com/38107",
   },
-  primaryContact: {
-    phone: "067 355 8676",
-    email: "info@lavenderlanekathu.co.za",
+  primaryContact: siteData.contacts[0],
+  contacts: siteData.contacts,
+  socialLinks: siteData.socials.map(({ name, link }) => ({
+    name,
+    link,
+  })),
+  location: {
+    street: "17 Nieshout St",
+    city: "Kathu",
+    province: "Northern Cape",
+    country: "South Africa",
+    postalCode: "8446",
+    formattedAddress:
+      "17 Nieshout St, Kathu, Northern Cape, South Africa, 8446",
+    mapsLink: "https://maps.app.goo.gl/1JEfwGthJcXdqvhH7",
+    mapsEmbedSrc:
+      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3532.7135455567986!2d23.052124!3d-27.6952471!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1e9e412976e47095%3A0xef41f10a6cf9bd04!2sLavender%20Lane!5e0!3m2!1sen!2sza!4v1779262689596!5m2!1sen!2sza",
   },
+  policies: [
+    {
+      title: "Check-in",
+      description: "From 2:00 PM",
+    },
+    {
+      title: "Check-out",
+      description: "By 10:00 AM",
+    },
+  ],
   roomsRatesRooms: [
     {
       name: "Double Room",
@@ -201,6 +253,22 @@ export function getBookingPlatform(): BookingPlatform {
 
 export function getPrimaryContact(): ContactInfo {
   return siteContent.primaryContact;
+}
+
+export function getContacts(): ReadonlyArray<ContactInfo> {
+  return siteContent.contacts;
+}
+
+export function getSocialLinks(): ReadonlyArray<SocialLink> {
+  return siteContent.socialLinks;
+}
+
+export function getLocation(): LocationInfo {
+  return siteContent.location;
+}
+
+export function getPolicies(): ReadonlyArray<PolicyInfo> {
+  return siteContent.policies;
 }
 
 export function getRoomsRatesRooms(): ReadonlyArray<RoomsRatesRoom> {

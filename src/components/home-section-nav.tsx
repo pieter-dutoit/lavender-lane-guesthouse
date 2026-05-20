@@ -16,6 +16,10 @@ const HOME_SECTION_NAV_ITEMS = [
     href: "#contact",
   },
   {
+    label: "Policies",
+    href: "#policies",
+  },
+  {
     label: "FAQs",
     href: "#faqs",
   },
