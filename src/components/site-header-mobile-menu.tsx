@@ -1,6 +1,6 @@
 "use client";
 
-import { ExternalLink, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { useSelectedLayoutSegment } from "next/navigation";
 import { useState } from "react";
@@ -12,16 +12,9 @@ const MOBILE_MENU_ID = "site-header-mobile-menu";
 
 type SiteHeaderMobileMenuProps = {
   navItems: ReadonlyArray<MainNavItem>;
-  bookingPlatform: {
-    name: string;
-    url: string;
-  };
 };
 
-export function SiteHeaderMobileMenu({
-  navItems,
-  bookingPlatform,
-}: SiteHeaderMobileMenuProps) {
+export function SiteHeaderMobileMenu({ navItems }: SiteHeaderMobileMenuProps) {
   const segment = useSelectedLayoutSegment();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -55,10 +48,10 @@ export function SiteHeaderMobileMenu({
         id={MOBILE_MENU_ID}
         popover="auto"
         onToggle={handleToggle}
-        className="fixed inset-x-0 top-18 bottom-auto z-50 m-0 w-screen max-w-none -translate-y-2 border-y border-secondary/40 bg-background p-0 opacity-0 shadow-lg transition-all transition-discrete duration-200 ease-out open:translate-y-0 open:opacity-100 starting:open:-translate-y-2 starting:open:opacity-0 motion-reduce:transition-none md:hidden"
+        className="fixed inset-x-0 top-18 bottom-auto z-50 m-0 w-screen max-w-none -translate-y-2 border-y border-secondary/40 bg-background p-0 opacity-0 shadow-lg transition-[opacity,transform,display,overlay] transition-discrete duration-200 ease-out open:translate-y-0 open:opacity-100 starting:open:-translate-y-2 starting:open:opacity-0 motion-reduce:transition-none md:hidden"
       >
         <div className="container mx-auto px-4 py-5 sm:px-6">
-          <ul className="space-y-1 text-xl font-semibold">
+          <ul className="space-y-1 text-base font-semibold">
             {navItems.map((item) => {
               const isActive = isMainNavItemActive(item.href, segment);
 
@@ -80,20 +73,6 @@ export function SiteHeaderMobileMenu({
               );
             })}
           </ul>
-
-          <div className="mt-5 border-t border-secondary/40 pt-5">
-            <a
-              href={bookingPlatform.url}
-              aria-label={`Book now on ${bookingPlatform.name}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={closeMenu}
-              className="inline-flex min-h-13 w-full items-center justify-center gap-2 rounded-md bg-accent px-5 py-3 text-lg font-extrabold text-accent-foreground shadow-sm transition-colors duration-200 ease-out hover:bg-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent motion-reduce:transition-none"
-            >
-              Book Now
-              <ExternalLink aria-hidden="true" className="size-5" />
-            </a>
-          </div>
         </div>
       </div>
     </div>

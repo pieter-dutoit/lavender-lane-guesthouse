@@ -73,6 +73,12 @@ export type HomeAmenity = {
   name: string;
 };
 
+export type HomeFaqItem = {
+  id: string;
+  question: string;
+  answer: string;
+};
+
 export type SiteContent = {
   bookingPlatform: BookingPlatform;
   primaryContact: ContactInfo;
@@ -82,6 +88,7 @@ export type SiteContent = {
   policies: ReadonlyArray<PolicyInfo>;
   roomsRatesRooms: ReadonlyArray<RoomsRatesRoom>;
   homeAmenities: ReadonlyArray<HomeAmenity>;
+  homeFaqs: ReadonlyArray<HomeFaqItem>;
 };
 
 const siteContent = {
@@ -242,7 +249,63 @@ const siteContent = {
     },
     {
       slug: "secure-premises",
-      name: "Secure Premises",
+      name: "Gated Premises",
+    },
+  ],
+  homeFaqs: [
+    {
+      id: "location",
+      question: "Where is Lavender Lane Guesthouse located in Kathu?",
+      answer:
+        "Lavender Lane Guesthouse is at 17 Nieshout St, Kathu, Northern Cape, South Africa, 8446. Our central Kathu location is convenient for business travel, overnight stops, and guests visiting the surrounding Northern Cape area.",
+    },
+    {
+      id: "room-types",
+      question: "What room types can I book?",
+      answer:
+        "You can book Double Rooms, Single Rooms, a Family Room, and Twin Rooms. There are 15 rooms in total, with options for solo travellers, couples, colleagues sharing, and small families.",
+    },
+    {
+      id: "check-in-check-out",
+      question: "What time is check-in and check-out?",
+      answer:
+        "Check-in is from 2:00 PM and check-out is by 10:00 AM. If you need help with arrival details, contact reception before your stay.",
+    },
+    {
+      id: "room-amenities",
+      question: "Do the rooms have Wi-Fi, air conditioning and DStv?",
+      answer:
+        "Yes. Rooms include free Wi-Fi, air conditioning, DStv, a work desk, fridge, microwave, kettle, and practical kitchenette-style conveniences for short or longer stays.",
+    },
+    {
+      id: "breakfast",
+      question: "Is breakfast available?",
+      answer:
+        "Yes. Breakfast is available for guests, and our amenities also include lunch packs and dinner voucher options when you need meals arranged around your schedule.",
+    },
+    {
+      id: "meals",
+      question: "Can I arrange lunch packs or dinner options?",
+      answer:
+        "Yes. Lunch packs can be arranged through reception, and dinner vouchers are available on request for local Kathu restaurants.",
+    },
+    {
+      id: "parking",
+      question: "Is there off-street parking?",
+      answer:
+        "Yes. Lavender Lane offers off-street parking for guests. Please note that the parking area is not gated, while the rest of the property is gated.",
+    },
+    {
+      id: "load-shedding",
+      question: "Will load-shedding affect my stay?",
+      answer:
+        "Lavender Lane has solar power for no load-shedding interruptions, plus borehole water for a reliable water supply during your stay.",
+    },
+    {
+      id: "business-travel",
+      question: "Is Lavender Lane suitable for business travellers?",
+      answer:
+        "Yes. Business guests have free Wi-Fi, in-room work desks, air-conditioned rooms, twin rooms for colleagues, laundry services, lunch packs, off-street parking, and a central Kathu location.",
     },
   ],
 } satisfies SiteContent;
@@ -277,4 +340,8 @@ export function getRoomsRatesRooms(): ReadonlyArray<RoomsRatesRoom> {
 
 export function getHomeAmenities(): ReadonlyArray<HomeAmenity> {
   return siteContent.homeAmenities;
+}
+
+export function getHomeFaqs(): ReadonlyArray<HomeFaqItem> {
+  return siteContent.homeFaqs;
 }

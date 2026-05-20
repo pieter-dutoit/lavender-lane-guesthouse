@@ -56,7 +56,7 @@ export function HomeAmenities() {
             headingId="amenities-heading"
             label="Stay in Comfort"
             title="Facilities & Amenities"
-            description="Enjoy breakfast options, reliable power, free Wi-Fi, secure parking, and practical in-room comforts for business or leisure travel."
+            description="Enjoy breakfast options, reliable power, free Wi-Fi, off-street parking, gated premises, and practical in-room comforts for business or leisure travel."
           />
 
           <ul className="mx-auto flex max-w-5xl flex-wrap-reverse justify-center gap-6 lg:gap-8">

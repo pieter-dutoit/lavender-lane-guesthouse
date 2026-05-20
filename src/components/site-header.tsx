@@ -31,10 +31,20 @@ export function SiteHeader() {
           />
         </Link>
 
-        <SiteHeaderMobileMenu
-          navItems={MAIN_NAV_ITEMS}
-          bookingPlatform={bookingPlatform}
-        />
+        <div className="flex shrink-0 items-center gap-2 md:hidden">
+          <a
+            href={bookingPlatform.url}
+            aria-label={`Book now on ${bookingPlatform.name}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex min-h-11 shrink-0 items-center gap-1.5 rounded-sm text-base font-extrabold text-accent transition-colors duration-200 ease-out hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent motion-reduce:transition-none"
+          >
+            Book now
+            <ExternalLink aria-hidden="true" className="size-4" />
+          </a>
+
+          <SiteHeaderMobileMenu navItems={MAIN_NAV_ITEMS} />
+        </div>
 
         <ul className="hidden items-stretch justify-end self-stretch gap-4 text-base font-medium text-foreground md:flex">
           {MAIN_NAV_ITEMS.map((item) => (
