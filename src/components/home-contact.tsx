@@ -1,0 +1,115 @@
+import { ExternalLink, Mail, MapPin, Phone } from "lucide-react";
+
+import { SectionHeader } from "@/components/section-header";
+import {
+  getContacts,
+  getLocation,
+  getSocialLinks,
+} from "@/content/site-content";
+import { getEmailHref, getTelephoneHref } from "@/utils/contact-links";
+
+export function HomeContact() {
+  const contacts = getContacts();
+  const location = getLocation();
+  const socialLinks = getSocialLinks();
+
+  return (
+    <section
+      aria-labelledby="contact-heading"
+      className="relative w-full border-b border-secondary/30 py-8 lg:py-16"
+    >
+      <div id="contact" className="absolute -mt-32 md:-mt-36 lg:-mt-40" />
+
+      <div className="container mx-auto flex flex-col gap-8 px-4 sm:px-6 lg:px-8">
+        <SectionHeader
+          headingId="contact-heading"
+          label="Get In Touch"
+          title="Contact & Location"
+          description="Get in touch with us for bookings or any inquiries."
+        />
+
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+          <div className="rounded-lg border border-secondary/50 bg-white p-6 shadow-lg">
+            <h3 className="text-lg font-semibold text-primary">
+              Contact Information
+            </h3>
+            <ul className="mt-2 text-sm">
+              {contacts.map((contact) => (
+                <li key={contact.email} className="space-y-2">
+                  <a
+                    href={getEmailHref(contact.email)}
+                    className="flex items-center gap-2 text-foreground transition-colors hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
+                  >
+                    <Mail aria-hidden="true" className="size-4 text-primary" />
+                    <span className="break-all">{contact.email}</span>
+                  </a>
+                  <a
+                    href={getTelephoneHref(contact.phone)}
+                    className="flex items-center gap-2 text-foreground transition-colors hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
+                  >
+                    <Phone aria-hidden="true" className="size-4 text-primary" />
+                    <span>{contact.phone}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+
+            <h3 className="mt-6 text-lg font-semibold text-primary">Address</h3>
+            <address className="mt-2 flex flex-col gap-4 text-sm not-italic text-foreground">
+              <p>{location.formattedAddress}</p>
+              <a
+                href={location.mapsLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 font-medium text-primary underline underline-offset-4 transition-colors hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
+              >
+                <MapPin aria-hidden="true" className="size-4" />
+                Get Directions
+                <ExternalLink aria-hidden="true" className="size-3" />
+              </a>
+            </address>
+
+            {socialLinks.length > 0 ? (
+              <>
+                <h3 className="mt-6 text-lg font-semibold text-primary">
+                  Follow Us
+                </h3>
+                <ul className="mt-2 flex flex-wrap gap-3 text-sm">
+                  {socialLinks.map((social) => (
+                    <li key={social.link}>
+                      <a
+                        href={social.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 font-medium text-primary underline underline-offset-4 transition-colors hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
+                      >
+                        <ExternalLink aria-hidden="true" className="size-4" />
+                        {social.name}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            ) : null}
+          </div>
+
+          <div className="rounded-lg border border-secondary/50 bg-white p-6 shadow-lg">
+            <h3 className="text-lg font-semibold text-primary">Location</h3>
+            <div className="mt-4 overflow-hidden rounded-lg border border-secondary/50 bg-secondary/15">
+              <iframe
+                title="Lavender Lane map location"
+                src={location.mapsEmbedSrc}
+                width="600"
+                height="350"
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                className="min-h-80 w-full border-0"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}

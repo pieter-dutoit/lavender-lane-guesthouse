@@ -1,19 +1,26 @@
 import { ExternalLink, Lock, Mail, MapPin, Phone } from "lucide-react";
 import Image from "next/image";
 
-import { getBookingPlatform, getPrimaryContact } from "@/content/site-content";
+import {
+  getBookingPlatform,
+  getHomeHeroImage,
+  getLocation,
+  getPrimaryContact,
+} from "@/content/site-content";
 import { getEmailHref, getTelephoneHref } from "@/utils/contact-links";
 
 export function HomeHero() {
   const bookingPlatform = getBookingPlatform();
   const contact = getPrimaryContact();
+  const heroImage = getHomeHeroImage();
+  const location = getLocation();
 
   return (
     <section className="relative overflow-hidden bg-[#edece8]">
       <div className="relative aspect-20/9 w-full bg-[#edece8] sm:absolute sm:inset-y-0 sm:right-0 sm:left-[40vw] sm:aspect-auto sm:h-full">
         <Image
-          src="/hero-placeholder-image.jpg"
-          alt="Guest room at Lavender Lane Guesthouse"
+          src={heroImage.src}
+          alt={heroImage.alt}
           fill
           preload
           sizes="(max-width: 640px) 100vw, 52vw"
@@ -32,13 +39,15 @@ export function HomeHero() {
               Accommodation in Kathu, Northern Cape
             </p>
             <a
-              href="https://www.google.com/maps/search/?api=1&query=Lavender%20Lane%20Guesthouse%20Kathu%20Northern%20Cape"
+              href={location.mapsLink}
               target="_blank"
               rel="noopener noreferrer"
               className="mt-3 inline-flex items-center gap-1.5 text-sm font-medium text-primary underline underline-offset-4 transition-colors hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
             >
               <MapPin aria-hidden="true" className="size-4 shrink-0" />
-              <span>Kathu, Northern Cape</span>
+              <span>
+                {location.city}, {location.province}
+              </span>
               <strong className="font-bold">(Get Directions)</strong>
             </a>
           </div>
@@ -59,9 +68,9 @@ export function HomeHero() {
                   href={bookingPlatform.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex h-10 items-center justify-center gap-2 rounded-md bg-primary px-4 py-2 text-base font-semibold text-primary-foreground shadow-sm transition-colors hover:bg-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
+                  className="inline-flex h-10 items-center justify-center gap-2 rounded-md bg-accent px-4 py-2 text-base font-semibold text-accent-foreground shadow-sm transition-colors hover:bg-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
                 >
-                  Book online
+                  Book Online
                   <ExternalLink aria-hidden="true" className="size-4" />
                 </a>
                 <em className="mt-1 inline-flex items-center gap-1 text-xs text-primary">

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Noto_Sans } from "next/font/google";
 
+import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 
 import "./globals.css";
@@ -25,6 +26,7 @@ export default function RootLayout({
       <body className="flex min-h-full flex-col bg-background text-foreground">
         <SiteHeader />
         {children}
+        <SiteFooter />
       </body>
     </html>
   );
