@@ -14,12 +14,14 @@ import {
 } from "lucide-react";
 
 import { AmenityChip } from "@/components/amenity-chip";
+import { RoomGalleryDialog } from "@/components/room-gallery-dialog";
 import { SectionHeader } from "@/components/section-header";
 import {
   getBookingPlatform,
   getRoomsRatesRooms,
 } from "@/content/site-content";
 import { formatRate } from "@/utils/format-rate";
+import { getRoomGalleryImages } from "@/utils/room-images";
 
 export function HomeRoomsRates() {
   const bookingPlatform = getBookingPlatform();
@@ -41,8 +43,9 @@ export function HomeRoomsRates() {
         />
 
         <ul className="grid grid-cols-1 gap-4">
-          {rooms.map((room) => {
+          {rooms.map((room, index) => {
             const sleepsCount = room.sleepsAdults + room.sleepsChildren;
+            const roomGalleryImages = getRoomGalleryImages(room);
 
             return (
               <li
@@ -142,17 +145,11 @@ export function HomeRoomsRates() {
                 </div>
 
                 <div className="order-1 size-full lg:order-2">
-                  <div
-                    aria-hidden="true"
-                    className="grid size-full grid-cols-5 gap-2 p-2"
-                  >
-                    <div className="col-span-3 min-h-48 overflow-hidden rounded-lg border border-secondary/50 bg-secondary/30" />
-                    <div className="relative col-span-2 min-h-48 overflow-hidden rounded-lg border border-secondary/50 bg-primary/30">
-                      <div className="absolute inset-0 flex items-center justify-center bg-primary/30 text-2xl font-semibold text-primary-foreground">
-                        +6
-                      </div>
-                    </div>
-                  </div>
+                  <RoomGalleryDialog
+                    roomName={room.name}
+                    images={roomGalleryImages}
+                    eagerPreview={index === 0}
+                  />
                 </div>
               </li>
             );

@@ -19,7 +19,7 @@ export function HomeFaq() {
       <div className="container mx-auto flex flex-col gap-8 px-4 sm:px-6 lg:px-8">
         <SectionHeader
           headingId="faqs-heading"
-          label="Good to Know"
+          label="Lavender Lane FAQs"
           title="Frequently Asked Questions"
           description="Helpful answers for guests planning accommodation in Kathu, from room options and meals to off-street parking, gated premises, and reliable power."
         />

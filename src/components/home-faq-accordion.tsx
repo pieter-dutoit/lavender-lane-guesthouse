@@ -3,6 +3,8 @@
 import { ChevronDown } from "lucide-react";
 import { useState } from "react";
 
+import { joinClasses } from "@/utils/join-classes";
+
 type HomeFaqAccordionItem = {
   id: string;
   question: string;
@@ -12,10 +14,6 @@ type HomeFaqAccordionItem = {
 type HomeFaqAccordionProps = {
   items: ReadonlyArray<HomeFaqAccordionItem>;
 };
-
-function joinClasses(...classes: Array<string | false | undefined>): string {
-  return classes.filter(Boolean).join(" ");
-}
 
 export function HomeFaqAccordion({ items }: HomeFaqAccordionProps) {
   const [openIds, setOpenIds] = useState<ReadonlyArray<string>>([]);

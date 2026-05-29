@@ -36,3 +36,8 @@ body {
   color: var(--foreground);
   font-family: var(--font-noto-sans), Arial, Helvetica, sans-serif;
 }
+
+.room-gallery-dialog::backdrop {
+  background: rgb(0 0 0 / 0.64);
+  backdrop-filter: blur(4px);
+}

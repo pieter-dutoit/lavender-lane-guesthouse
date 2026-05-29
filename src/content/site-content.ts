@@ -32,6 +32,56 @@ export type SiteImage = {
   height: number;
 };
 
+export type ContentImage = SiteImage & {
+  id: string;
+  caption: string;
+};
+
+export type HomeGalleryImageCategory =
+  | "breakfast"
+  | "common-area"
+  | "outdoor"
+  | "parking"
+  | "security"
+  | "braai";
+
+export type HomeGalleryImage = ContentImage & {
+  category: HomeGalleryImageCategory;
+};
+
+function createR2Image(
+  id: string,
+  path: string,
+  alt: string,
+  width: number,
+  height: number,
+  caption = alt,
+): ContentImage {
+  return {
+    id,
+    src: getR2ImageSrc(path),
+    alt,
+    width,
+    height,
+    caption,
+  };
+}
+
+function createHomeGalleryImage(
+  category: HomeGalleryImageCategory,
+  id: string,
+  path: string,
+  alt: string,
+  width: number,
+  height: number,
+  caption = alt,
+): HomeGalleryImage {
+  return {
+    ...createR2Image(id, path, alt, width, height, caption),
+    category,
+  };
+}
+
 export type BookingPlatform = {
   name: string;
   url: AbsoluteHttpUrl;
@@ -77,6 +127,8 @@ export type RoomsRatesRoom = {
   sleepsAdults: number;
   sleepsChildren: number;
   beds: ReadonlyArray<RoomsRatesBed>;
+  featuredImages: readonly [ContentImage, ContentImage];
+  galleryImages: ReadonlyArray<ContentImage>;
 };
 
 export type HomeAmenitySlug =
@@ -118,16 +170,18 @@ export type SiteContent = {
   policies: ReadonlyArray<PolicyInfo>;
   roomsRatesRooms: ReadonlyArray<RoomsRatesRoom>;
   homeAmenities: ReadonlyArray<HomeAmenity>;
+  homeGalleryImages: ReadonlyArray<HomeGalleryImage>;
   homeFaqs: ReadonlyArray<HomeFaqItem>;
 };
 
 const siteContent = {
-  siteLogoImage: {
-    src: getR2ImageSrc("Lavender%20Lane%20Logo.webp"),
-    alt: "Lavender Lane Guesthouse",
-    width: 350,
-    height: 171,
-  },
+  siteLogoImage: createR2Image(
+    "site-logo",
+    "Lavender Lane Logo.png",
+    "Lavender Lane Guesthouse logo",
+    506,
+    247,
+  ),
   homeHeroImage: {
     src: getR2ImageSrc("lavender-lane-kathu-hero.jpg"),
     alt: "Double bed in a Lavender Lane Guesthouse room",
@@ -181,6 +235,82 @@ const siteContent = {
           quantity: 1,
         },
       ],
+      featuredImages: [
+        createR2Image(
+          "double-room-main-bed",
+          "Room Double Bed.jpg",
+          "Double room bed with white linen and floral cushions",
+          2342,
+          1523,
+          "Double room bed",
+        ),
+        createR2Image(
+          "double-room-red-throw",
+          "Double Room Red Throw.jpg",
+          "Double room bed with a red throw and floral cushions",
+          1463,
+          1097,
+          "Double room with red throw",
+        ),
+      ],
+      galleryImages: [
+        createR2Image(
+          "double-room-main-bed",
+          "Room Double Bed.jpg",
+          "Double room bed with white linen and floral cushions",
+          2342,
+          1523,
+          "Double room bed",
+        ),
+        createR2Image(
+          "double-room-red-throw",
+          "Double Room Red Throw.jpg",
+          "Double room bed with a red throw and floral cushions",
+          1463,
+          1097,
+          "Double room with red throw",
+        ),
+        createR2Image(
+          "double-room-green",
+          "Double Room Green.jpg",
+          "Double room bed with a green throw and butterfly cushions",
+          1200,
+          900,
+          "Double room with green throw",
+        ),
+        createR2Image(
+          "double-room-bed",
+          "Double room bed.jpg",
+          "Double room bed with bedside lamps and towels",
+          1600,
+          1200,
+          "Double room bed with towels",
+        ),
+        createR2Image(
+          "double-room-queen-green-throw",
+          "Queen room bed green throw.jpg",
+          "Queen room bed with a green throw and bedside lamps",
+          966,
+          724,
+          "Queen room bed with green throw",
+        ),
+        createR2Image(
+          "double-room-coffee-tea",
+          "Room coffee and tea.jpg",
+          "In-room coffee and tea selection",
+          3398,
+          2265,
+          "Coffee and tea selection",
+        ),
+        createR2Image(
+          "double-room-microwave",
+          "Room microwave.jpg",
+          "In-room microwave and kitchenette cupboard",
+          3600,
+          2400,
+          "In-room microwave",
+        ),
+      ],
     },
     {
       name: "Single Room",
@@ -195,6 +325,58 @@ const siteContent = {
           name: "Three-Quarter",
           quantity: 1,
         },
+      ],
+      featuredImages: [
+        createR2Image(
+          "single-room-bed",
+          "Single room.jpg",
+          "Single room bed with a green throw and towels",
+          1125,
+          844,
+          "Single room bed",
+        ),
+        createR2Image(
+          "single-room-bedroom-amenities",
+          "Bedroom amenities.jpg",
+          "Single room with bedside table, wardrobe, desk, and kitchenette",
+          2944,
+          1962,
+          "Single room amenities",
+        ),
+      ],
+      galleryImages: [
+        createR2Image(
+          "single-room-bed",
+          "Single room.jpg",
+          "Single room bed with a green throw and towels",
+          1125,
+          844,
+          "Single room bed",
+        ),
+        createR2Image(
+          "single-room-bedroom-amenities",
+          "Bedroom amenities.jpg",
+          "Single room with bedside table, wardrobe, desk, and kitchenette",
+          2944,
+          1962,
+          "Single room amenities",
+        ),
+        createR2Image(
+          "single-room-study-desk",
+          "Room Study Desk.jpg",
+          "In-room study desk and chair",
+          2031,
+          3047,
+          "Room study desk",
+        ),
+        createR2Image(
+          "single-room-bathroom",
+          "Bathroom.jpg",
+          "En-suite bathroom with shower and vanity",
+          1157,
+          1543,
+          "En-suite bathroom",
+        ),
       ],
     },
     {
@@ -215,6 +397,50 @@ const siteContent = {
           quantity: 1,
         },
       ],
+      featuredImages: [
+        createR2Image(
+          "family-room-beds",
+          "Family Room.jpg",
+          "Family room with a double bed and single bed",
+          1540,
+          1155,
+          "Family room beds",
+        ),
+        createR2Image(
+          "family-room-amenities",
+          "Room amenities.jpg",
+          "Room kitchenette amenities with kettle, microwave, and storage",
+          2191,
+          3287,
+          "Family room amenities",
+        ),
+      ],
+      galleryImages: [
+        createR2Image(
+          "family-room-beds",
+          "Family Room.jpg",
+          "Family room with a double bed and single bed",
+          1540,
+          1155,
+          "Family room beds",
+        ),
+        createR2Image(
+          "family-room-amenities",
+          "Room amenities.jpg",
+          "Room kitchenette amenities with kettle, microwave, and storage",
+          2191,
+          3287,
+          "Family room amenities",
+        ),
+        createR2Image(
+          "family-room-coffee-microwave",
+          "Room amentities coffee microwave.jpg",
+          "Room coffee station and microwave",
+          2400,
+          3600,
+          "Coffee station and microwave",
+        ),
+      ],
     },
     {
       name: "Twin Room",
@@ -229,6 +455,50 @@ const siteContent = {
           name: "Single",
           quantity: 2,
         },
+      ],
+      featuredImages: [
+        createR2Image(
+          "twin-room-beds",
+          "Twin Room.jpg",
+          "Twin room with two single beds",
+          3294,
+          2193,
+          "Twin room beds",
+        ),
+        createR2Image(
+          "twin-room-bed-detail",
+          "Twin room beds.jpg",
+          "Twin room beds with towels",
+          1024,
+          768,
+          "Twin room beds with towels",
+        ),
+      ],
+      galleryImages: [
+        createR2Image(
+          "twin-room-beds",
+          "Twin Room.jpg",
+          "Twin room with two single beds",
+          3294,
+          2193,
+          "Twin room beds",
+        ),
+        createR2Image(
+          "twin-room-bed-detail",
+          "Twin room beds.jpg",
+          "Twin room beds with towels",
+          1024,
+          768,
+          "Twin room beds with towels",
+        ),
+        createR2Image(
+          "twin-room-desk-fridge",
+          "Room desk and fridge.jpg",
+          "In-room desk, fridge, and wardrobe",
+          2400,
+          3600,
+          "Desk, fridge, and wardrobe",
+        ),
       ],
     },
   ],
@@ -293,6 +563,116 @@ const siteContent = {
       slug: "secure-premises",
       name: "Gated Premises",
     },
+  ],
+  homeGalleryImages: [
+    createHomeGalleryImage(
+      "breakfast",
+      "breakfast-area",
+      "Breakfast area.jpg",
+      "Breakfast area with tables, chairs, and serving counter",
+      3163,
+      2109,
+      "Breakfast area",
+    ),
+    createHomeGalleryImage(
+      "breakfast",
+      "breakfast-bar",
+      "Breakfast bar.jpg",
+      "Breakfast bar with coffee and tea station",
+      3517,
+      2345,
+      "Breakfast bar",
+    ),
+    createHomeGalleryImage(
+      "breakfast",
+      "breakfast-cereal",
+      "Breakfast cereal.jpg",
+      "Breakfast cereal dispensers and jars",
+      3278,
+      2185,
+      "Breakfast cereal station",
+    ),
+    createHomeGalleryImage(
+      "common-area",
+      "dining-area",
+      "Dining Area.jpg",
+      "Dining area with tables, chairs, and lounge seating",
+      3420,
+      2280,
+      "Dining area",
+    ),
+    createHomeGalleryImage(
+      "common-area",
+      "lounge",
+      "Lavender Lane Lounge.jpg",
+      "Lavender Lane lounge with leather seating",
+      1478,
+      1108,
+      "Guest lounge",
+    ),
+    createHomeGalleryImage(
+      "outdoor",
+      "outdoor-dining-area",
+      "Lavender Lane Outdoor Dining Area.jpg",
+      "Outdoor dining table under a tree",
+      768,
+      1024,
+      "Outdoor dining area",
+    ),
+    createHomeGalleryImage(
+      "outdoor",
+      "outdoor-seating",
+      "Lavender Lane Outdoor Seating.jpg",
+      "Outdoor seating with umbrella beside the garden",
+      1024,
+      768,
+      "Outdoor seating",
+    ),
+    createHomeGalleryImage(
+      "outdoor",
+      "patio-seating",
+      "Lavender Lane Patio Seating.jpg",
+      "Patio seating with table and hanging plants",
+      1148,
+      1464,
+      "Patio seating",
+    ),
+    createHomeGalleryImage(
+      "outdoor",
+      "patio",
+      "Patio.jpg",
+      "Patio walkway with plants and garden access",
+      3600,
+      2400,
+      "Patio walkway",
+    ),
+    createHomeGalleryImage(
+      "parking",
+      "parking",
+      "Lavender Lane Parking.jpg",
+      "Lavender Lane parking area and exterior signage",
+      898,
+      674,
+      "Parking area",
+    ),
+    createHomeGalleryImage(
+      "security",
+      "secure-premises",
+      "Lavender Lane Secure Premises.jpg",
+      "Lavender Lane exterior sign at the secure premises",
+      1385,
+      1038,
+      "Secure premises",
+    ),
+    createHomeGalleryImage(
+      "braai",
+      "outdoor-braai-area",
+      "Outdoor Braai Area.jpg",
+      "Outdoor braai area with table and chairs",
+      962,
+      721,
+      "Outdoor braai area",
+    ),
   ],
   homeFaqs: [
     {
@@ -390,6 +770,10 @@ export function getRoomsRatesRooms(): ReadonlyArray<RoomsRatesRoom> {
 
 export function getHomeAmenities(): ReadonlyArray<HomeAmenity> {
   return siteContent.homeAmenities;
+}
+
+export function getHomeGalleryImages(): ReadonlyArray<HomeGalleryImage> {
+  return siteContent.homeGalleryImages;
 }
 
 export function getHomeFaqs(): ReadonlyArray<HomeFaqItem> {

@@ -53,6 +53,33 @@ Use these alongside the Next DevTools MCP when a dev server is running.
 - Prefer static generation for SEO pages; content changes infrequently, so avoid
   dynamic rendering unless a feature truly needs it.
 
+## Guesthouse Image Editing Guidelines
+
+When editing source photos for the website, aim for professional hospitality
+photography while keeping the property truthful. Improve the photo as a better
+version of the same real scene; do not create a fictional or materially upgraded
+guesthouse.
+
+- Preserve the real scene, layout, architecture, furniture, materials, room
+  proportions, outdoor features, and camera viewpoint.
+- Avoid changing the angle in a way that invents unseen parts of the scene.
+  Prefer subtle crop/framing improvements, lens correction, horizon correction,
+  and straightened vertical lines.
+- Use realistic photographic improvements: balanced exposure, recovered
+  highlights and shadows, natural warm daylight, corrected white balance,
+  tasteful contrast, clarity, noise reduction, sharpening, and a restrained
+  hospitality/interior color grade.
+- Remove temporary or distracting items only when requested or clearly
+  non-permanent, such as vehicles, bins, loose cables, litter, personal items,
+  stains, minor clutter, or distracting reflections.
+- When removing objects, reconstruct the affected background realistically from
+  the surrounding driveway, walls, garden, flooring, bedding, furniture, or
+  architecture.
+- Do not invent new furniture, amenities, windows, doors, views, landscaping,
+  signage, people, decorative elements, room size, or property features.
+- Avoid fake HDR, oversaturation, heavy blur, artificial bokeh, dramatic sky
+  replacement, unrealistic sunset lighting, text, and watermarks.
+
 ## Tailwind Guidelines
 
 - Prefer canonical Tailwind utilities over arbitrary values when they produce the

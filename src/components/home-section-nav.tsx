@@ -1,3 +1,5 @@
+import { HashLink } from "@/components/hash-link";
+
 const HOME_SECTION_NAV_ITEMS = [
   {
     label: "Rooms & Rates",
@@ -35,12 +37,12 @@ export function HomeSectionNav() {
         <ul className="flex min-w-max items-center gap-6 text-sm md:text-base font-semibold text-foreground md:gap-10 lg:gap-14">
           {HOME_SECTION_NAV_ITEMS.map((item) => (
             <li key={item.href}>
-              <a
+              <HashLink
                 href={item.href}
                 className="flex min-h-11 items-center whitespace-nowrap py-4 transition-colors duration-200 ease-out hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent motion-reduce:transition-none"
               >
                 {item.label}
-              </a>
+              </HashLink>
             </li>
           ))}
         </ul>

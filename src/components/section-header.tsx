@@ -1,5 +1,7 @@
 import type { ReactNode } from "react";
 
+import { joinClasses } from "@/utils/join-classes";
+
 type SectionHeaderAlign = "left" | "center";
 
 type SectionHeaderProps = {
@@ -20,10 +22,6 @@ const DESCRIPTION_ALIGNMENT_CLASSES: Record<SectionHeaderAlign, string> = {
   left: "",
   center: "mx-auto",
 };
-
-function joinClasses(...classes: Array<string | undefined>): string {
-  return classes.filter(Boolean).join(" ");
-}
 
 export function SectionHeader({
   label,

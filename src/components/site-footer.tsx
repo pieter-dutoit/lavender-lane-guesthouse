@@ -2,6 +2,7 @@ import { ExternalLink, Mail, MapPin, Phone } from "lucide-react";
 import Link from "next/link";
 
 import { FOOTER_NAV_ITEMS } from "@/constants/navigation";
+import { HashLink } from "@/components/hash-link";
 import {
   getContacts,
   getLocation,
@@ -10,6 +11,12 @@ import {
 import { getEmailHref, getTelephoneHref } from "@/utils/contact-links";
 
 const COPYRIGHT_YEAR = 2026;
+
+function hasRealHash(href: string) {
+  const hashIndex = href.indexOf("#");
+
+  return hashIndex !== -1 && hashIndex < href.length - 1;
+}
 
 export function SiteFooter() {
   const contacts = getContacts();
@@ -78,16 +85,20 @@ export function SiteFooter() {
               Quick Links
             </h2>
             <ul className="mt-6 flex flex-col gap-3 text-base">
-              {FOOTER_NAV_ITEMS.map((item) => (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    className="inline-flex w-fit text-neutral-100 transition-colors hover:text-secondary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-secondary"
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
+              {FOOTER_NAV_ITEMS.map((item) => {
+                const LinkComponent = hasRealHash(item.href) ? HashLink : Link;
+
+                return (
+                  <li key={item.href}>
+                    <LinkComponent
+                      href={item.href}
+                      className="inline-flex w-fit text-neutral-100 transition-colors hover:text-secondary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-secondary"
+                    >
+                      {item.label}
+                    </LinkComponent>
+                  </li>
+                );
+              })}
             </ul>
           </nav>
 
