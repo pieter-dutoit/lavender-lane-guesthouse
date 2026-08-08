@@ -11,7 +11,6 @@
   --primary: var(--brand-green-deep);
   --primary-foreground: #ffffff;
   --secondary: var(--brand-green-mist);
-  --secondary-foreground: var(--brand-green-deep);
   --accent: var(--brand-lavender);
   --accent-foreground: #ffffff;
 }
@@ -22,13 +21,8 @@
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
   --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
-  --font-sans: var(--font-noto-sans);
-  --font-mono:
-    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
-    "Courier New", monospace;
 }
 
 body {

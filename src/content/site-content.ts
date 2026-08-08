@@ -1,16 +1,14 @@
 import "server-only";
 
-import { siteData } from "@/content/site-data";
-
 type AbsoluteHttpUrl = `http://${string}` | `https://${string}`;
 type LocalImageSrc = `/media/${string}`;
 
-export type SiteImage = {
+type SiteImage = {
   src: LocalImageSrc;
   alt: string;
 };
 
-export type SiteLogoImage = SiteImage & {
+type SiteLogoImage = SiteImage & {
   width: number;
   height: number;
 };
@@ -34,39 +32,35 @@ function createContentImage(
   };
 }
 
-export type BookingPlatform = {
+type BookingPlatform = {
   name: string;
   url: AbsoluteHttpUrl;
 };
 
-export type ContactInfo = {
+type ContactInfo = {
   phone: string;
   email: string;
-  position?: string;
 };
 
-export type SocialLink = {
+type SocialLink = {
   name: string;
   link: string;
 };
 
-export type LocationInfo = {
-  street: string;
+type LocationInfo = {
   city: string;
   province: string;
-  country: string;
-  postalCode: string;
   formattedAddress: string;
   mapsLink: AbsoluteHttpUrl;
   mapsEmbedSrc: AbsoluteHttpUrl;
 };
 
-export type PolicyInfo = {
+type PolicyInfo = {
   title: string;
   description: string;
 };
 
-export type RoomsRatesBed = {
+type RoomsRatesBed = {
   name: string;
   quantity: number;
 };
@@ -100,12 +94,12 @@ export type HomeAmenitySlug =
   | "off-street-parking"
   | "secure-premises";
 
-export type HomeAmenity = {
+type HomeAmenity = {
   slug: HomeAmenitySlug;
   name: string;
 };
 
-export type HomeFaqItem = {
+type HomeFaqItem = {
   id: string;
   question: string;
   answer: string;
@@ -117,18 +111,18 @@ export type AboutHighlightSlug =
   | "complimentary-amenities"
   | "prime-location";
 
-export type AboutHighlight = {
+type AboutHighlight = {
   slug: AboutHighlightSlug;
   title: string;
   description: string;
 };
 
-export type AboutTeamMember = {
+type AboutTeamMember = {
   name: string;
   role: string;
 };
 
-export type AboutContent = {
+type AboutContent = {
   hero: {
     label: string;
     title: string;
@@ -159,7 +153,7 @@ export type AboutContent = {
   };
 };
 
-export type SiteContent = {
+type SiteContent = {
   siteLogoImage: SiteLogoImage;
   homeHeroImage: SiteImage;
   about: AboutContent;
@@ -174,6 +168,13 @@ export type SiteContent = {
   homeGalleryImages: ReadonlyArray<ContentImage>;
   homeFaqs: ReadonlyArray<HomeFaqItem>;
 };
+
+const contacts = [
+  {
+    email: "info@lavenderlanekathu.co.za",
+    phone: "067 355 8676",
+  },
+] satisfies ReadonlyArray<ContactInfo>;
 
 const siteContent = {
   siteLogoImage: {
@@ -267,18 +268,17 @@ const siteContent = {
     name: "NightsBridge",
     url: "https://book.nightsbridge.com/38107",
   },
-  primaryContact: siteData.contacts[0],
-  contacts: siteData.contacts,
-  socialLinks: siteData.socials.map(({ name, link }) => ({
-    name,
-    link,
-  })),
+  primaryContact: contacts[0],
+  contacts,
+  socialLinks: [
+    {
+      name: "Instagram",
+      link: "https://www.instagram.com/lavenderlanekathu/#",
+    },
+  ],
   location: {
-    street: "17 Nieshout Street",
     city: "Kathu",
     province: "Northern Cape",
-    country: "South Africa",
-    postalCode: "8446",
     formattedAddress:
       "17 Nieshout Street, Kathu, Northern Cape, South Africa, 8446",
     mapsLink: "https://maps.app.goo.gl/KR5bnydJB9HdNGMs8",

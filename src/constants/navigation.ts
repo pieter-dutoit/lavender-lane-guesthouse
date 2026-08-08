@@ -14,7 +14,7 @@ export const MAIN_NAV_ITEMS: ReadonlyArray<MainNavItem> = [
   },
 ];
 
-export type FooterNavItem = {
+type FooterNavItem = {
   label: string;
   href:
     | "/"
