@@ -1,8 +1,13 @@
 import { SectionHeader } from "@/components/section-header";
-import { getAboutContent } from "@/content/site-content";
+import { getLocalizedAboutContent } from "@/content/localized-site-content";
+import type { SiteLocale } from "@/i18n/locale";
 
-export function AboutStory() {
-  const { story } = getAboutContent();
+type AboutStoryProps = {
+  locale: SiteLocale;
+};
+
+export function AboutStory({ locale }: AboutStoryProps) {
+  const { story } = getLocalizedAboutContent(locale);
 
   return (
     <section

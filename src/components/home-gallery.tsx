@@ -1,9 +1,16 @@
 import { HomeGalleryDialog } from "@/components/home-gallery-dialog";
 import { SectionHeader } from "@/components/section-header";
-import { getHomeGalleryImages } from "@/content/site-content";
+import { getLocalizedHomeGalleryImages } from "@/content/localized-site-content";
+import { getSiteCopy } from "@/content/site-copy";
+import type { SiteLocale } from "@/i18n/locale";
 
-export function HomeGallery() {
-  const images = getHomeGalleryImages();
+type HomeGalleryProps = {
+  locale: SiteLocale;
+};
+
+export function HomeGallery({ locale }: HomeGalleryProps) {
+  const images = getLocalizedHomeGalleryImages(locale);
+  const copy = getSiteCopy(locale);
 
   if (images.length === 0) {
     return null;
@@ -19,12 +26,12 @@ export function HomeGallery() {
       <div className="container mx-auto flex flex-col gap-8 px-4 sm:px-6 lg:px-8">
         <SectionHeader
           headingId="gallery-heading"
-          label="A Look Around"
-          title="Gallery"
-          description="See the breakfast areas, guest lounges, outdoor seating, secure parking, and braai facilities around Lavender Lane Guesthouse."
+          label={copy.home.gallery.label}
+          title={copy.home.gallery.title}
+          description={copy.home.gallery.description}
         />
 
-        <HomeGalleryDialog images={images} />
+        <HomeGalleryDialog images={images} locale={locale} />
       </div>
     </section>
   );

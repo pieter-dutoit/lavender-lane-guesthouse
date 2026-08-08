@@ -1,53 +1,70 @@
+import { getSiteCopy } from "@/content/site-copy";
+import {
+  getHomeHashPath,
+  getPagePath,
+  type SiteLocale,
+  type SitePageKey,
+} from "@/i18n/locale";
+
 export type MainNavItem = {
   label: string;
-  href: "/" | "/about";
+  href: string;
+  page: SitePageKey;
 };
-
-export const MAIN_NAV_ITEMS: ReadonlyArray<MainNavItem> = [
-  {
-    label: "Home",
-    href: "/",
-  },
-  {
-    label: "About Us",
-    href: "/about",
-  },
-];
 
 type FooterNavItem = {
   label: string;
-  href:
-    | "/"
-    | "/about"
-    | "/#rooms-rates"
-    | "/#amenities"
-    | "/#contact"
-    | "/#faqs";
+  href: string;
 };
 
-export const FOOTER_NAV_ITEMS: ReadonlyArray<FooterNavItem> = [
-  {
-    label: "Home",
-    href: "/",
-  },
-  {
-    label: "About Us",
-    href: "/about",
-  },
-  {
-    label: "Rooms & Rates",
-    href: "/#rooms-rates",
-  },
-  {
-    label: "Amenities",
-    href: "/#amenities",
-  },
-  {
-    label: "Contact",
-    href: "/#contact",
-  },
-  {
-    label: "FAQs",
-    href: "/#faqs",
-  },
-];
+export function getMainNavItems(
+  locale: SiteLocale,
+): ReadonlyArray<MainNavItem> {
+  const { navigation } = getSiteCopy(locale);
+
+  return [
+    {
+      label: navigation.home,
+      href: getPagePath(locale, "home"),
+      page: "home",
+    },
+    {
+      label: navigation.about,
+      href: getPagePath(locale, "about"),
+      page: "about",
+    },
+  ];
+}
+
+export function getFooterNavItems(
+  locale: SiteLocale,
+): ReadonlyArray<FooterNavItem> {
+  const { navigation } = getSiteCopy(locale);
+
+  return [
+    {
+      label: navigation.home,
+      href: getPagePath(locale, "home"),
+    },
+    {
+      label: navigation.about,
+      href: getPagePath(locale, "about"),
+    },
+    {
+      label: navigation.roomsRates,
+      href: getHomeHashPath(locale, "rooms-rates"),
+    },
+    {
+      label: navigation.amenities,
+      href: getHomeHashPath(locale, "amenities"),
+    },
+    {
+      label: navigation.contact,
+      href: getHomeHashPath(locale, "contact"),
+    },
+    {
+      label: navigation.faqs,
+      href: getHomeHashPath(locale, "faqs"),
+    },
+  ];
+}

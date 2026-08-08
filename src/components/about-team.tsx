@@ -1,10 +1,15 @@
 import { UserRound } from "lucide-react";
 
 import { SectionHeader } from "@/components/section-header";
-import { getAboutContent } from "@/content/site-content";
+import { getLocalizedAboutContent } from "@/content/localized-site-content";
+import type { SiteLocale } from "@/i18n/locale";
 
-export function AboutTeam() {
-  const { team } = getAboutContent();
+type AboutTeamProps = {
+  locale: SiteLocale;
+};
+
+export function AboutTeam({ locale }: AboutTeamProps) {
+  const { team } = getLocalizedAboutContent(locale);
 
   return (
     <section

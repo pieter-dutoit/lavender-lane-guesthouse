@@ -273,7 +273,7 @@ const siteContent = {
   socialLinks: [
     {
       name: "Instagram",
-      link: "https://www.instagram.com/lavenderlanekathu/#",
+      link: "https://www.instagram.com/lavenderlanekathu/",
     },
   ],
   location: {
@@ -288,11 +288,15 @@ const siteContent = {
   policies: [
     {
       title: "Check-in",
-      description: "From 2:00 PM",
+      description: "From 14:00 by arrangement",
     },
     {
       title: "Check-out",
-      description: "By 10:00 AM",
+      description: "By 10:00",
+    },
+    {
+      title: "Pets",
+      description: "By prior arrangement",
     },
   ],
   roomsRatesRooms: [
@@ -530,7 +534,7 @@ const siteContent = {
   homeAmenities: [
     {
       slug: "breakfast",
-      name: "Free Breakfast",
+      name: "Breakfast Included",
     },
     {
       slug: "lunch-packs",
@@ -653,8 +657,8 @@ const siteContent = {
     createContentImage(
       "secure-premises",
       "/media/lavender-lane-secure-premises.jpg",
-      "Lavender Lane exterior sign at the secure premises",
-      "Secure premises",
+      "Lavender Lane exterior sign at the gated guesthouse premises",
+      "Gated guesthouse premises",
     ),
     createContentImage(
       "outdoor-braai-area",
@@ -680,7 +684,7 @@ const siteContent = {
       id: "check-in-check-out",
       question: "What time is check-in and check-out?",
       answer:
-        "Check-in is from 2:00 PM and check-out is by 10:00 AM. If you need help with arrival details, contact reception before your stay.",
+        "Check-in is available from 14:00 by arrangement, and check-out is by 10:00. Contact us before your stay to arrange your arrival.",
     },
     {
       id: "room-amenities",
@@ -690,9 +694,9 @@ const siteContent = {
     },
     {
       id: "breakfast",
-      question: "Is breakfast available?",
+      question: "Is breakfast included in the room rate?",
       answer:
-        "Yes. Breakfast is available for guests, and our amenities also include lunch packs and dinner voucher options when you need meals arranged around your schedule.",
+        "Yes. Breakfast is included in the current direct rates for all four room types. Lunch packs and dinner vouchers can also be arranged at an additional price on request.",
     },
     {
       id: "meals",
@@ -710,13 +714,19 @@ const siteContent = {
       id: "load-shedding",
       question: "Will load-shedding affect my stay?",
       answer:
-        "Lavender Lane has solar power for no load-shedding interruptions, plus borehole water for a reliable water supply during your stay.",
+        "Lavender Lane uses full solar backup to continue normal guesthouse operations during load-shedding. Borehole water also supports a reliable water supply during your stay.",
     },
     {
       id: "business-travel",
       question: "Is Lavender Lane suitable for business travellers?",
       answer:
         "Yes. Business guests have free Wi-Fi, in-room work desks, air-conditioned rooms, twin rooms for colleagues, laundry services, lunch packs, off-street parking, and a central Kathu location.",
+    },
+    {
+      id: "pets",
+      question: "Are pets allowed?",
+      answer:
+        "Pets may stay by prior arrangement. Please contact us before booking so we can confirm the details for your stay.",
     },
   ],
 } satisfies SiteContent;

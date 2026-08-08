@@ -9,19 +9,24 @@ import {
   ROOM_SINGLE_PREVIEW_IMAGE_SIZES,
 } from "@/constants/image-sizes";
 import type { ContentImage } from "@/content/site-content";
+import { getGalleryCopy } from "@/constants/gallery-copy";
+import type { SiteLocale } from "@/i18n/locale";
 import { joinClasses } from "@/utils/join-classes";
 
 type RoomGalleryDialogProps = {
   roomName: string;
   images: ReadonlyArray<ContentImage>;
+  locale: SiteLocale;
 };
 
 export function RoomGalleryDialog({
   roomName,
   images,
+  locale,
 }: RoomGalleryDialogProps) {
   const previewImages = images.slice(0, 2);
   const remainingImageCount = Math.max(images.length - previewImages.length, 0);
+  const copy = getGalleryCopy(locale);
 
   if (images.length === 0) {
     return null;
@@ -31,11 +36,12 @@ export function RoomGalleryDialog({
     <GalleryLightbox
       images={images}
       title={roomName}
-      label="Room gallery"
+      label={copy.roomGalleryLabel}
+      locale={locale}
       renderTrigger={(openLightbox) => (
         <button
           type="button"
-          aria-label={`View ${roomName} gallery`}
+          aria-label={copy.viewRoomGallery(roomName)}
           onClick={() => openLightbox(0)}
           className="group grid size-full grid-cols-5 gap-2 p-2 text-left focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
         >

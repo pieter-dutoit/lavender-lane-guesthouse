@@ -3,18 +3,25 @@ import Image from "next/image";
 
 import {
   getBookingPlatform,
-  getHomeHeroImage,
-  getLocation,
+  getLocalizedHomeHeroImage,
+  getLocalizedLocation,
   getPrimaryContact,
-} from "@/content/site-content";
+} from "@/content/localized-site-content";
+import { getSiteCopy } from "@/content/site-copy";
 import { HOME_HERO_IMAGE_SIZES } from "@/constants/image-sizes";
+import type { SiteLocale } from "@/i18n/locale";
 import { getEmailHref, getTelephoneHref } from "@/utils/contact-links";
 
-export function HomeHero() {
+type HomeHeroProps = {
+  locale: SiteLocale;
+};
+
+export function HomeHero({ locale }: HomeHeroProps) {
   const bookingPlatform = getBookingPlatform();
   const contact = getPrimaryContact();
-  const heroImage = getHomeHeroImage();
-  const location = getLocation();
+  const heroImage = getLocalizedHomeHeroImage(locale);
+  const location = getLocalizedLocation(locale);
+  const copy = getSiteCopy(locale);
 
   return (
     <section className="relative overflow-hidden bg-[#edece8]">
@@ -33,35 +40,39 @@ export function HomeHero() {
       <div className="container relative z-10 mx-auto grid w-full grid-cols-1 px-4 sm:px-6 lg:px-8">
         <div className="flex w-full max-w-2xl flex-col gap-6 py-10 sm:py-20 md:gap-8 md:py-24 lg:py-32">
           <div>
-            <h1 className="text-4xl font-semibold text-primary md:text-5xl lg:text-6xl max-w-[15ch]">
-              Lavender Lane Guesthouse
+            <h1 className="max-w-[20ch] text-4xl font-semibold text-balance text-primary md:text-5xl lg:text-6xl">
+              {copy.home.hero.title}
             </h1>
             <p className="mt-2 text-xs font-extrabold text-primary/70 md:text-sm">
-              Accommodation in Kathu, Northern Cape
+              {copy.home.hero.label}
             </p>
             <a
               href={location.mapsLink}
               target="_blank"
               rel="noopener noreferrer"
+              data-seo-event="directions_click"
+              data-seo-locale={locale}
+              data-seo-placement="hero"
               className="mt-3 inline-flex items-center gap-1.5 text-sm font-medium text-primary underline underline-offset-4 transition-colors hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
             >
               <MapPin aria-hidden="true" className="size-4 shrink-0" />
               <span>
                 {location.city}, {location.province}
               </span>
-              <strong className="font-bold">(Get Directions)</strong>
+              <strong className="font-bold">
+                ({copy.home.hero.directions})
+              </strong>
             </a>
           </div>
 
           <p className="max-w-[45ch] text-sm leading-6 text-foreground md:text-base md:leading-normal">
-            <strong>Your Home Away From Home.</strong> <br />
-            Experience a relaxing and comfortable stay at our centrally located
-            bed &amp; breakfast in Kathu.
+            <strong>{copy.home.hero.lead}</strong> <br />
+            {copy.home.hero.description}
           </p>
 
           <div className="flex flex-col gap-4">
             <p className="text-lg font-extrabold text-primary md:text-xl">
-              Book online, or contact us directly.
+              {copy.home.hero.bookingPrompt}
             </p>
             <div className="flex flex-wrap items-start gap-3">
               <div className="flex flex-col items-start">
@@ -69,23 +80,28 @@ export function HomeHero() {
                   href={bookingPlatform.url}
                   target="_blank"
                   rel="noopener noreferrer"
+                  data-seo-event="booking_engine_click"
+                  data-seo-locale={locale}
+                  data-seo-placement="hero"
                   className="inline-flex h-10 items-center justify-center gap-2 rounded-md bg-accent px-4 py-2 text-base font-semibold text-accent-foreground shadow-sm transition-colors hover:bg-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
                 >
-                  Book Online
+                  {copy.booking.bookOnline}
                   <ExternalLink aria-hidden="true" className="size-4" />
                 </a>
                 <em className="mt-1 inline-flex items-center gap-1 text-xs text-primary">
                   <Lock aria-hidden="true" className="size-3" />
-                  Opens{" "}
                   <strong className="font-semibold">
-                    {bookingPlatform.name}
+                    {copy.booking.opensPlatform}
                   </strong>
                 </em>
               </div>
 
               <a
                 href={getTelephoneHref(contact.phone)}
-                aria-label="Call Lavender Lane Guesthouse"
+                aria-label={copy.home.hero.callAriaLabel}
+                data-seo-event="phone_click"
+                data-seo-locale={locale}
+                data-seo-placement="hero"
                 className="inline-flex h-10 items-center justify-center gap-2 rounded-md border border-secondary bg-background px-4 py-2 text-base font-semibold text-primary shadow-sm transition-colors hover:bg-secondary/30 hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
               >
                 <Phone aria-hidden="true" className="size-4" />
@@ -93,7 +109,10 @@ export function HomeHero() {
               </a>
               <a
                 href={getEmailHref(contact.email)}
-                aria-label="Email Lavender Lane Guesthouse"
+                aria-label={copy.home.hero.emailAriaLabel}
+                data-seo-event="email_click"
+                data-seo-locale={locale}
+                data-seo-placement="hero"
                 className="inline-flex min-h-10 items-center justify-center gap-2 rounded-md border border-secondary bg-background px-4 py-2 text-base font-semibold text-primary shadow-sm transition-colors hover:bg-secondary/30 hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
               >
                 <Mail aria-hidden="true" className="size-4 shrink-0" />

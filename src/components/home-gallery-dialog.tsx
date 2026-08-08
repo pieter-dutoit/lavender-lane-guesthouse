@@ -11,14 +11,21 @@ import {
   HOME_GALLERY_STANDARD_IMAGE_SIZES,
 } from "@/constants/image-sizes";
 import { joinClasses } from "@/utils/join-classes";
+import { getGalleryCopy } from "@/constants/gallery-copy";
+import type { SiteLocale } from "@/i18n/locale";
 
 type HomeGalleryDialogProps = {
   images: ReadonlyArray<GalleryLightboxImage>;
+  locale: SiteLocale;
 };
 
-export function HomeGalleryDialog({ images }: HomeGalleryDialogProps) {
+export function HomeGalleryDialog({
+  images,
+  locale,
+}: HomeGalleryDialogProps) {
   const previewImages = images.slice(0, 6);
   const remainingImageCount = Math.max(images.length - previewImages.length, 0);
+  const copy = getGalleryCopy(locale);
 
   if (images.length === 0) {
     return null;
@@ -28,11 +35,12 @@ export function HomeGalleryDialog({ images }: HomeGalleryDialogProps) {
     <GalleryLightbox
       images={images}
       title="Lavender Lane Guesthouse"
-      label="Guesthouse gallery"
+      label={copy.guesthouseGalleryLabel}
+      locale={locale}
       renderTrigger={(openLightbox) => (
         <button
           type="button"
-          aria-label="View Lavender Lane Guesthouse gallery"
+          aria-label={copy.viewGuesthouseGallery}
           onClick={() => openLightbox(0)}
           className="group grid grid-cols-6 gap-2 text-left focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent md:gap-3"
         >
@@ -68,10 +76,8 @@ export function HomeGalleryDialog({ images }: HomeGalleryDialogProps) {
                     className="absolute inset-0 flex items-center justify-center rounded-[inherit] bg-black/40 px-3 text-center text-base font-semibold text-primary-foreground underline underline-offset-4 backdrop-blur-sm md:text-xl"
                   >
                     {remainingImageCount > 0
-                      ? `+${remainingImageCount} photo${
-                          remainingImageCount === 1 ? "" : "s"
-                        }`
-                      : "View all"}
+                      ? copy.remainingPhotos(remainingImageCount)
+                      : copy.viewAll}
                   </span>
                 ) : null}
               </span>

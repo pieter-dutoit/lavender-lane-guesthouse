@@ -1,13 +1,16 @@
 import { ExternalLink, Mail, MapPin, Phone } from "lucide-react";
 import Link from "next/link";
 
-import { FOOTER_NAV_ITEMS } from "@/constants/navigation";
 import { HashLink } from "@/components/hash-link";
+import { SeoAnalyticsSettingsButton } from "@/components/seo-analytics-settings-button";
+import { getFooterNavItems } from "@/constants/navigation";
 import {
   getContacts,
-  getLocation,
+  getLocalizedLocation,
   getSocialLinks,
-} from "@/content/site-content";
+} from "@/content/localized-site-content";
+import { getSiteCopy } from "@/content/site-copy";
+import type { SiteLocale } from "@/i18n/locale";
 import { getEmailHref, getTelephoneHref } from "@/utils/contact-links";
 
 const COPYRIGHT_YEAR = 2026;
@@ -18,10 +21,16 @@ function hasRealHash(href: string) {
   return hashIndex !== -1 && hashIndex < href.length - 1;
 }
 
-export function SiteFooter() {
+type SiteFooterProps = {
+  locale: SiteLocale;
+};
+
+export function SiteFooter({ locale }: SiteFooterProps) {
   const contacts = getContacts();
-  const location = getLocation();
+  const location = getLocalizedLocation(locale);
   const socialLinks = getSocialLinks();
+  const footerNavItems = getFooterNavItems(locale);
+  const copy = getSiteCopy(locale);
 
   return (
     <footer className="bg-neutral-900 text-neutral-100">
@@ -41,10 +50,13 @@ export function SiteFooter() {
                 href={location.mapsLink}
                 target="_blank"
                 rel="noopener noreferrer"
+                data-seo-event="directions_click"
+                data-seo-locale={locale}
+                data-seo-placement="footer"
                 className="inline-flex w-fit items-center gap-2 font-medium text-secondary underline underline-offset-4 transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-secondary"
               >
                 <MapPin aria-hidden="true" className="size-5 shrink-0" />
-                Get Directions
+                {copy.contact.directions}
                 <ExternalLink aria-hidden="true" className="size-4 shrink-0" />
               </a>
 
@@ -53,6 +65,9 @@ export function SiteFooter() {
                   <li key={contact.email} className="flex flex-col gap-4">
                     <a
                       href={getEmailHref(contact.email)}
+                      data-seo-event="email_click"
+                      data-seo-locale={locale}
+                      data-seo-placement="footer"
                       className="inline-flex w-fit items-center gap-3 text-neutral-100 transition-colors hover:text-secondary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-secondary"
                     >
                       <Mail
@@ -63,6 +78,9 @@ export function SiteFooter() {
                     </a>
                     <a
                       href={getTelephoneHref(contact.phone)}
+                      data-seo-event="phone_click"
+                      data-seo-locale={locale}
+                      data-seo-placement="footer"
                       className="inline-flex w-fit items-center gap-3 text-neutral-100 transition-colors hover:text-secondary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-secondary"
                     >
                       <Phone
@@ -82,10 +100,10 @@ export function SiteFooter() {
               id="footer-quick-links-heading"
               className="text-xl font-bold text-white"
             >
-              Quick Links
+              {copy.footer.quickLinks}
             </h2>
             <ul className="mt-6 flex flex-col gap-3 text-base">
-              {FOOTER_NAV_ITEMS.map((item) => {
+              {footerNavItems.map((item) => {
                 const LinkComponent = hasRealHash(item.href) ? HashLink : Link;
 
                 return (
@@ -108,7 +126,7 @@ export function SiteFooter() {
                 id="footer-social-heading"
                 className="text-xl font-bold text-white"
               >
-                Connect With Us
+                {copy.footer.connect}
               </h2>
               <ul className="mt-6 flex flex-col gap-3 text-base">
                 {socialLinks.map((social) => (
@@ -128,14 +146,17 @@ export function SiteFooter() {
                   </li>
                 ))}
               </ul>
+              <SeoAnalyticsSettingsButton
+                locale={locale}
+                className="mt-5 inline-flex w-fit text-sm text-neutral-300 underline underline-offset-4 transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-secondary"
+              />
             </section>
           ) : null}
         </div>
 
         <div className="mt-12 border-t border-neutral-300/70 pt-8 text-center text-base text-neutral-300">
           <p>
-            &copy; {COPYRIGHT_YEAR} Lavender Lane Guesthouse. All rights
-            reserved.
+            &copy; {COPYRIGHT_YEAR} Lavender Lane Guesthouse. {copy.footer.copyright}
           </p>
         </div>
       </div>

@@ -8,9 +8,10 @@ import {
 
 import { SectionHeader } from "@/components/section-header";
 import {
-  getAboutContent,
   type AboutHighlightSlug,
 } from "@/content/site-content";
+import { getLocalizedAboutContent } from "@/content/localized-site-content";
+import type { SiteLocale } from "@/i18n/locale";
 
 const ABOUT_HIGHLIGHT_ICONS: Record<AboutHighlightSlug, LucideIcon> = {
   "modern-rooms": BedDouble,
@@ -19,8 +20,12 @@ const ABOUT_HIGHLIGHT_ICONS: Record<AboutHighlightSlug, LucideIcon> = {
   "prime-location": MapPin,
 };
 
-export function AboutOverview() {
-  const { overview } = getAboutContent();
+type AboutOverviewProps = {
+  locale: SiteLocale;
+};
+
+export function AboutOverview({ locale }: AboutOverviewProps) {
+  const { overview } = getLocalizedAboutContent(locale);
 
   return (
     <section

@@ -1,13 +1,22 @@
 import { ContactSection } from "@/components/contact-section";
+import { getSiteCopy } from "@/content/site-copy";
+import type { SiteLocale } from "@/i18n/locale";
 
-export function HomeContact() {
+type HomeContactProps = {
+  locale: SiteLocale;
+};
+
+export function HomeContact({ locale }: HomeContactProps) {
+  const copy = getSiteCopy(locale).home.contact;
+
   return (
     <ContactSection
       sectionId="contact"
       headingId="contact-heading"
-      label="Get in Touch"
-      title="Contact & Location"
-      description="Contact us directly for bookings, availability, or help planning your stay."
+      label={copy.label}
+      title={copy.title}
+      description={copy.description}
+      locale={locale}
     />
   );
 }

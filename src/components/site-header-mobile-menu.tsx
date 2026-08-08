@@ -2,20 +2,26 @@
 
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
-import { useSelectedLayoutSegment } from "next/navigation";
 import { useState } from "react";
 
 import type { MainNavItem } from "@/constants/navigation";
-import { isMainNavItemActive } from "@/utils/navigation";
+import type { SitePageKey } from "@/i18n/locale";
 
 const MOBILE_MENU_ID = "site-header-mobile-menu";
 
 type SiteHeaderMobileMenuProps = {
   navItems: ReadonlyArray<MainNavItem>;
+  activePage: SitePageKey;
+  openLabel: string;
+  closeLabel: string;
 };
 
-export function SiteHeaderMobileMenu({ navItems }: SiteHeaderMobileMenuProps) {
-  const segment = useSelectedLayoutSegment();
+export function SiteHeaderMobileMenu({
+  navItems,
+  activePage,
+  openLabel,
+  closeLabel,
+}: SiteHeaderMobileMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   function closeMenu() {
@@ -34,7 +40,7 @@ export function SiteHeaderMobileMenu({ navItems }: SiteHeaderMobileMenuProps) {
         popoverTargetAction="toggle"
         aria-controls={MOBILE_MENU_ID}
         aria-expanded={isOpen}
-        aria-label={isOpen ? "Close menu" : "Open menu"}
+        aria-label={isOpen ? closeLabel : openLabel}
         className="inline-flex size-11 items-center justify-center rounded-md text-primary transition-colors duration-200 ease-out hover:bg-secondary/20 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent motion-reduce:transition-none"
       >
         {isOpen ? (
@@ -53,7 +59,7 @@ export function SiteHeaderMobileMenu({ navItems }: SiteHeaderMobileMenuProps) {
         <div className="container mx-auto px-4 py-5 sm:px-6">
           <ul className="space-y-1 text-base font-semibold">
             {navItems.map((item) => {
-              const isActive = isMainNavItemActive(item.href, segment);
+              const isActive = item.page === activePage;
 
               return (
                 <li key={item.href}>

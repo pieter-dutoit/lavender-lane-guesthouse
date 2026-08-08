@@ -18,7 +18,12 @@ import {
 } from "lucide-react";
 
 import { SectionHeader } from "@/components/section-header";
-import { getHomeAmenities, type HomeAmenitySlug } from "@/content/site-content";
+import {
+  getLocalizedHomeAmenities,
+} from "@/content/localized-site-content";
+import { getSiteCopy } from "@/content/site-copy";
+import type { HomeAmenitySlug } from "@/content/site-content";
+import type { SiteLocale } from "@/i18n/locale";
 
 const HOME_AMENITY_ICONS: Record<HomeAmenitySlug, LucideIcon> = {
   breakfast: EggFried,
@@ -38,8 +43,13 @@ const HOME_AMENITY_ICONS: Record<HomeAmenitySlug, LucideIcon> = {
   "secure-premises": ShieldCheck,
 };
 
-export function HomeAmenities() {
-  const amenities = getHomeAmenities();
+type HomeAmenitiesProps = {
+  locale: SiteLocale;
+};
+
+export function HomeAmenities({ locale }: HomeAmenitiesProps) {
+  const amenities = getLocalizedHomeAmenities(locale);
+  const copy = getSiteCopy(locale);
 
   return (
     <section
@@ -54,9 +64,9 @@ export function HomeAmenities() {
             align="center"
             className="mx-auto max-w-2xl"
             headingId="amenities-heading"
-            label="Stay in Comfort"
-            title="Facilities & Amenities"
-            description="Enjoy breakfast options, reliable power, free Wi-Fi, off-street parking, gated premises, and practical in-room comforts for business or leisure travel."
+            label={copy.home.amenities.label}
+            title={copy.home.amenities.title}
+            description={copy.home.amenities.description}
           />
 
           <ul className="mx-auto flex max-w-5xl flex-wrap-reverse justify-center gap-6 lg:gap-8">

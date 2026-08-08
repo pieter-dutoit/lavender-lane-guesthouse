@@ -11,6 +11,7 @@ import {
   Tv,
   Users,
   Wifi,
+  type LucideIcon,
 } from "lucide-react";
 
 import { AmenityChip } from "@/components/amenity-chip";
@@ -18,14 +19,33 @@ import { RoomGalleryDialog } from "@/components/room-gallery-dialog";
 import { SectionHeader } from "@/components/section-header";
 import {
   getBookingPlatform,
-  getRoomsRatesRooms,
-} from "@/content/site-content";
+  getLocalizedRoomsRatesRooms,
+} from "@/content/localized-site-content";
+import { getSiteCopy } from "@/content/site-copy";
+import type { SiteLocale } from "@/i18n/locale";
 import { formatRate } from "@/utils/format-rate";
 import { getRoomGalleryImages } from "@/utils/room-images";
 
-export function HomeRoomsRates() {
+const ROOM_AMENITY_ICONS: ReadonlyArray<LucideIcon> = [
+  Wifi,
+  AirVent,
+  Coffee,
+  Refrigerator,
+  Microwave,
+  BriefcaseBusiness,
+  Tv,
+  ShowerHead,
+  DoorOpen,
+];
+
+type HomeRoomsRatesProps = {
+  locale: SiteLocale;
+};
+
+export function HomeRoomsRates({ locale }: HomeRoomsRatesProps) {
   const bookingPlatform = getBookingPlatform();
-  const rooms = getRoomsRatesRooms();
+  const rooms = getLocalizedRoomsRatesRooms(locale);
+  const copy = getSiteCopy(locale);
 
   return (
     <section
@@ -37,9 +57,9 @@ export function HomeRoomsRates() {
       <div className="container mx-auto flex flex-col gap-8 px-4 sm:px-6 lg:px-8">
         <SectionHeader
           headingId="rooms-rates-heading"
-          label="Stay, Work, Recharge"
-          title="Rooms & Rates"
-          description="Find the perfect room for your stay, whether you're traveling solo, with colleagues, or as a family."
+          label={copy.home.rooms.label}
+          title={copy.home.rooms.title}
+          description={copy.home.rooms.description}
         />
 
         <ul className="grid grid-cols-1 gap-4">
@@ -59,10 +79,12 @@ export function HomeRoomsRates() {
                   <p className="mt-2 text-sm text-pretty text-foreground">
                     {room.description}
                   </p>
-                  <p className="sr-only">{room.count} rooms available.</p>
+                  <p className="sr-only">
+                    {copy.home.rooms.roomsAvailable(room.count)}
+                  </p>
 
                   <div className="mt-6 flex flex-col gap-6">
-                    <h4 className="sr-only">Capacity</h4>
+                    <h4 className="sr-only">{copy.home.rooms.capacity}</h4>
                     <ul className="flex flex-col flex-wrap gap-2">
                       <li className="flex items-center gap-2">
                         <Users
@@ -70,7 +92,7 @@ export function HomeRoomsRates() {
                           className="size-5 shrink-0 text-primary"
                         />
                         <span className="text-sm font-semibold">
-                          Sleeps {sleepsCount} People
+                          {copy.home.rooms.sleepsPeople(sleepsCount)}
                         </span>
                       </li>
                       <li className="flex flex-col gap-2">
@@ -84,8 +106,10 @@ export function HomeRoomsRates() {
                               className="size-5 shrink-0 text-primary"
                             />
                             <span className="text-sm font-semibold">
-                              {bed.quantity} x {bed.name} Bed
-                              {bed.quantity === 1 ? "" : "s"}
+                              {copy.home.rooms.bedCount(
+                                bed.quantity,
+                                bed.name,
+                              )}
                             </span>
                           </span>
                         ))}
@@ -94,49 +118,46 @@ export function HomeRoomsRates() {
 
                     <div>
                       <h4 className="text-sm font-semibold">
-                        Features &amp; Amenities
+                        {copy.home.rooms.features}
                       </h4>
                       <ul className="mt-2 flex flex-row flex-wrap items-center gap-2">
-                        <AmenityChip icon={Wifi}>Free WiFi</AmenityChip>
-                        <AmenityChip icon={AirVent}>
-                          Air Conditioning
-                        </AmenityChip>
-                        <AmenityChip icon={Coffee}>
-                          Coffee &amp; Tea Station
-                        </AmenityChip>
-                        <AmenityChip icon={Refrigerator}>Fridge</AmenityChip>
-                        <AmenityChip icon={Microwave}>Microwave</AmenityChip>
-                        <AmenityChip icon={BriefcaseBusiness}>Desk</AmenityChip>
-                        <AmenityChip icon={Tv}>DSTV</AmenityChip>
-                        <AmenityChip icon={ShowerHead}>
-                          En-suite Shower
-                        </AmenityChip>
-                        <AmenityChip icon={DoorOpen}>Garden Access</AmenityChip>
+                        {copy.home.rooms.amenities.map((amenity, index) => {
+                          const Icon = ROOM_AMENITY_ICONS[index];
+
+                          return Icon ? (
+                            <AmenityChip key={amenity} icon={Icon}>
+                              {amenity}
+                            </AmenityChip>
+                          ) : null;
+                        })}
                       </ul>
                     </div>
 
                     <div className="flex flex-wrap items-center justify-between gap-4">
                       <p className="text-sm font-semibold text-primary">
-                        from{" "}
+                        {copy.home.rooms.from}{" "}
                         <strong className="text-lg">
                           {formatRate(room.basePrice)}
                         </strong>{" "}
-                        per night
+                        {copy.home.rooms.perNightBreakfast}
                       </p>
                       <div className="flex flex-col items-start">
                         <a
                           href={bookingPlatform.url}
                           target="_blank"
                           rel="noopener noreferrer"
+                          data-seo-event="booking_engine_click"
+                          data-seo-locale={locale}
+                          data-seo-room-type={room.name}
+                          data-seo-placement="room_card"
                           className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-6 py-2 text-base font-medium text-primary-foreground shadow transition-colors hover:bg-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
                         >
-                          Check availability
+                          {copy.booking.checkAvailability}
                         </a>
                         <em className="mt-0.5 flex items-center gap-1 text-xs text-nowrap text-primary">
                           <Lock aria-hidden="true" className="size-2.5" />
-                          Opens{" "}
                           <strong className="font-semibold">
-                            {bookingPlatform.name}
+                            {copy.booking.opensPlatform}
                           </strong>
                         </em>
                       </div>
@@ -148,6 +169,7 @@ export function HomeRoomsRates() {
                   <RoomGalleryDialog
                     roomName={room.name}
                     images={roomGalleryImages}
+                    locale={locale}
                   />
                 </div>
               </li>

@@ -18,6 +18,8 @@ import {
   LIGHTBOX_IMAGE_SIZES,
 } from "@/constants/image-sizes";
 import { joinClasses } from "@/utils/join-classes";
+import { getGalleryCopy } from "@/constants/gallery-copy";
+import type { SiteLocale } from "@/i18n/locale";
 
 export type GalleryLightboxImage = {
   id: string;
@@ -30,6 +32,7 @@ type GalleryLightboxProps = {
   images: ReadonlyArray<GalleryLightboxImage>;
   title: string;
   label?: string;
+  locale: SiteLocale;
   renderTrigger: (openLightbox: (imageIndex?: number) => void) => ReactNode;
 };
 
@@ -40,7 +43,8 @@ function getWrappedImageIndex(imageIndex: number, imageCount: number): number {
 export function GalleryLightbox({
   images,
   title,
-  label = "Gallery",
+  label,
+  locale,
   renderTrigger,
 }: GalleryLightboxProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
@@ -49,6 +53,7 @@ export function GalleryLightbox({
   );
   const headingId = useId();
   const hasMultipleImages = images.length > 1;
+  const copy = getGalleryCopy(locale);
 
   useEffect(() => {
     const dialog = dialogRef.current;
@@ -175,7 +180,7 @@ export function GalleryLightbox({
           <header className="flex shrink-0 items-start justify-between gap-4 p-4 sm:p-6">
             <div>
               <p className="text-xs leading-tight font-bold tracking-wide text-primary/70 uppercase">
-                {label}
+                {label ?? copy.defaultLabel}
               </p>
               <h3
                 id={headingId}
@@ -186,7 +191,7 @@ export function GalleryLightbox({
             </div>
             <button
               type="button"
-              aria-label="Close gallery"
+              aria-label={copy.closeLabel}
               onClick={closeLightbox}
               className="inline-flex size-11 shrink-0 items-center justify-center rounded-md border border-secondary/50 bg-white text-primary transition-colors hover:bg-secondary/20 hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
             >
@@ -236,7 +241,7 @@ export function GalleryLightbox({
                   <>
                     <button
                       type="button"
-                      aria-label="Show previous image"
+                      aria-label={copy.previousLabel}
                       onClick={showPreviousImage}
                       className="absolute top-1/2 left-2 z-10 inline-flex size-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/80 bg-white/90 text-primary shadow-lg transition-colors hover:bg-white hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent sm:left-4"
                     >
@@ -245,7 +250,7 @@ export function GalleryLightbox({
 
                     <button
                       type="button"
-                      aria-label="Show next image"
+                      aria-label={copy.nextLabel}
                       onClick={showNextImage}
                       className="absolute top-1/2 right-2 z-10 inline-flex size-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/80 bg-white/90 text-primary shadow-lg transition-colors hover:bg-white hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent sm:right-4"
                     >
@@ -260,7 +265,7 @@ export function GalleryLightbox({
                   aria-live="polite"
                   className="mt-3 text-center text-sm font-bold text-primary/70"
                 >
-                  Photo {selectedImageIndex + 1} of {images.length}
+                  {copy.photoPosition(selectedImageIndex + 1, images.length)}
                 </p>
               )}
 

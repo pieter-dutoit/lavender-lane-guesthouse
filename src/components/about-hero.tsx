@@ -1,10 +1,15 @@
 import Image from "next/image";
 
 import { ABOUT_HERO_IMAGE_SIZES } from "@/constants/image-sizes";
-import { getAboutContent } from "@/content/site-content";
+import { getLocalizedAboutContent } from "@/content/localized-site-content";
+import type { SiteLocale } from "@/i18n/locale";
 
-export function AboutHero() {
-  const { hero } = getAboutContent();
+type AboutHeroProps = {
+  locale: SiteLocale;
+};
+
+export function AboutHero({ locale }: AboutHeroProps) {
+  const { hero } = getLocalizedAboutContent(locale);
 
   return (
     <section

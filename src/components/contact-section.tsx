@@ -3,9 +3,11 @@ import { ExternalLink, Mail, MapPin, Phone } from "lucide-react";
 import { SectionHeader } from "@/components/section-header";
 import {
   getContacts,
-  getLocation,
+  getLocalizedLocation,
   getSocialLinks,
-} from "@/content/site-content";
+} from "@/content/localized-site-content";
+import { getSiteCopy } from "@/content/site-copy";
+import type { SiteLocale } from "@/i18n/locale";
 import { getEmailHref, getTelephoneHref } from "@/utils/contact-links";
 
 type ContactSectionProps = {
@@ -14,6 +16,7 @@ type ContactSectionProps = {
   label: string;
   title: string;
   description: string;
+  locale: SiteLocale;
 };
 
 export function ContactSection({
@@ -22,10 +25,12 @@ export function ContactSection({
   label,
   title,
   description,
+  locale,
 }: ContactSectionProps) {
   const contacts = getContacts();
-  const location = getLocation();
+  const location = getLocalizedLocation(locale);
   const socialLinks = getSocialLinks();
+  const { contact } = getSiteCopy(locale);
 
   return (
     <section
@@ -48,13 +53,16 @@ export function ContactSection({
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
           <div className="rounded-lg border border-secondary/50 bg-white p-6 shadow-lg">
             <h3 className="text-lg font-semibold text-primary">
-              Contact Information
+              {contact.information}
             </h3>
             <ul className="mt-2 text-sm">
               {contacts.map((contact) => (
                 <li key={contact.email} className="space-y-2">
                   <a
                     href={getEmailHref(contact.email)}
+                    data-seo-event="email_click"
+                    data-seo-locale={locale}
+                    data-seo-placement="contact_section"
                     className="flex touch-manipulation items-center gap-2 text-foreground transition-colors hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
                   >
                     <Mail aria-hidden="true" className="size-4 text-primary" />
@@ -62,6 +70,9 @@ export function ContactSection({
                   </a>
                   <a
                     href={getTelephoneHref(contact.phone)}
+                    data-seo-event="phone_click"
+                    data-seo-locale={locale}
+                    data-seo-placement="contact_section"
                     className="flex touch-manipulation items-center gap-2 text-foreground transition-colors hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
                   >
                     <Phone
@@ -74,17 +85,22 @@ export function ContactSection({
               ))}
             </ul>
 
-            <h3 className="mt-6 text-lg font-semibold text-primary">Address</h3>
+            <h3 className="mt-6 text-lg font-semibold text-primary">
+              {contact.address}
+            </h3>
             <address className="mt-2 flex flex-col gap-4 text-sm not-italic text-foreground">
               <p>{location.formattedAddress}</p>
               <a
                 href={location.mapsLink}
                 target="_blank"
                 rel="noopener noreferrer"
+                data-seo-event="directions_click"
+                data-seo-locale={locale}
+                data-seo-placement="contact_section"
                 className="inline-flex w-fit touch-manipulation items-center gap-1 font-medium text-primary underline underline-offset-4 transition-colors hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
               >
                 <MapPin aria-hidden="true" className="size-4" />
-                Get Directions
+                {contact.directions}
                 <ExternalLink aria-hidden="true" className="size-3" />
               </a>
             </address>
@@ -92,7 +108,7 @@ export function ContactSection({
             {socialLinks.length > 0 ? (
               <>
                 <h3 className="mt-6 text-lg font-semibold text-primary">
-                  Follow Us
+                  {contact.followUs}
                 </h3>
                 <ul className="mt-2 flex flex-wrap gap-3 text-sm">
                   {socialLinks.map((social) => (
@@ -114,10 +130,12 @@ export function ContactSection({
           </div>
 
           <div className="rounded-lg border border-secondary/50 bg-white p-6 shadow-lg">
-            <h3 className="text-lg font-semibold text-primary">Location</h3>
+            <h3 className="text-lg font-semibold text-primary">
+              {contact.location}
+            </h3>
             <div className="mt-4 overflow-hidden rounded-lg border border-secondary/50 bg-secondary/15">
               <iframe
-                title="Lavender Lane map location"
+                title={contact.mapTitle}
                 src={location.mapsEmbedSrc}
                 width="600"
                 height="350"

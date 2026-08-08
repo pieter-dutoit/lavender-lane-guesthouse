@@ -1,8 +1,15 @@
 import { SectionHeader } from "@/components/section-header";
-import { getPolicies } from "@/content/site-content";
+import { getLocalizedPolicies } from "@/content/localized-site-content";
+import { getSiteCopy } from "@/content/site-copy";
+import type { SiteLocale } from "@/i18n/locale";
 
-export function HomePolicies() {
-  const policies = getPolicies();
+type HomePoliciesProps = {
+  locale: SiteLocale;
+};
+
+export function HomePolicies({ locale }: HomePoliciesProps) {
+  const policies = getLocalizedPolicies(locale);
+  const copy = getSiteCopy(locale).home.policies;
 
   return (
     <section
@@ -14,9 +21,9 @@ export function HomePolicies() {
       <div className="container mx-auto flex flex-col gap-8 px-4 sm:px-6 lg:px-8">
         <SectionHeader
           headingId="policies-heading"
-          label="Good to Know"
-          title="Policies"
-          description="Plan your arrival and departure with our current check-in and check-out times."
+          label={copy.label}
+          title={copy.title}
+          description={copy.description}
         />
 
         <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2">

@@ -1,9 +1,16 @@
 import { HomeFaqAccordion } from "@/components/home-faq-accordion";
 import { SectionHeader } from "@/components/section-header";
-import { getHomeFaqs } from "@/content/site-content";
+import { getLocalizedHomeFaqs } from "@/content/localized-site-content";
+import { getSiteCopy } from "@/content/site-copy";
+import type { SiteLocale } from "@/i18n/locale";
 
-export function HomeFaq() {
-  const faqs = getHomeFaqs();
+type HomeFaqProps = {
+  locale: SiteLocale;
+};
+
+export function HomeFaq({ locale }: HomeFaqProps) {
+  const faqs = getLocalizedHomeFaqs(locale);
+  const copy = getSiteCopy(locale).home.faq;
 
   if (faqs.length === 0) {
     return null;
@@ -19,9 +26,9 @@ export function HomeFaq() {
       <div className="container mx-auto flex flex-col gap-8 px-4 sm:px-6 lg:px-8">
         <SectionHeader
           headingId="faqs-heading"
-          label="Lavender Lane FAQs"
-          title="Frequently Asked Questions"
-          description="Helpful answers for guests planning accommodation in Kathu, from room options and meals to off-street parking, gated premises, and reliable power."
+          label={copy.label}
+          title={copy.title}
+          description={copy.description}
         />
 
         <div className="w-full">
