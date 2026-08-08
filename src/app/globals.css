@@ -2,11 +2,11 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #78716c;
+  --foreground: #5f5955;
 
   --brand-green-deep: #1f6f6a;
   --brand-green-mist: #9bc7c7;
-  --brand-lavender: #7858a4;
+  --brand-lavender: #68476f;
 
   --primary: var(--brand-green-deep);
   --primary-foreground: #ffffff;
@@ -37,7 +37,7 @@ body {
   font-family: var(--font-noto-sans), Arial, Helvetica, sans-serif;
 }
 
-.room-gallery-dialog::backdrop {
+.gallery-lightbox-dialog::backdrop {
   background: rgb(0 0 0 / 0.64);
   backdrop-filter: blur(4px);
 }

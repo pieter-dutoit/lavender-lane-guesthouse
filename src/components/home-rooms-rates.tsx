@@ -43,7 +43,7 @@ export function HomeRoomsRates() {
         />
 
         <ul className="grid grid-cols-1 gap-4">
-          {rooms.map((room, index) => {
+          {rooms.map((room) => {
             const sleepsCount = room.sleepsAdults + room.sleepsChildren;
             const roomGalleryImages = getRoomGalleryImages(room);
 
@@ -148,7 +148,6 @@ export function HomeRoomsRates() {
                   <RoomGalleryDialog
                     roomName={room.name}
                     images={roomGalleryImages}
-                    eagerPreview={index === 0}
                   />
                 </div>
               </li>

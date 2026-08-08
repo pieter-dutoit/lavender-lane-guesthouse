@@ -3,31 +3,14 @@ import "server-only";
 import { siteData } from "@/content/site-data";
 
 type AbsoluteHttpUrl = `http://${string}` | `https://${string}`;
-
-const DEFAULT_R2_BUCKET_URL =
-  "https://pub-0f026b3e7ada40e1abeb4ecc6c3619e5.r2.dev";
-
-const r2BucketUrl =
-  process.env.NEXT_PUBLIC_R2_BUCKET_URL ?? DEFAULT_R2_BUCKET_URL;
-
-function isAbsoluteHttpUrl(value: string): value is AbsoluteHttpUrl {
-  return value.startsWith("http://") || value.startsWith("https://");
-}
-
-function getR2ImageSrc(path: string): AbsoluteHttpUrl {
-  const bucketUrl = `${r2BucketUrl.replace(/\/+$/, "")}/`;
-  const src = new URL(path, bucketUrl).href;
-
-  if (!isAbsoluteHttpUrl(src)) {
-    throw new Error(`Invalid R2 image URL: ${src}`);
-  }
-
-  return src;
-}
+type LocalImageSrc = `/media/${string}`;
 
 export type SiteImage = {
-  src: AbsoluteHttpUrl;
+  src: LocalImageSrc;
   alt: string;
+};
+
+export type SiteLogoImage = SiteImage & {
   width: number;
   height: number;
 };
@@ -37,48 +20,17 @@ export type ContentImage = SiteImage & {
   caption: string;
 };
 
-export type HomeGalleryImageCategory =
-  | "breakfast"
-  | "common-area"
-  | "outdoor"
-  | "parking"
-  | "security"
-  | "braai";
-
-export type HomeGalleryImage = ContentImage & {
-  category: HomeGalleryImageCategory;
-};
-
-function createR2Image(
+function createContentImage(
   id: string,
-  path: string,
+  src: LocalImageSrc,
   alt: string,
-  width: number,
-  height: number,
   caption = alt,
 ): ContentImage {
   return {
     id,
-    src: getR2ImageSrc(path),
+    src,
     alt,
-    width,
-    height,
     caption,
-  };
-}
-
-function createHomeGalleryImage(
-  category: HomeGalleryImageCategory,
-  id: string,
-  path: string,
-  alt: string,
-  width: number,
-  height: number,
-  caption = alt,
-): HomeGalleryImage {
-  return {
-    ...createR2Image(id, path, alt, width, height, caption),
-    category,
   };
 }
 
@@ -159,9 +111,58 @@ export type HomeFaqItem = {
   answer: string;
 };
 
+export type AboutHighlightSlug =
+  | "modern-rooms"
+  | "friendly-staff"
+  | "complimentary-amenities"
+  | "prime-location";
+
+export type AboutHighlight = {
+  slug: AboutHighlightSlug;
+  title: string;
+  description: string;
+};
+
+export type AboutTeamMember = {
+  name: string;
+  role: string;
+};
+
+export type AboutContent = {
+  hero: {
+    label: string;
+    title: string;
+    description: string;
+    image: SiteImage;
+  };
+  overview: {
+    label: string;
+    title: string;
+    description: string;
+    highlights: ReadonlyArray<AboutHighlight>;
+  };
+  story: {
+    label: string;
+    title: string;
+    paragraphs: ReadonlyArray<string>;
+  };
+  team: {
+    label: string;
+    title: string;
+    description: string;
+    members: ReadonlyArray<AboutTeamMember>;
+  };
+  contact: {
+    label: string;
+    title: string;
+    description: string;
+  };
+};
+
 export type SiteContent = {
-  siteLogoImage: SiteImage;
+  siteLogoImage: SiteLogoImage;
   homeHeroImage: SiteImage;
+  about: AboutContent;
   bookingPlatform: BookingPlatform;
   primaryContact: ContactInfo;
   contacts: ReadonlyArray<ContactInfo>;
@@ -170,23 +171,97 @@ export type SiteContent = {
   policies: ReadonlyArray<PolicyInfo>;
   roomsRatesRooms: ReadonlyArray<RoomsRatesRoom>;
   homeAmenities: ReadonlyArray<HomeAmenity>;
-  homeGalleryImages: ReadonlyArray<HomeGalleryImage>;
+  homeGalleryImages: ReadonlyArray<ContentImage>;
   homeFaqs: ReadonlyArray<HomeFaqItem>;
 };
 
 const siteContent = {
-  siteLogoImage: createR2Image(
-    "site-logo",
-    "Lavender Lane Logo.png",
-    "Lavender Lane Guesthouse logo",
-    506,
-    247,
-  ),
+  siteLogoImage: {
+    src: "/media/lavender-lane-logo.png",
+    alt: "Lavender Lane Guesthouse logo",
+    width: 506,
+    height: 247,
+  },
   homeHeroImage: {
-    src: getR2ImageSrc("lavender-lane-kathu-hero.jpg"),
+    src: "/media/lavender-lane-kathu-hero.jpg",
     alt: "Double bed in a Lavender Lane Guesthouse room",
-    width: 2612,
-    height: 1960,
+  },
+  about: {
+    hero: {
+      label: "Lavender Lane Guesthouse",
+      title: "About Lavender Lane",
+      description: "Your home away from home in the heart of Kathu.",
+      image: {
+        src: "/media/lavender-lane-secure-premises.jpg",
+        alt: "Lavender Lane Guesthouse exterior sign",
+      },
+    },
+    overview: {
+      label: "Overview",
+      title: "Experience Comfort & Hospitality",
+      description:
+        "Situated at 17 Nieshout Street in Kathu, Lavender Lane offers a perfect blend of comfort and friendly service.",
+      highlights: [
+        {
+          slug: "modern-rooms",
+          title: "Modern Rooms",
+          description:
+            "15 tastefully decorated rooms with a contemporary design.",
+        },
+        {
+          slug: "friendly-staff",
+          title: "Friendly Staff",
+          description:
+            "A welcoming team with more than 20 years of hospitality experience.",
+        },
+        {
+          slug: "complimentary-amenities",
+          title: "Complimentary Amenities",
+          description:
+            "Free Wi-Fi, coffee and tea stations, and daily room cleaning.",
+        },
+        {
+          slug: "prime-location",
+          title: "Prime Location",
+          description:
+            "Conveniently located in central Kathu for business or leisure stays.",
+        },
+      ],
+    },
+    story: {
+      label: "About Us",
+      title: "Our Story",
+      paragraphs: [
+        "Lavender Lane was born out of a passion for hospitality and a desire to create a welcoming space for travellers in Kathu. Our guesthouse has been thoughtfully designed to provide a comfortable and memorable stay for all our guests.",
+        "With 15 beautifully appointed rooms, including a family room and 2 twin rooms, we cater to a variety of needs. Each room is equipped with modern amenities to make your stay as comfortable as possible.",
+        "Our team, with more than 20 years of experience in the hospitality industry, is dedicated to making your stay exceptional. From the moment you arrive until your departure, we strive to offer personalised service that will make you feel truly at home.",
+      ],
+    },
+    team: {
+      label: "Who We Are",
+      title: "Meet Our Team",
+      description: "The heart of Lavender Lane’s hospitality.",
+      members: [
+        {
+          name: "Mienie du Toit",
+          role: "Owner",
+        },
+        {
+          name: "Madeleine de Waal",
+          role: "Owner",
+        },
+        {
+          name: "Izandri Janse van Vuuren",
+          role: "Administration",
+        },
+      ],
+    },
+    contact: {
+      label: "Come Stay With Us",
+      title: "Let’s Plan Your Visit",
+      description:
+        "Questions about our rooms, amenities, or Kathu? Our team is ready to help you feel at home before you arrive.",
+    },
   },
   bookingPlatform: {
     name: "NightsBridge",
@@ -199,14 +274,14 @@ const siteContent = {
     link,
   })),
   location: {
-    street: "17 Nieshout St",
+    street: "17 Nieshout Street",
     city: "Kathu",
     province: "Northern Cape",
     country: "South Africa",
     postalCode: "8446",
     formattedAddress:
-      "17 Nieshout St, Kathu, Northern Cape, South Africa, 8446",
-    mapsLink: "https://maps.app.goo.gl/1JEfwGthJcXdqvhH7",
+      "17 Nieshout Street, Kathu, Northern Cape, South Africa, 8446",
+    mapsLink: "https://maps.app.goo.gl/KR5bnydJB9HdNGMs8",
     mapsEmbedSrc:
       "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3532.7135455567986!2d23.052124!3d-27.6952471!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1e9e412976e47095%3A0xef41f10a6cf9bd04!2sLavender%20Lane!5e0!3m2!1sen!2sza!4v1779262689596!5m2!1sen!2sza",
   },
@@ -236,78 +311,60 @@ const siteContent = {
         },
       ],
       featuredImages: [
-        createR2Image(
+        createContentImage(
           "double-room-main-bed",
-          "Room Double Bed.jpg",
+          "/media/room-double-bed.jpg",
           "Double room bed with white linen and floral cushions",
-          2342,
-          1523,
           "Double room bed",
         ),
-        createR2Image(
+        createContentImage(
           "double-room-red-throw",
-          "Double Room Red Throw.jpg",
+          "/media/double-room-red-throw.jpg",
           "Double room bed with a red throw and floral cushions",
-          1463,
-          1097,
           "Double room with red throw",
         ),
       ],
       galleryImages: [
-        createR2Image(
+        createContentImage(
           "double-room-main-bed",
-          "Room Double Bed.jpg",
+          "/media/room-double-bed.jpg",
           "Double room bed with white linen and floral cushions",
-          2342,
-          1523,
           "Double room bed",
         ),
-        createR2Image(
+        createContentImage(
           "double-room-red-throw",
-          "Double Room Red Throw.jpg",
+          "/media/double-room-red-throw.jpg",
           "Double room bed with a red throw and floral cushions",
-          1463,
-          1097,
           "Double room with red throw",
         ),
-        createR2Image(
+        createContentImage(
           "double-room-green",
-          "Double Room Green.jpg",
+          "/media/double-room-green.jpg",
           "Double room bed with a green throw and butterfly cushions",
-          1200,
-          900,
           "Double room with green throw",
         ),
-        createR2Image(
+        createContentImage(
           "double-room-bed",
-          "Double room bed.jpg",
+          "/media/double-room-bed.jpg",
           "Double room bed with bedside lamps and towels",
-          1600,
-          1200,
           "Double room bed with towels",
         ),
-        createR2Image(
+        createContentImage(
           "double-room-queen-green-throw",
-          "Queen room bed green throw.jpg",
+          "/media/queen-room-bed-green-throw.jpg",
           "Queen room bed with a green throw and bedside lamps",
-          966,
-          724,
           "Queen room bed with green throw",
         ),
-        createR2Image(
+        createContentImage(
           "double-room-coffee-tea",
-          "Room coffee and tea.jpg",
+          "/media/room-coffee-and-tea.jpg",
           "In-room coffee and tea selection",
-          3398,
-          2265,
           "Coffee and tea selection",
         ),
-        createR2Image(
+        createContentImage(
           "double-room-microwave",
-          "Room microwave.jpg",
+          "/media/room-microwave.jpg",
           "In-room microwave and kitchenette cupboard",
-          3600,
-          2400,
           "In-room microwave",
         ),
       ],
@@ -327,54 +384,42 @@ const siteContent = {
         },
       ],
       featuredImages: [
-        createR2Image(
+        createContentImage(
           "single-room-bed",
-          "Single room.jpg",
+          "/media/single-room.jpg",
           "Single room bed with a green throw and towels",
-          1125,
-          844,
           "Single room bed",
         ),
-        createR2Image(
+        createContentImage(
           "single-room-bedroom-amenities",
-          "Bedroom amenities.jpg",
+          "/media/bedroom-amenities.jpg",
           "Single room with bedside table, wardrobe, desk, and kitchenette",
-          2944,
-          1962,
           "Single room amenities",
         ),
       ],
       galleryImages: [
-        createR2Image(
+        createContentImage(
           "single-room-bed",
-          "Single room.jpg",
+          "/media/single-room.jpg",
           "Single room bed with a green throw and towels",
-          1125,
-          844,
           "Single room bed",
         ),
-        createR2Image(
+        createContentImage(
           "single-room-bedroom-amenities",
-          "Bedroom amenities.jpg",
+          "/media/bedroom-amenities.jpg",
           "Single room with bedside table, wardrobe, desk, and kitchenette",
-          2944,
-          1962,
           "Single room amenities",
         ),
-        createR2Image(
+        createContentImage(
           "single-room-study-desk",
-          "Room Study Desk.jpg",
+          "/media/room-study-desk.jpg",
           "In-room study desk and chair",
-          2031,
-          3047,
           "Room study desk",
         ),
-        createR2Image(
+        createContentImage(
           "single-room-bathroom",
-          "Bathroom.jpg",
+          "/media/bathroom.jpg",
           "En-suite bathroom with shower and vanity",
-          1157,
-          1543,
           "En-suite bathroom",
         ),
       ],
@@ -398,46 +443,36 @@ const siteContent = {
         },
       ],
       featuredImages: [
-        createR2Image(
+        createContentImage(
           "family-room-beds",
-          "Family Room.jpg",
+          "/media/family-room.jpg",
           "Family room with a double bed and single bed",
-          1540,
-          1155,
           "Family room beds",
         ),
-        createR2Image(
+        createContentImage(
           "family-room-amenities",
-          "Room amenities.jpg",
+          "/media/room-amenities.jpg",
           "Room kitchenette amenities with kettle, microwave, and storage",
-          2191,
-          3287,
           "Family room amenities",
         ),
       ],
       galleryImages: [
-        createR2Image(
+        createContentImage(
           "family-room-beds",
-          "Family Room.jpg",
+          "/media/family-room.jpg",
           "Family room with a double bed and single bed",
-          1540,
-          1155,
           "Family room beds",
         ),
-        createR2Image(
+        createContentImage(
           "family-room-amenities",
-          "Room amenities.jpg",
+          "/media/room-amenities.jpg",
           "Room kitchenette amenities with kettle, microwave, and storage",
-          2191,
-          3287,
           "Family room amenities",
         ),
-        createR2Image(
+        createContentImage(
           "family-room-coffee-microwave",
-          "Room amentities coffee microwave.jpg",
+          "/media/room-amenities-coffee-microwave.jpg",
           "Room coffee station and microwave",
-          2400,
-          3600,
           "Coffee station and microwave",
         ),
       ],
@@ -457,46 +492,36 @@ const siteContent = {
         },
       ],
       featuredImages: [
-        createR2Image(
+        createContentImage(
           "twin-room-beds",
-          "Twin Room.jpg",
+          "/media/twin-room.jpg",
           "Twin room with two single beds",
-          3294,
-          2193,
           "Twin room beds",
         ),
-        createR2Image(
+        createContentImage(
           "twin-room-bed-detail",
-          "Twin room beds.jpg",
+          "/media/twin-room-beds.jpg",
           "Twin room beds with towels",
-          1024,
-          768,
           "Twin room beds with towels",
         ),
       ],
       galleryImages: [
-        createR2Image(
+        createContentImage(
           "twin-room-beds",
-          "Twin Room.jpg",
+          "/media/twin-room.jpg",
           "Twin room with two single beds",
-          3294,
-          2193,
           "Twin room beds",
         ),
-        createR2Image(
+        createContentImage(
           "twin-room-bed-detail",
-          "Twin room beds.jpg",
+          "/media/twin-room-beds.jpg",
           "Twin room beds with towels",
-          1024,
-          768,
           "Twin room beds with towels",
         ),
-        createR2Image(
+        createContentImage(
           "twin-room-desk-fridge",
-          "Room desk and fridge.jpg",
+          "/media/room-desk-and-fridge.jpg",
           "In-room desk, fridge, and wardrobe",
-          2400,
-          3600,
           "Desk, fridge, and wardrobe",
         ),
       ],
@@ -565,112 +590,76 @@ const siteContent = {
     },
   ],
   homeGalleryImages: [
-    createHomeGalleryImage(
-      "breakfast",
+    createContentImage(
       "breakfast-area",
-      "Breakfast area.jpg",
+      "/media/breakfast-area.jpg",
       "Breakfast area with tables, chairs, and serving counter",
-      3163,
-      2109,
       "Breakfast area",
     ),
-    createHomeGalleryImage(
-      "breakfast",
+    createContentImage(
       "breakfast-bar",
-      "Breakfast bar.jpg",
+      "/media/breakfast-bar.jpg",
       "Breakfast bar with coffee and tea station",
-      3517,
-      2345,
       "Breakfast bar",
     ),
-    createHomeGalleryImage(
-      "breakfast",
+    createContentImage(
       "breakfast-cereal",
-      "Breakfast cereal.jpg",
+      "/media/breakfast-cereal.jpg",
       "Breakfast cereal dispensers and jars",
-      3278,
-      2185,
       "Breakfast cereal station",
     ),
-    createHomeGalleryImage(
-      "common-area",
+    createContentImage(
       "dining-area",
-      "Dining Area.jpg",
+      "/media/dining-area.jpg",
       "Dining area with tables, chairs, and lounge seating",
-      3420,
-      2280,
       "Dining area",
     ),
-    createHomeGalleryImage(
-      "common-area",
+    createContentImage(
       "lounge",
-      "Lavender Lane Lounge.jpg",
+      "/media/lavender-lane-lounge.jpg",
       "Lavender Lane lounge with leather seating",
-      1478,
-      1108,
       "Guest lounge",
     ),
-    createHomeGalleryImage(
-      "outdoor",
+    createContentImage(
       "outdoor-dining-area",
-      "Lavender Lane Outdoor Dining Area.jpg",
+      "/media/lavender-lane-outdoor-dining-area.jpg",
       "Outdoor dining table under a tree",
-      768,
-      1024,
       "Outdoor dining area",
     ),
-    createHomeGalleryImage(
-      "outdoor",
+    createContentImage(
       "outdoor-seating",
-      "Lavender Lane Outdoor Seating.jpg",
+      "/media/lavender-lane-outdoor-seating.jpg",
       "Outdoor seating with umbrella beside the garden",
-      1024,
-      768,
       "Outdoor seating",
     ),
-    createHomeGalleryImage(
-      "outdoor",
+    createContentImage(
       "patio-seating",
-      "Lavender Lane Patio Seating.jpg",
+      "/media/lavender-lane-patio-seating.jpg",
       "Patio seating with table and hanging plants",
-      1148,
-      1464,
       "Patio seating",
     ),
-    createHomeGalleryImage(
-      "outdoor",
+    createContentImage(
       "patio",
-      "Patio.jpg",
+      "/media/patio.jpg",
       "Patio walkway with plants and garden access",
-      3600,
-      2400,
       "Patio walkway",
     ),
-    createHomeGalleryImage(
+    createContentImage(
       "parking",
-      "parking",
-      "Lavender Lane Parking.jpg",
+      "/media/lavender-lane-parking.jpg",
       "Lavender Lane parking area and exterior signage",
-      898,
-      674,
       "Parking area",
     ),
-    createHomeGalleryImage(
-      "security",
+    createContentImage(
       "secure-premises",
-      "Lavender Lane Secure Premises.jpg",
+      "/media/lavender-lane-secure-premises.jpg",
       "Lavender Lane exterior sign at the secure premises",
-      1385,
-      1038,
       "Secure premises",
     ),
-    createHomeGalleryImage(
-      "braai",
+    createContentImage(
       "outdoor-braai-area",
-      "Outdoor Braai Area.jpg",
+      "/media/outdoor-braai-area.jpg",
       "Outdoor braai area with table and chairs",
-      962,
-      721,
       "Outdoor braai area",
     ),
   ],
@@ -679,7 +668,7 @@ const siteContent = {
       id: "location",
       question: "Where is Lavender Lane Guesthouse located in Kathu?",
       answer:
-        "Lavender Lane Guesthouse is at 17 Nieshout St, Kathu, Northern Cape, South Africa, 8446. Our central Kathu location is convenient for business travel, overnight stops, and guests visiting the surrounding Northern Cape area.",
+        "Lavender Lane Guesthouse is at 17 Nieshout Street, Kathu, Northern Cape, South Africa, 8446. Our central Kathu location is convenient for business travel, overnight stops, and guests visiting the surrounding Northern Cape area.",
     },
     {
       id: "room-types",
@@ -732,12 +721,16 @@ const siteContent = {
   ],
 } satisfies SiteContent;
 
-export function getSiteLogoImage(): SiteImage {
+export function getSiteLogoImage(): SiteLogoImage {
   return siteContent.siteLogoImage;
 }
 
 export function getHomeHeroImage(): SiteImage {
   return siteContent.homeHeroImage;
+}
+
+export function getAboutContent(): AboutContent {
+  return siteContent.about;
 }
 
 export function getBookingPlatform(): BookingPlatform {
@@ -772,7 +765,7 @@ export function getHomeAmenities(): ReadonlyArray<HomeAmenity> {
   return siteContent.homeAmenities;
 }
 
-export function getHomeGalleryImages(): ReadonlyArray<HomeGalleryImage> {
+export function getHomeGalleryImages(): ReadonlyArray<ContentImage> {
   return siteContent.homeGalleryImages;
 }
 

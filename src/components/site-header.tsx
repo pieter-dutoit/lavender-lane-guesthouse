@@ -5,6 +5,7 @@ import Link from "next/link";
 import { MAIN_NAV_ITEMS } from "@/constants/navigation";
 import { SiteHeaderMobileMenu } from "@/components/site-header-mobile-menu";
 import { SiteHeaderNavLink } from "@/components/site-header-nav-link";
+import { HEADER_LOGO_IMAGE_SIZES } from "@/constants/image-sizes";
 import { getBookingPlatform, getSiteLogoImage } from "@/content/site-content";
 
 export function SiteHeader() {
@@ -26,7 +27,7 @@ export function SiteHeader() {
             alt={logoImage.alt}
             width={logoImage.width}
             height={logoImage.height}
-            sizes="112px"
+            sizes={HEADER_LOGO_IMAGE_SIZES}
             loading="eager"
             className="h-auto w-28"
           />

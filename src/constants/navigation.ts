@@ -16,13 +16,23 @@ export const MAIN_NAV_ITEMS: ReadonlyArray<MainNavItem> = [
 
 export type FooterNavItem = {
   label: string;
-  href: "/" | "/#rooms-rates" | "/#amenities" | "/#contact" | "/#faqs";
+  href:
+    | "/"
+    | "/about"
+    | "/#rooms-rates"
+    | "/#amenities"
+    | "/#contact"
+    | "/#faqs";
 };
 
 export const FOOTER_NAV_ITEMS: ReadonlyArray<FooterNavItem> = [
   {
     label: "Home",
     href: "/",
+  },
+  {
+    label: "About Us",
+    href: "/about",
   },
   {
     label: "Rooms & Rates",

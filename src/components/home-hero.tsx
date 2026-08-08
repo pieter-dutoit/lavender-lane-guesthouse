@@ -7,6 +7,7 @@ import {
   getLocation,
   getPrimaryContact,
 } from "@/content/site-content";
+import { HOME_HERO_IMAGE_SIZES } from "@/constants/image-sizes";
 import { getEmailHref, getTelephoneHref } from "@/utils/contact-links";
 
 export function HomeHero() {
@@ -23,7 +24,7 @@ export function HomeHero() {
           alt={heroImage.alt}
           fill
           preload
-          sizes="(max-width: 640px) 100vw, 52vw"
+          sizes={HOME_HERO_IMAGE_SIZES}
           className="object-cover object-right"
         />
         <div className="absolute inset-0 hidden bg-[linear-gradient(90deg,#edece8_0%,rgb(247_244_237_/_0.96)_16%,rgb(247_244_237_/_0.68)_32%,rgb(247_244_237_/_0)_56%)] sm:block" />
