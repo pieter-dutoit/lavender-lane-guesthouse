@@ -1,5 +1,4 @@
 import { HomeAmenities } from "@/components/home-amenities";
-import { HomeBusinessStays } from "@/components/home-business-stays";
 import { HomeContact } from "@/components/home-contact";
 import { HomeFaq } from "@/components/home-faq";
 import { HomeGallery } from "@/components/home-gallery";
@@ -32,7 +31,6 @@ export function HomePageContent({ locale }: HomePageContentProps) {
         <HomeSectionNav locale={locale} />
         <HomeRoomsRates locale={locale} />
         <HomeAmenities locale={locale} />
-        <HomeBusinessStays locale={locale} />
         <HomeGallery locale={locale} />
         <HomeContact locale={locale} />
         <HomePolicies locale={locale} />

@@ -183,7 +183,7 @@ export function getLocalizedAboutContent(
       ...content.hero,
       label: "Lavender Lane Guesthouse",
       title: "Oor Lavender Lane",
-      description: "Jou tuiste weg van die huis in die hartjie van Kathu.",
+      description: "Jou tuiste weg van die huis.",
       image: {
         ...content.hero.image,
         alt: "Lavender Lane Guesthouse se buitenaambord",
@@ -192,39 +192,39 @@ export function getLocalizedAboutContent(
     overview: {
       ...content.overview,
       label: "Oorsig",
-      title: "Gerief & gasvryheid in Kathu",
+      title: "Gerief & Gasvryheid In Kathu",
       description:
         "Lavender Lane is by Nieshoutstraat 17 in Kathu en kombineer gemaklike verblyf met vriendelike, praktiese diens.",
       highlights: [
         {
           slug: "modern-rooms",
-          title: "Moderne kamers",
+          title: "Moderne Kamers",
           description:
             "15 smaakvol ingerigte kamers met alles wat jy vir ’n gemaklike verblyf nodig het.",
         },
         {
           slug: "friendly-staff",
-          title: "Vriendelike span",
+          title: "Vriendelike Span",
           description:
             "’n Verwelkomende span met meer as 20 jaar se ervaring in gasvryheid.",
         },
         {
           slug: "complimentary-amenities",
-          title: "Ingeslote geriewe",
+          title: "Ingeslote Geriewe",
           description:
             "Gratis Wi-Fi, koffie- en teestasies, ontbyt en daaglikse kamerskoonmaak.",
         },
         {
           slug: "prime-location",
-          title: "Sentrale ligging",
+          title: "Sentrale Ligging",
           description:
             "Gerieflik geleë in sentraal Kathu vir sake- of ontspanningsverblyf.",
         },
       ],
     },
     story: {
-      label: "Oor ons",
-      title: "Ons verhaal",
+      label: "Oor Ons",
+      title: "Ons Verhaal",
       paragraphs: [
         "Lavender Lane het ontstaan uit ’n liefde vir gasvryheid en die wens om ’n verwelkomende plek vir reisigers in Kathu te skep. Ons gastehuis is sorgvuldig ingerig om elke gas ’n gemaklike en aangename verblyf te bied.",
         "Met 15 kamers — waaronder ’n gesinskamer en twee kamers met enkelbeddens — kan ons verskillende reisbehoeftes akkommodeer. Elke kamer het praktiese, moderne geriewe vir ’n gemaklike besoek.",
@@ -232,8 +232,8 @@ export function getLocalizedAboutContent(
       ],
     },
     team: {
-      label: "Wie ons is",
-      title: "Ontmoet ons span",
+      label: "Wie Ons Is",
+      title: "Ontmoet Ons Span",
       description: "Die hart van Lavender Lane se gasvryheid.",
       members: content.team.members.map((member) => ({
         ...member,
@@ -241,8 +241,8 @@ export function getLocalizedAboutContent(
       })),
     },
     contact: {
-      label: "Kom kuier by ons",
-      title: "Kom ons beplan jou besoek",
+      label: "Kom Kuier By Ons",
+      title: "Kom Ons Beplan Jou Besoek",
       description:
         "Het jy vrae oor ons kamers, geriewe of Kathu? Ons span help graag sodat jy reeds voor aankoms tuis kan voel.",
     },
@@ -270,7 +270,6 @@ export function getLocalizedPolicies(locale: SiteLocale) {
   return [
     { title: "Inklok", description: "Vanaf 14:00 volgens reëling" },
     { title: "Uitklok", description: "Teen 10:00" },
-    { title: "Troeteldiere", description: "Volgens voorafreëling" },
   ];
 }
 
@@ -303,7 +302,7 @@ export function getLocalizedRoomsRatesRooms(
       bedNames: ["dubbel", "enkel"],
     },
     {
-      name: "Kamer met twee enkelbeddens",
+      name: "Kamer Met Twee Enkelbeddens",
       description:
         "’n Gemaklike kamer met twee enkelbeddens, ideaal vir kollegas of vriende. Dit sluit lugversorging, ’n TV met DStv, Wi-Fi, ’n yskas, mikrogolfoond, ketel en werkstafel in.",
       bedNames: ["enkel"],
@@ -349,7 +348,8 @@ export function getLocalizedHomeAmenities(locale: SiteLocale) {
     "dinner-vouchers": "Aandete-bewyse (prys op aanvraag)",
     "braai-area": "Braai-area",
     "indoor-ourdoor-lounges": "Binne- en buitesitareas",
-    "solar-power-no-load-shedding": "Sonkrag & normale werking tydens beurtkrag",
+    "solar-power-no-load-shedding":
+      "Sonkrag & normale werking tydens beurtkrag",
     "borehole-water": "Boorgatwater",
     "free-wifi": "Gratis Wi-Fi",
     "air-conditioning": "Lugversorging",
@@ -433,18 +433,7 @@ export function getLocalizedHomeFaqs(locale: SiteLocale) {
       answer:
         "Ja. Sakegaste het gratis Wi-Fi, werktafels in die kamers, lugversorging, kamers met enkelbeddens vir kollegas, wasgoeddiens, kospakkies, parkering van die straat af en ’n sentrale ligging in Kathu.",
     },
-    {
-      id: "pets",
-      question: "Word troeteldiere toegelaat?",
-      answer:
-        "Troeteldiere kan volgens voorafreëling saamkom. Kontak ons asseblief voor bespreking sodat ons die besonderhede vir jou verblyf kan bevestig.",
-    },
   ];
 }
 
-export {
-  getBookingPlatform,
-  getContacts,
-  getPrimaryContact,
-  getSocialLinks,
-};
+export { getBookingPlatform, getContacts, getPrimaryContact, getSocialLinks };

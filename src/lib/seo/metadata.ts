@@ -14,8 +14,8 @@ import {
 import type { SeoLocale, SeoPageId } from "@/lib/seo/types";
 
 const ROOT_TITLES: Record<SeoLocale, string> = {
-  "en-ZA": "Affordable Accommodation in Kathu | Lavender Lane Guesthouse",
-  "af-ZA": "Bekostigbare Akkommodasie in Kathu | Lavender Lane Guesthouse",
+  "en-ZA": "Affordable Accommodation In Kathu | Lavender Lane Guesthouse",
+  "af-ZA": "Bekostigbare Akkommodasie In Kathu | Lavender Lane Guesthouse",
 };
 
 const TITLE_TEMPLATES: Record<SeoLocale, string> = {

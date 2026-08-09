@@ -12,14 +12,14 @@ export const SEO_ROUTES: ReadonlyArray<SeoRoute> = [
     pages: {
       "en-ZA": {
         pathname: "/",
-        title: "Affordable Accommodation in Kathu | Lavender Lane Guesthouse",
+        title: "Affordable Accommodation In Kathu | Lavender Lane Guesthouse",
         description:
           "Book comfortable, affordable accommodation in central Kathu, Northern Cape, with breakfast included, full solar backup, free Wi-Fi, laundry and rooms from R750.",
         openGraphLocale: "en_ZA",
       },
       "af-ZA": {
         pathname: "/af",
-        title: "Bekostigbare Akkommodasie in Kathu | Lavender Lane Guesthouse",
+        title: "Bekostigbare Akkommodasie In Kathu | Lavender Lane Guesthouse",
         description:
           "Bespreek gerieflike, bekostigbare verblyf in sentraal Kathu, Noord-Kaap, met ontbyt ingesluit, volledige sonkrag-rugsteun, gratis Wi-Fi, wasgoeddiens en kamers vanaf R750.",
         openGraphLocale: "af_ZA",

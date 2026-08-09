@@ -287,16 +287,12 @@ const siteContent = {
   },
   policies: [
     {
-      title: "Check-in",
+      title: "Check-In",
       description: "From 14:00 by arrangement",
     },
     {
-      title: "Check-out",
+      title: "Check-Out",
       description: "By 10:00",
-    },
-    {
-      title: "Pets",
-      description: "By prior arrangement",
     },
   ],
   roomsRatesRooms: [

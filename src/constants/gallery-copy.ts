@@ -25,8 +25,7 @@ const GALLERY_COPY = {
     viewRoomGallery: (roomName) => `View ${roomName} gallery`,
     guesthouseGalleryLabel: "Guesthouse gallery",
     viewGuesthouseGallery: "View Lavender Lane Guesthouse gallery",
-    remainingPhotos: (count) =>
-      `+${count} ${count === 1 ? "photo" : "photos"}`,
+    remainingPhotos: (count) => `+${count} ${count === 1 ? "photo" : "photos"}`,
     viewAll: "View all",
   },
   "af-ZA": {
@@ -37,10 +36,9 @@ const GALLERY_COPY = {
     photoPosition: (current, total) => `Foto ${current} van ${total}`,
     roomGalleryLabel: "Kamergalery",
     viewRoomGallery: (roomName) => `Bekyk die galery vir ${roomName}`,
-    guesthouseGalleryLabel: "Gastehuisgalery",
+    guesthouseGalleryLabel: "Galery",
     viewGuesthouseGallery: "Bekyk Lavender Lane Guesthouse se galery",
-    remainingPhotos: (count) =>
-      `+${count} ${count === 1 ? "foto" : "foto’s"}`,
+    remainingPhotos: (count) => `+${count} ${count === 1 ? "foto" : "foto’s"}`,
     viewAll: "Bekyk alles",
   },
 } satisfies Record<SiteLocale, GalleryCopy>;

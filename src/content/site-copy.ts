@@ -55,16 +55,6 @@ type LocalizedSiteCopy = {
       title: string;
       description: string;
     };
-    business: {
-      label: string;
-      title: string;
-      description: string;
-      cards: ReadonlyArray<{
-        title: string;
-        description: string;
-      }>;
-      securityNote: string;
-    };
     gallery: {
       label: string;
       title: string;
@@ -128,19 +118,19 @@ const SITE_COPY = {
     },
     home: {
       hero: {
-        title: "Affordable Guesthouse Accommodation in Kathu, Northern Cape",
-        label: "Central, business-ready bed and breakfast",
+        title: "Lavender Lane Guesthouse",
+        label: "Central, Business-Ready Bed And Breakfast",
         directions: "Get directions",
         lead: "Comfortable rooms from R750, with breakfast included.",
         description:
-          "Stay centrally in Kathu with full solar backup, free Wi-Fi, daily-cleaned rooms and practical support for business, contractor and overnight stays.",
+          "Stay centrally in Kathu with solar backup, free Wi-Fi, daily-cleaned rooms and practical support for business, contractor and overnight stays.",
         bookingPrompt: "Book online, or contact us directly.",
         callAriaLabel: "Call Lavender Lane Guesthouse",
         emailAriaLabel: "Email Lavender Lane Guesthouse",
       },
       rooms: {
         label: "Stay, Work, Recharge",
-        title: "15 Rooms & Direct Rates",
+        title: "Rooms & Rates",
         description:
           "Choose a single, double, twin or family room. Current direct rates include breakfast and start at R750 per night.",
         roomsAvailable: (count) =>
@@ -167,34 +157,9 @@ const SITE_COPY = {
       },
       amenities: {
         label: "Comfort Without Compromise",
-        title: "Breakfast, Solar Power & Practical Amenities",
+        title: "Breakfast, Solar Power & Amenities",
         description:
           "Breakfast is included, full solar backup keeps normal operations running during outages, and every stay includes free Wi-Fi and daily room cleaning. Laundry and meal arrangements are also available.",
-      },
-      business: {
-        label: "Built for Productive Stays",
-        title: "Business-ready accommodation in central Kathu",
-        description:
-          "A reliable, well-located base for consultants, contractors, project teams and colleagues working in Kathu or around Sishen.",
-        cards: [
-          {
-            title: "Work without interruption",
-            description:
-              "Full solar backup keeps the guesthouse operating normally during load-shedding, with free Wi-Fi, in-room desks and air conditioning.",
-          },
-          {
-            title: "Keep longer stays simple",
-            description:
-              "Breakfast is included in every direct room rate. Laundry, daily room cleaning, lunch packs and dinner vouchers help make work trips manageable.",
-          },
-          {
-            title: "Stay close to Kathu essentials",
-            description:
-              "Approximate driving distances are 3.2 km to Kathu Village Mall, 3.9 km to Sishen Golf Course, 8.1 km to Sishen Mine and 10.6 km to Sishen Airport. Routes can vary; contact our team for current guidance.",
-          },
-        ],
-        securityNote:
-          "The guesthouse accommodation premises are gated. Guest parking is off-street and outside the gated accommodation area.",
       },
       gallery: {
         label: "A Look Around",
@@ -203,13 +168,13 @@ const SITE_COPY = {
           "See our real rooms, breakfast and shared areas, outdoor spaces, off-street parking and gated guesthouse premises.",
       },
       contact: {
-        label: "Get in Touch",
+        label: "Get In Touch",
         title: "Contact & Location",
         description:
           "Contact us directly for bookings, availability, group stays or help planning your visit to Kathu.",
       },
       policies: {
-        label: "Good to Know",
+        label: "Good To Know",
         title: "Stay Policies",
         description:
           "Check-in is available from 14:00 by arrangement, checkout is by 10:00, and pets may stay by prior arrangement.",
@@ -239,13 +204,13 @@ const SITE_COPY = {
     navigation: {
       primaryLabel: "Hoofnavigasie",
       home: "Tuis",
-      about: "Oor ons",
-      roomsRates: "Kamers en tariewe",
+      about: "Oor Ons",
+      roomsRates: "Kamers En Tariewe",
       amenities: "Geriewe",
       gallery: "Galery",
       contact: "Kontak",
       policies: "Beleide",
-      faqs: "Gereelde vrae",
+      faqs: "Gereelde Vrae",
       guesthouseSections: "Gastehuisafdelings",
       openMenu: "Maak kieslys oop",
       closeMenu: "Maak kieslys toe",
@@ -261,19 +226,19 @@ const SITE_COPY = {
     },
     home: {
       hero: {
-        title: "Bekostigbare gastehuisverblyf in Kathu, Noord-Kaap",
-        label: "Sentrale bed-en-ontbyt, toegerus vir sakereisigers",
+        title: "Lavender Lane Gastehuis",
+        label: "Sentrale Bed-En-Ontbyt, Toegerus Vir Sakereisigers",
         directions: "Kry aanwysings",
         lead: "Gerieflike kamers vanaf R750, met ontbyt ingesluit.",
         description:
-          "Bly sentraal in Kathu met ’n volledige sonkrag-rugsteunstelsel, gratis Wi-Fi, kamers wat daagliks skoongemaak word en praktiese ondersteuning vir sake-, kontrakteur- en oornagverblyf.",
+          "Bly sentraal in Kathu met ’n sonkrag stelsel, gratis internet, kamers wat daagliks skoongemaak word en praktiese ondersteuning vir sake-, kontrakteur- en oornagverblyf.",
         bookingPrompt: "Bespreek aanlyn of kontak ons direk.",
         callAriaLabel: "Bel Lavender Lane Guesthouse",
         emailAriaLabel: "E-pos Lavender Lane Guesthouse",
       },
       rooms: {
-        label: "Bly, werk, herlaai",
-        title: "15 kamers en direkte tariewe",
+        label: "Bly, Werk, Herlaai",
+        title: "Kamers En Tariewe",
         description:
           "Kies ’n enkelkamer, dubbelkamer, kamer met twee enkelbeddens of gesinskamer. Huidige direkte tariewe sluit ontbyt in en begin by R750 per nag.",
         roomsAvailable: (count) =>
@@ -283,7 +248,7 @@ const SITE_COPY = {
           `Slaapplek vir ${count} ${count === 1 ? "persoon" : "persone"}`,
         bedCount: (quantity, bedName) =>
           `${quantity} × ${bedName}${quantity === 1 ? "bed" : "beddens"}`,
-        features: "Kenmerke en geriewe",
+        features: "Kenmerke En Geriewe",
         amenities: [
           "Gratis Wi-Fi",
           "Lugversorging",
@@ -299,57 +264,32 @@ const SITE_COPY = {
         perNightBreakfast: "per nag, ontbyt ingesluit",
       },
       amenities: {
-        label: "Gerief sonder kompromie",
-        title: "Ontbyt, sonkrag en praktiese geriewe",
+        label: "Gerief Sonder Kompromie",
+        title: "Ontbyt, Sonkrag En Geriewe",
         description:
           "Ontbyt is ingesluit, ’n volledige sonkrag-rugsteunstelsel hou normale bedrywighede tydens kragonderbrekings aan die gang, en elke verblyf sluit gratis Wi-Fi en daaglikse kamerskoonmaak in. Wasgoed- en maaltydreëlings is ook beskikbaar.",
       },
-      business: {
-        label: "Vir produktiewe verblyf",
-        title: "Sakereed verblyf in sentrale Kathu",
-        description:
-          "’n Betroubare, goed geleë basis vir konsultante, kontrakteurs, projekspanne en kollegas wat in Kathu of die Sishen-omgewing werk.",
-        cards: [
-          {
-            title: "Werk sonder onderbrekings",
-            description:
-              "’n Volledige sonkrag-rugsteunstelsel laat die gastehuis normaal funksioneer tydens beurtkrag, met gratis Wi-Fi, werktafels in die kamers en lugversorging.",
-          },
-          {
-            title: "Maak langer verblyf eenvoudig",
-            description:
-              "Ontbyt is by elke direkte kamertarief ingesluit. Wasgoeddiens, daaglikse kamerskoonmaak, kospakkies en aandetebewyse help om werksreise makliker te maak.",
-          },
-          {
-            title: "Bly naby Kathu se belangrikste plekke",
-            description:
-              "Geskatte ry-afstande is 3,2 km na Kathu Village Mall, 3,9 km na Sishen Golf Course, 8,1 km na Sishen Mine en 10,6 km na Sishen Airport. Roetes kan verskil; kontak ons span vir huidige aanwysings.",
-          },
-        ],
-        securityNote:
-          "Die gastehuisperseel is omhein. Gasteparkeerplek is van die straat af, maar buite die omheinde verblyfarea.",
-      },
       gallery: {
-        label: "Kyk gerus rond",
-        title: "Gastehuisgalery",
+        label: "Kyk Gerus Rond",
+        title: "Galery",
         description:
           "Bekyk ons werklike kamers, ontbyt- en gedeelde ruimtes, buiteruimtes, parkeerarea en omheinde gastehuisperseel.",
       },
       contact: {
-        label: "Kontak ons",
-        title: "Kontakbesonderhede en ligging",
+        label: "Kontak Ons",
+        title: "Kontakbesonderhede En Ligging",
         description:
           "Kontak ons direk vir besprekings, beskikbaarheid, groepverblyf of hulp om jou besoek aan Kathu te beplan.",
       },
       policies: {
-        label: "Goed om te weet",
+        label: "Goed Om Te Weet",
         title: "Verblyfbeleide",
         description:
           "Inklok is vanaf 14:00 volgens reëling beskikbaar, uitklok is teen 10:00, en troeteldiere kan volgens voorafreëling saamkom.",
       },
       faq: {
-        label: "Lavender Lane se gereelde vrae",
-        title: "Gereelde vrae",
+        label: "Lavender Lane Se Gereelde Vrae",
+        title: "Gereelde Vrae",
         description:
           "Duidelike antwoorde oor ons verblyf in Kathu, kamertariewe, ingeslote ontbyt, sonkrag, parkering, troeteldiere en aankomstye.",
       },
@@ -358,13 +298,13 @@ const SITE_COPY = {
       information: "Kontakbesonderhede",
       address: "Adres",
       directions: "Kry aanwysings",
-      followUs: "Volg ons",
+      followUs: "Volg Ons",
       location: "Ligging",
       mapTitle: "Lavender Lane Guesthouse se ligging op die kaart",
     },
     footer: {
-      quickLinks: "Vinnige skakels",
-      connect: "Skakel met ons",
+      quickLinks: "Vinnige Skakels",
+      connect: "Skakel Met Ons",
       copyright: "Alle regte voorbehou.",
     },
   },

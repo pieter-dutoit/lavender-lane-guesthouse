@@ -42,7 +42,7 @@ export const SEO_ANALYTICS_CONSENT_COPY: Record<
   SeoAnalyticsConsentCopy
 > = {
   "en-ZA": {
-    title: "Privacy choices",
+    title: "Privacy Choices",
     description:
       "With your permission, we use Google Analytics to understand how the website is used. Google Analytics is not loaded unless you accept.",
     enabledStatus: "Analytics is currently enabled.",
