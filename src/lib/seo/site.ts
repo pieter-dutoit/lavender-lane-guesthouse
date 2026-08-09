@@ -56,9 +56,9 @@ export const LODGING_FACTS = {
   priceRange: "R750-R800",
   descriptions: {
     "en-ZA":
-      "Affordable, business-ready accommodation in central Kathu with breakfast included, full solar backup, free Wi-Fi, laundry and daily-cleaned rooms.",
+      "Affordable, business-ready accommodation in central Kathu with breakfast included, solar backup, free Wi-Fi, laundry and daily-cleaned rooms.",
     "af-ZA":
-      "Bekostigbare, sakereed verblyf in sentraal Kathu met ontbyt ingesluit, volledige sonkrag-rugsteun, gratis Wi-Fi, wasgoeddiens en kamers wat daagliks skoongemaak word.",
+      "Bekostigbare, sakereed verblyf in sentraal Kathu met ontbyt ingesluit, sonkrag-stelsel, gratis Wi-Fi, wasgoeddiens en kamers wat daagliks skoongemaak word.",
   },
 } satisfies SiteFacts;
 

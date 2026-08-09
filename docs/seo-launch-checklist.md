@@ -13,7 +13,7 @@ Use these exact facts on the website, Google, Google Hotels and every directory:
 - Room inventory: 15 rooms — 10 double, 2 single, 1 family and 2 twin
 - Direct rates: R750 single; R800 double, twin and family
 - Breakfast: included in the current direct room rates
-- Power: full solar backup supports normal guesthouse operation during outages
+- Power: solar backup supports normal guesthouse operation during outages
 - Cleaning: rooms are cleaned daily
 - Laundry: available; confirm the current price directly with the guesthouse
 - Parking and access: the guesthouse accommodation premises are gated. Guest parking is off-street and outside the gated accommodation area.

@@ -17,14 +17,12 @@ type LocalizedSiteCopy = {
     openMenu: string;
     closeMenu: string;
     languageSwitch: string;
-    languageSwitchLabel: string;
   };
   booking: {
     bookNow: string;
     bookOnline: string;
     checkAvailability: string;
     opensPlatform: string;
-    headerAriaLabel: string;
   };
   home: {
     hero: {
@@ -34,8 +32,6 @@ type LocalizedSiteCopy = {
       lead: string;
       description: string;
       bookingPrompt: string;
-      callAriaLabel: string;
-      emailAriaLabel: string;
     };
     rooms: {
       label: string;
@@ -87,6 +83,9 @@ type LocalizedSiteCopy = {
   footer: {
     quickLinks: string;
     connect: string;
+    siteSettings: string;
+    analytics: string;
+    languageSwitch: string;
     copyright: string;
   };
 };
@@ -107,14 +106,12 @@ const SITE_COPY = {
       openMenu: "Open menu",
       closeMenu: "Close menu",
       languageSwitch: "Afrikaans",
-      languageSwitchLabel: "View this page in Afrikaans",
     },
     booking: {
       bookNow: "Book now",
       bookOnline: "Book Online",
       checkAvailability: "Check availability",
       opensPlatform: "Opens NightsBridge",
-      headerAriaLabel: "Book now on NightsBridge",
     },
     home: {
       hero: {
@@ -125,8 +122,6 @@ const SITE_COPY = {
         description:
           "Stay centrally in Kathu with solar backup, free Wi-Fi, daily-cleaned rooms and practical support for business, contractor and overnight stays.",
         bookingPrompt: "Book online, or contact us directly.",
-        callAriaLabel: "Call Lavender Lane Guesthouse",
-        emailAriaLabel: "Email Lavender Lane Guesthouse",
       },
       rooms: {
         label: "Stay, Work, Recharge",
@@ -159,7 +154,7 @@ const SITE_COPY = {
         label: "Comfort Without Compromise",
         title: "Breakfast, Solar Power & Amenities",
         description:
-          "Breakfast is included, full solar backup keeps normal operations running during outages, and every stay includes free Wi-Fi and daily room cleaning. Laundry and meal arrangements are also available.",
+          "Breakfast is included, solar backup keeps normal operations running during outages, and every stay includes free Wi-Fi and daily room cleaning. Laundry and meal arrangements are also available.",
       },
       gallery: {
         label: "A Look Around",
@@ -177,7 +172,7 @@ const SITE_COPY = {
         label: "Good To Know",
         title: "Stay Policies",
         description:
-          "Check-in is available from 14:00 by arrangement, checkout is by 10:00, and pets may stay by prior arrangement.",
+          "Check-in is available from 14:00 by arrangement, and checkout is by 10:00.",
       },
       faq: {
         label: "Lavender Lane FAQs",
@@ -197,6 +192,9 @@ const SITE_COPY = {
     footer: {
       quickLinks: "Quick Links",
       connect: "Connect With Us",
+      siteSettings: "Site Settings",
+      analytics: "Analytics",
+      languageSwitch: "View in Afrikaans",
       copyright: "All rights reserved.",
     },
   },
@@ -205,7 +203,7 @@ const SITE_COPY = {
       primaryLabel: "Hoofnavigasie",
       home: "Tuis",
       about: "Oor Ons",
-      roomsRates: "Kamers En Tariewe",
+      roomsRates: "Kamers en Tariewe",
       amenities: "Geriewe",
       gallery: "Galery",
       contact: "Kontak",
@@ -215,14 +213,12 @@ const SITE_COPY = {
       openMenu: "Maak kieslys oop",
       closeMenu: "Maak kieslys toe",
       languageSwitch: "English",
-      languageSwitchLabel: "Bekyk hierdie bladsy in Engels",
     },
     booking: {
       bookNow: "Bespreek nou",
       bookOnline: "Bespreek aanlyn",
       checkAvailability: "Gaan beskikbaarheid na",
       opensPlatform: "Maak NightsBridge oop",
-      headerAriaLabel: "Bespreek nou op NightsBridge",
     },
     home: {
       hero: {
@@ -233,12 +229,10 @@ const SITE_COPY = {
         description:
           "Bly sentraal in Kathu met ’n sonkrag stelsel, gratis internet, kamers wat daagliks skoongemaak word en praktiese ondersteuning vir sake-, kontrakteur- en oornagverblyf.",
         bookingPrompt: "Bespreek aanlyn of kontak ons direk.",
-        callAriaLabel: "Bel Lavender Lane Guesthouse",
-        emailAriaLabel: "E-pos Lavender Lane Guesthouse",
       },
       rooms: {
         label: "Bly, Werk, Herlaai",
-        title: "Kamers En Tariewe",
+        title: "Kamers en Tariewe",
         description:
           "Kies ’n enkelkamer, dubbelkamer, kamer met twee enkelbeddens of gesinskamer. Huidige direkte tariewe sluit ontbyt in en begin by R750 per nag.",
         roomsAvailable: (count) =>
@@ -267,7 +261,7 @@ const SITE_COPY = {
         label: "Gerief Sonder Kompromie",
         title: "Ontbyt, Sonkrag En Geriewe",
         description:
-          "Ontbyt is ingesluit, ’n volledige sonkrag-rugsteunstelsel hou normale bedrywighede tydens kragonderbrekings aan die gang, en elke verblyf sluit gratis Wi-Fi en daaglikse kamerskoonmaak in. Wasgoed- en maaltydreëlings is ook beskikbaar.",
+          "Ontbyt is ingesluit, ’n sonkrag-stelsel hou normale bedrywighede tydens kragonderbrekings aan die gang, en elke verblyf sluit gratis Wi-Fi en daaglikse kamerskoonmaak in. Wasgoed- en maaltydreëlings is ook beskikbaar.",
       },
       gallery: {
         label: "Kyk Gerus Rond",
@@ -305,6 +299,9 @@ const SITE_COPY = {
     footer: {
       quickLinks: "Vinnige Skakels",
       connect: "Skakel Met Ons",
+      siteSettings: "Werfinstellings",
+      analytics: "Ontledings",
+      languageSwitch: "View in English",
       copyright: "Alle regte voorbehou.",
     },
   },

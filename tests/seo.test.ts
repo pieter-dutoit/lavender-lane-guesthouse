@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 import manifest from "@/app/manifest";
 import robots from "@/app/robots";
 import sitemap from "@/app/sitemap";
+import { getSiteCopy } from "@/content/site-copy";
 import { createPageMetadata } from "@/lib/seo/metadata";
 import {
   getLanguageAlternates,
@@ -45,6 +46,15 @@ describe("SEO route and locale map", () => {
       }
 
       expect(languages["x-default"]).toBe(languages["en-ZA"]);
+    },
+  );
+
+  it.each(SITE_LOCALES)(
+    "keeps the %s homepage metadata title aligned with its visible H1",
+    (locale) => {
+      expect(createPageMetadata("home", locale).title).toEqual({
+        absolute: getSiteCopy(locale).home.hero.title,
+      });
     },
   );
 });

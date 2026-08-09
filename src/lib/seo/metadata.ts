@@ -13,11 +13,6 @@ import {
 } from "@/lib/seo/site";
 import type { SeoLocale, SeoPageId } from "@/lib/seo/types";
 
-const ROOT_TITLES: Record<SeoLocale, string> = {
-  "en-ZA": "Affordable Accommodation In Kathu | Lavender Lane Guesthouse",
-  "af-ZA": "Bekostigbare Akkommodasie In Kathu | Lavender Lane Guesthouse",
-};
-
 const TITLE_TEMPLATES: Record<SeoLocale, string> = {
   "en-ZA": `%s | ${SITE_NAME}`,
   "af-ZA": `%s | ${SITE_NAME}`,
@@ -36,7 +31,7 @@ export function createRootMetadata(locale: SeoLocale): Metadata {
   return {
     metadataBase: SITE_ORIGIN,
     title: {
-      default: ROOT_TITLES[locale],
+      default: home.title,
       template: TITLE_TEMPLATES[locale],
     },
     description: home.description,

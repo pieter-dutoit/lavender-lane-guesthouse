@@ -27,6 +27,11 @@ export function RoomGalleryDialog({
   const previewImages = images.slice(0, 2);
   const remainingImageCount = Math.max(images.length - previewImages.length, 0);
   const copy = getGalleryCopy(locale);
+  const visibleGalleryLabel = copy.remainingPhotos(remainingImageCount);
+  const accessibleGalleryLabel =
+    remainingImageCount > 0
+      ? `${copy.viewRoomGallery(roomName)}: ${visibleGalleryLabel}`
+      : copy.viewRoomGallery(roomName);
 
   if (images.length === 0) {
     return null;
@@ -41,7 +46,7 @@ export function RoomGalleryDialog({
       renderTrigger={(openLightbox) => (
         <button
           type="button"
-          aria-label={copy.viewRoomGallery(roomName)}
+          aria-label={accessibleGalleryLabel}
           onClick={() => openLightbox(0)}
           className="group grid size-full grid-cols-5 gap-2 p-2 text-left focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
         >
@@ -75,7 +80,7 @@ export function RoomGalleryDialog({
                   aria-hidden="true"
                   className="absolute inset-0 flex items-center justify-center rounded-[inherit] bg-black/50 text-2xl font-medium text-primary-foreground backdrop-blur-sm"
                 >
-                  +{remainingImageCount}
+                  {visibleGalleryLabel}
                 </span>
               ) : null}
             </span>

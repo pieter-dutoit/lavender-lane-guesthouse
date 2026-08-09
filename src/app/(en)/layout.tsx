@@ -3,6 +3,7 @@ import { SeoAnalyticsController } from "@/components/seo-analytics-controller";
 import { createRootMetadata, siteViewport } from "@/lib/seo/metadata";
 import { createSiteJsonLd } from "@/lib/seo/structured-data";
 import { siteFont } from "@/styles/site-font";
+import { getGoogleAnalyticsId } from "@/utils/seo-analytics";
 
 import "../globals.css";
 
@@ -14,12 +15,17 @@ export default function EnglishRootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const measurementId = getGoogleAnalyticsId();
+
   return (
     <html lang="en-ZA" className={`${siteFont.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col bg-background text-foreground">
         <JsonLd id="site-json-ld" data={createSiteJsonLd("en-ZA")} />
         {children}
-        <SeoAnalyticsController locale="en-ZA" />
+        <SeoAnalyticsController
+          measurementId={measurementId}
+          locale="en-ZA"
+        />
       </body>
     </html>
   );

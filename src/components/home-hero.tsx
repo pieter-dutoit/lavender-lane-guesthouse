@@ -33,6 +33,7 @@ export function HomeHero({ locale }: HomeHeroProps) {
           preload
           sizes={HOME_HERO_IMAGE_SIZES}
           className="object-cover object-right"
+          fetchPriority="high"
         />
         <div className="absolute inset-0 hidden bg-[linear-gradient(90deg,#edece8_0%,rgb(247_244_237_/_0.96)_16%,rgb(247_244_237_/_0.68)_32%,rgb(247_244_237_/_0)_56%)] sm:block" />
       </div>
@@ -98,7 +99,6 @@ export function HomeHero({ locale }: HomeHeroProps) {
 
               <a
                 href={getTelephoneHref(contact.phone)}
-                aria-label={copy.home.hero.callAriaLabel}
                 data-seo-event="phone_click"
                 data-seo-locale={locale}
                 data-seo-placement="hero"
@@ -109,7 +109,6 @@ export function HomeHero({ locale }: HomeHeroProps) {
               </a>
               <a
                 href={getEmailHref(contact.email)}
-                aria-label={copy.home.hero.emailAriaLabel}
                 data-seo-event="email_click"
                 data-seo-locale={locale}
                 data-seo-placement="hero"

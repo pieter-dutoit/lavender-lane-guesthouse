@@ -1,4 +1,4 @@
-import { ExternalLink, Languages } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -11,12 +11,7 @@ import {
   getLocalizedSiteLogoImage,
 } from "@/content/localized-site-content";
 import { getSiteCopy } from "@/content/site-copy";
-import {
-  getAlternateLocale,
-  getPagePath,
-  type SiteLocale,
-  type SitePageKey,
-} from "@/i18n/locale";
+import { getPagePath, type SiteLocale, type SitePageKey } from "@/i18n/locale";
 
 type SiteHeaderProps = {
   locale: SiteLocale;
@@ -28,8 +23,6 @@ export function SiteHeader({ locale, page }: SiteHeaderProps) {
   const logoImage = getLocalizedSiteLogoImage(locale);
   const copy = getSiteCopy(locale);
   const navItems = getMainNavItems(locale);
-  const alternateLocale = getAlternateLocale(locale);
-  const alternateHref = getPagePath(alternateLocale, page);
 
   return (
     <header className="sticky top-0 z-50 border-b border-secondary/40 bg-background">
@@ -53,23 +46,8 @@ export function SiteHeader({ locale, page }: SiteHeaderProps) {
         </Link>
 
         <div className="flex shrink-0 items-center gap-2 md:hidden">
-          <Link
-            href={alternateHref}
-            hrefLang={alternateLocale}
-            aria-label={copy.navigation.languageSwitchLabel}
-            data-seo-event="language_switch"
-            data-seo-locale={locale}
-            data-seo-placement="header_mobile"
-            className="inline-flex min-h-11 items-center gap-1 text-sm font-semibold text-primary transition-colors hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
-          >
-            <Languages aria-hidden="true" className="size-4" />
-            <span className="hidden sm:inline">
-              {copy.navigation.languageSwitch}
-            </span>
-          </Link>
           <a
             href={bookingPlatform.url}
-            aria-label={copy.booking.headerAriaLabel}
             target="_blank"
             rel="noopener noreferrer"
             data-seo-event="booking_engine_click"
@@ -101,23 +79,8 @@ export function SiteHeader({ locale, page }: SiteHeaderProps) {
             </li>
           ))}
           <li className="flex">
-            <Link
-              href={alternateHref}
-              hrefLang={alternateLocale}
-              aria-label={copy.navigation.languageSwitchLabel}
-              data-seo-event="language_switch"
-              data-seo-locale={locale}
-              data-seo-placement="header_desktop"
-              className="flex h-full items-center gap-1.5 border-b-2 border-transparent px-2 pt-1 font-semibold text-primary transition-colors duration-200 ease-out hover:border-secondary hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent motion-reduce:transition-none sm:px-3"
-            >
-              <Languages aria-hidden="true" className="size-4" />
-              {copy.navigation.languageSwitch}
-            </Link>
-          </li>
-          <li className="flex">
             <a
               href={bookingPlatform.url}
-              aria-label={copy.booking.headerAriaLabel}
               target="_blank"
               rel="noopener noreferrer"
               data-seo-event="booking_engine_click"

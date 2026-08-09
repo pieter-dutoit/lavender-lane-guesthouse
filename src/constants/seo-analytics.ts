@@ -44,25 +44,25 @@ export const SEO_ANALYTICS_CONSENT_COPY: Record<
   "en-ZA": {
     title: "Privacy Choices",
     description:
-      "With your permission, we use Google Analytics to understand how the website is used. Google Analytics is not loaded unless you accept.",
+      "We use Google Analytics by default to understand how the website is used. You can decline analytics at any time.",
     enabledStatus: "Analytics is currently enabled.",
     disabledStatus: "Analytics is currently disabled.",
     accept: "Accept analytics",
-    reject: "Reject analytics",
-    revoke: "Withdraw analytics consent",
-    close: "Close settings",
+    reject: "Decline analytics",
+    revoke: "Decline analytics",
+    close: "Close analytics settings",
     settings: "Analytics settings",
   },
   "af-ZA": {
     title: "Privaatheidskeuses",
     description:
-      "Met jou toestemming gebruik ons Google Analytics om te verstaan hoe die webwerf gebruik word. Google Analytics word nie gelaai tensy jy dit aanvaar nie.",
+      "Ons gebruik Google Analytics by verstek om te verstaan hoe die webwerf gebruik word. Jy kan ontledings enige tyd weier.",
     enabledStatus: "Ontledings is tans aangeskakel.",
     disabledStatus: "Ontledings is tans afgeskakel.",
     accept: "Aanvaar ontledings",
     reject: "Weier ontledings",
-    revoke: "Trek toestemming vir ontledings terug",
-    close: "Sluit instellings",
+    revoke: "Weier ontledings",
+    close: "Sluit ontledingsinstellings",
     settings: "Ontledingsinstellings",
   },
 };

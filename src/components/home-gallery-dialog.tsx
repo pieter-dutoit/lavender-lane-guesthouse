@@ -26,6 +26,11 @@ export function HomeGalleryDialog({
   const previewImages = images.slice(0, 6);
   const remainingImageCount = Math.max(images.length - previewImages.length, 0);
   const copy = getGalleryCopy(locale);
+  const visibleGalleryLabel =
+    remainingImageCount > 0
+      ? copy.remainingPhotos(remainingImageCount)
+      : copy.viewAll;
+  const accessibleGalleryLabel = `${copy.viewGuesthouseGallery}: ${visibleGalleryLabel}`;
 
   if (images.length === 0) {
     return null;
@@ -40,7 +45,7 @@ export function HomeGalleryDialog({
       renderTrigger={(openLightbox) => (
         <button
           type="button"
-          aria-label={copy.viewGuesthouseGallery}
+          aria-label={accessibleGalleryLabel}
           onClick={() => openLightbox(0)}
           className="group grid grid-cols-6 gap-2 text-left focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent md:gap-3"
         >
@@ -75,9 +80,7 @@ export function HomeGalleryDialog({
                     aria-hidden="true"
                     className="absolute inset-0 flex items-center justify-center rounded-[inherit] bg-black/40 px-3 text-center text-base font-semibold text-primary-foreground underline underline-offset-4 backdrop-blur-sm md:text-xl"
                   >
-                    {remainingImageCount > 0
-                      ? copy.remainingPhotos(remainingImageCount)
-                      : copy.viewAll}
+                    {visibleGalleryLabel}
                   </span>
                 ) : null}
               </span>

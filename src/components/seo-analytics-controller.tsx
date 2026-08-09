@@ -1,6 +1,7 @@
 "use client";
 
 import { GoogleAnalytics, sendGAEvent } from "@next/third-parties/google";
+import { XIcon } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 import {
@@ -12,9 +13,9 @@ import {
   type SeoAnalyticsEventName,
   type SeoLocale,
 } from "@/constants/seo-analytics";
-import { getGoogleAnalyticsId } from "@/utils/seo-analytics";
 
 type SeoAnalyticsControllerProps = {
+  measurementId: string | null;
   locale?: SeoLocale;
 };
 
@@ -33,8 +34,8 @@ type SeoAnalyticsEventParameters = {
   placement?: string;
 };
 
-const DENIED_GOOGLE_CONSENT: GoogleConsentParameters = {
-  analytics_storage: "denied",
+const DEFAULT_GOOGLE_CONSENT: GoogleConsentParameters = {
+  analytics_storage: "granted",
   ad_storage: "denied",
   ad_user_data: "denied",
   ad_personalization: "denied",
@@ -61,18 +62,18 @@ function pushGoogleConsentCommand(
   gtag("consent", action, parameters);
 }
 
-function ensureDeniedGoogleConsentDefaults() {
+function ensureGoogleConsentDefaults() {
   if (hasInitializedGoogleConsent) {
     return;
   }
 
-  pushGoogleConsentCommand("default", DENIED_GOOGLE_CONSENT);
+  pushGoogleConsentCommand("default", DEFAULT_GOOGLE_CONSENT);
   hasInitializedGoogleConsent = true;
 }
 
 function updateGoogleConsent(choice: SeoAnalyticsConsentChoice) {
   const parameters: GoogleConsentParameters = {
-    ...DENIED_GOOGLE_CONSENT,
+    ...DEFAULT_GOOGLE_CONSENT,
     analytics_storage: choice === "accepted" ? "granted" : "denied",
   };
 
@@ -126,13 +127,14 @@ function normalizeEventParameter(value: string | undefined) {
 }
 
 export function SeoAnalyticsController({
+  measurementId,
   locale = "en-ZA",
 }: SeoAnalyticsControllerProps) {
-  const measurementId = getGoogleAnalyticsId();
   const [choice, setChoice] =
     useState<SeoAnalyticsConsentChoice | null>(null);
   const [isReady, setIsReady] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [isPromptDismissed, setIsPromptDismissed] = useState(false);
   const panelRef = useRef<HTMLElement>(null);
   const settingsTriggerRef = useRef<HTMLElement | null>(null);
   const shouldFocusPanelRef = useRef(false);
@@ -142,7 +144,7 @@ export function SeoAnalyticsController({
       return;
     }
 
-    ensureDeniedGoogleConsentDefaults();
+    ensureGoogleConsentDefaults();
 
     const storedChoice = readStoredConsent();
 
@@ -153,7 +155,7 @@ export function SeoAnalyticsController({
       );
       updateGoogleConsent(storedChoice);
     } else {
-      setGoogleAnalyticsDisabled(measurementId, true);
+      setGoogleAnalyticsDisabled(measurementId, false);
     }
 
     /* eslint-disable react-hooks/set-state-in-effect -- localStorage is a client-only external source that must be read after hydration. */
@@ -173,6 +175,7 @@ export function SeoAnalyticsController({
       settingsTriggerRef.current =
         activeElement instanceof HTMLElement ? activeElement : null;
       shouldFocusPanelRef.current = true;
+      setIsPromptDismissed(false);
       setIsSettingsOpen(true);
     }
 
@@ -193,7 +196,7 @@ export function SeoAnalyticsController({
   }, [isSettingsOpen]);
 
   useEffect(() => {
-    if (choice !== "accepted") {
+    if (choice === "rejected") {
       return;
     }
 
@@ -245,10 +248,12 @@ export function SeoAnalyticsController({
 
   const activeMeasurementId = measurementId;
   const copy = SEO_ANALYTICS_CONSENT_COPY[locale];
-  const isPanelOpen = isReady && (choice === null || isSettingsOpen);
-  const isAnalyticsEnabled = isReady && choice === "accepted";
+  const isPanelOpen =
+    isReady && !isPromptDismissed && (choice === null || isSettingsOpen);
+  const isAnalyticsEnabled = isReady && choice !== "rejected";
 
   function closeSettings() {
+    setIsPromptDismissed(true);
     setIsSettingsOpen(false);
 
     window.requestAnimationFrame(() => {
@@ -285,65 +290,57 @@ export function SeoAnalyticsController({
           tabIndex={-1}
           aria-labelledby="seo-analytics-consent-title"
           aria-describedby="seo-analytics-consent-description"
-          className="fixed inset-x-4 bottom-4 z-50 mx-auto max-w-3xl rounded-lg border border-secondary/50 bg-white p-5 text-foreground shadow-2xl focus:outline-none sm:p-6"
+          className="fixed inset-x-2 bottom-[max(0.5rem,env(safe-area-inset-bottom))] z-50 mx-auto flex max-w-lg flex-col gap-2 rounded-md border border-secondary/50 bg-white px-3 py-2 text-foreground shadow-lg focus:outline-none sm:right-2 sm:left-auto sm:w-auto sm:max-w-[calc(100vw-1rem)] sm:flex-row sm:items-center sm:gap-3"
         >
-          <h2
-            id="seo-analytics-consent-title"
-            className="text-lg font-semibold text-primary"
-          >
-            {copy.title}
-          </h2>
-          <p
-            id="seo-analytics-consent-description"
-            className="mt-2 text-sm leading-relaxed text-pretty"
-          >
-            {copy.description}
-          </p>
-
-          {choice ? (
-            <p className="mt-2 text-sm font-semibold text-primary" aria-live="polite">
-              {choice === "accepted"
-                ? copy.enabledStatus
-                : copy.disabledStatus}
+          <div className="min-w-0 text-xs leading-4 text-pretty sm:w-lg">
+            <h2
+              id="seo-analytics-consent-title"
+              className="inline font-semibold text-primary"
+            >
+              {copy.title}: {" "}
+            </h2>
+            <p id="seo-analytics-consent-description" className="inline">
+              {copy.description}
+              {choice ? (
+                <span
+                  className="ml-1 font-semibold text-primary"
+                  aria-live="polite"
+                >
+                  {choice === "accepted"
+                    ? copy.enabledStatus
+                    : copy.disabledStatus}
+                </span>
+              ) : null}
             </p>
-          ) : null}
+          </div>
 
-          <div className="mt-5 flex flex-wrap items-center justify-end gap-3">
-            {choice === null ? (
-              <button
-                type="button"
-                onClick={() => applyChoice("rejected")}
-                className="inline-flex min-h-11 items-center justify-center rounded-md border border-secondary bg-white px-4 py-2 text-sm font-semibold text-primary transition-colors hover:bg-secondary/20 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
-              >
-                {copy.reject}
-              </button>
-            ) : (
-              <button
-                type="button"
-                onClick={closeSettings}
-                className="inline-flex min-h-11 items-center justify-center rounded-md border border-secondary bg-white px-4 py-2 text-sm font-semibold text-primary transition-colors hover:bg-secondary/20 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
-              >
-                {copy.close}
-              </button>
-            )}
-
-            {choice === "accepted" ? (
-              <button
-                type="button"
-                onClick={() => applyChoice("rejected")}
-                className="inline-flex min-h-11 items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition-colors hover:bg-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
-              >
-                {copy.revoke}
-              </button>
-            ) : (
+          <div className="flex shrink-0 items-stretch gap-1.5">
+            {choice === "rejected" ? (
               <button
                 type="button"
                 onClick={() => applyChoice("accepted")}
-                className="inline-flex min-h-11 items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition-colors hover:bg-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
+                className="inline-flex min-h-8 min-w-0 flex-1 touch-manipulation items-center justify-center rounded-sm bg-primary px-2.5 py-1 text-center text-xs leading-tight font-semibold text-primary-foreground transition-colors hover:bg-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:flex-none sm:whitespace-nowrap"
               >
                 {copy.accept}
               </button>
+            ) : (
+              <button
+                type="button"
+                onClick={() => applyChoice("rejected")}
+                className="inline-flex min-h-8 min-w-0 flex-1 touch-manipulation items-center justify-center rounded-sm bg-white px-2.5 py-1 text-center text-xs leading-tight font-semibold text-primary transition-colors hover:bg-secondary/20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:flex-none sm:whitespace-nowrap"
+              >
+                {choice === "accepted" ? copy.revoke : copy.reject}
+              </button>
             )}
+
+            <button
+              type="button"
+              onClick={closeSettings}
+              aria-label={copy.close}
+              className="inline-flex size-8 shrink-0 touch-manipulation items-center justify-center rounded-sm border border-primary bg-white text-primary transition-colors hover:bg-secondary/20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+            >
+              <XIcon aria-hidden="true" className="size-4" />
+            </button>
           </div>
         </section>
       ) : null}

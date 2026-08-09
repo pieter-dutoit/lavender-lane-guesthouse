@@ -10,8 +10,14 @@ import {
   getSocialLinks,
 } from "@/content/localized-site-content";
 import { getSiteCopy } from "@/content/site-copy";
-import type { SiteLocale } from "@/i18n/locale";
+import {
+  getAlternateLocale,
+  getPagePath,
+  type SiteLocale,
+  type SitePageKey,
+} from "@/i18n/locale";
 import { getEmailHref, getTelephoneHref } from "@/utils/contact-links";
+import { getGoogleAnalyticsId } from "@/utils/seo-analytics";
 
 const COPYRIGHT_YEAR = 2026;
 
@@ -23,14 +29,18 @@ function hasRealHash(href: string) {
 
 type SiteFooterProps = {
   locale: SiteLocale;
+  page: SitePageKey;
 };
 
-export function SiteFooter({ locale }: SiteFooterProps) {
+export function SiteFooter({ locale, page }: SiteFooterProps) {
   const contacts = getContacts();
   const location = getLocalizedLocation(locale);
   const socialLinks = getSocialLinks();
   const footerNavItems = getFooterNavItems(locale);
   const copy = getSiteCopy(locale);
+  const measurementId = getGoogleAnalyticsId();
+  const alternateLocale = getAlternateLocale(locale);
+  const alternateHref = getPagePath(alternateLocale, page);
 
   return (
     <footer className="bg-neutral-900 text-neutral-100">
@@ -120,38 +130,69 @@ export function SiteFooter({ locale }: SiteFooterProps) {
             </ul>
           </nav>
 
-          {socialLinks.length > 0 ? (
-            <section aria-labelledby="footer-social-heading">
+          <div className="flex flex-col gap-8">
+            {socialLinks.length > 0 ? (
+              <section aria-labelledby="footer-social-heading">
+                <h2
+                  id="footer-social-heading"
+                  className="text-xl font-bold text-white"
+                >
+                  {copy.footer.connect}
+                </h2>
+                <ul className="mt-6 flex flex-col gap-3 text-base">
+                  {socialLinks.map((social) => (
+                    <li key={social.link}>
+                      <a
+                        href={social.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex w-fit items-center gap-2 font-medium text-secondary underline underline-offset-4 transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-secondary"
+                      >
+                        {social.name}
+                        <ExternalLink
+                          aria-hidden="true"
+                          className="size-4 shrink-0"
+                        />
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            ) : null}
+
+            <section aria-labelledby="footer-settings-heading">
               <h2
-                id="footer-social-heading"
+                id="footer-settings-heading"
                 className="text-xl font-bold text-white"
               >
-                {copy.footer.connect}
+                {copy.footer.siteSettings}
               </h2>
               <ul className="mt-6 flex flex-col gap-3 text-base">
-                {socialLinks.map((social) => (
-                  <li key={social.link}>
-                    <a
-                      href={social.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex w-fit items-center gap-2 font-medium text-secondary underline underline-offset-4 transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-secondary"
-                    >
-                      {social.name}
-                      <ExternalLink
-                        aria-hidden="true"
-                        className="size-4 shrink-0"
-                      />
-                    </a>
+                {measurementId ? (
+                  <li>
+                    <SeoAnalyticsSettingsButton
+                      measurementId={measurementId}
+                      locale={locale}
+                      label={copy.footer.analytics}
+                      className="inline-flex text-base"
+                    />
                   </li>
-                ))}
+                ) : null}
+                <li>
+                  <Link
+                    href={alternateHref}
+                    hrefLang={alternateLocale}
+                    data-seo-event="language_switch"
+                    data-seo-locale={locale}
+                    data-seo-placement="footer"
+                    className="inline-flex w-fit text-neutral-300 underline underline-offset-4 transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-secondary"
+                  >
+                    {copy.footer.languageSwitch}
+                  </Link>
+                </li>
               </ul>
-              <SeoAnalyticsSettingsButton
-                locale={locale}
-                className="mt-5 inline-flex w-fit text-sm text-neutral-300 underline underline-offset-4 transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-secondary"
-              />
             </section>
-          ) : null}
+          </div>
         </div>
 
         <div className="mt-12 border-t border-neutral-300/70 pt-8 text-center text-base text-neutral-300">

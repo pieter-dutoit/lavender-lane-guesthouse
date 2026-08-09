@@ -212,7 +212,7 @@ export function getLocalizedAboutContent(
           slug: "complimentary-amenities",
           title: "Ingeslote Geriewe",
           description:
-            "Gratis Wi-Fi, koffie- en teestasies, ontbyt en daaglikse kamerskoonmaak.",
+            "Gratis Wi-Fi, koffie- en tee-stasies, ontbyt en daaglikse kamerskoonmaak.",
         },
         {
           slug: "prime-location",

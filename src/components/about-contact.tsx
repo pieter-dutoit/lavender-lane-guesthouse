@@ -17,6 +17,7 @@ export function AboutContact({ locale }: AboutContactProps) {
       title={contact.title}
       description={contact.description}
       locale={locale}
+      showMap={false}
     />
   );
 }

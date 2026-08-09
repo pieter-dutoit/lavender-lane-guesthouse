@@ -9,6 +9,7 @@ import {
 import { getSiteCopy } from "@/content/site-copy";
 import type { SiteLocale } from "@/i18n/locale";
 import { getEmailHref, getTelephoneHref } from "@/utils/contact-links";
+import { joinClasses } from "@/utils/join-classes";
 
 type ContactSectionProps = {
   sectionId: string;
@@ -17,6 +18,7 @@ type ContactSectionProps = {
   title: string;
   description: string;
   locale: SiteLocale;
+  showMap?: boolean;
 };
 
 export function ContactSection({
@@ -26,6 +28,7 @@ export function ContactSection({
   title,
   description,
   locale,
+  showMap = true,
 }: ContactSectionProps) {
   const contacts = getContacts();
   const location = getLocalizedLocation(locale);
@@ -50,7 +53,12 @@ export function ContactSection({
           description={description}
         />
 
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+        <div
+          className={joinClasses(
+            "grid grid-cols-1 gap-8",
+            showMap && "md:grid-cols-2",
+          )}
+        >
           <div className="rounded-lg border border-secondary/50 bg-white p-6 shadow-lg">
             <h3 className="text-lg font-semibold text-primary">
               {contact.information}
@@ -129,23 +137,25 @@ export function ContactSection({
             ) : null}
           </div>
 
-          <div className="rounded-lg border border-secondary/50 bg-white p-6 shadow-lg">
-            <h3 className="text-lg font-semibold text-primary">
-              {contact.location}
-            </h3>
-            <div className="mt-4 overflow-hidden rounded-lg border border-secondary/50 bg-secondary/15">
-              <iframe
-                title={contact.mapTitle}
-                src={location.mapsEmbedSrc}
-                width="600"
-                height="350"
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                className="min-h-80 w-full border-0"
-              />
+          {showMap ? (
+            <div className="rounded-lg border border-secondary/50 bg-white p-6 shadow-lg">
+              <h3 className="text-lg font-semibold text-primary">
+                {contact.location}
+              </h3>
+              <div className="mt-4 overflow-hidden rounded-lg border border-secondary/50 bg-secondary/15">
+                <iframe
+                  title={contact.mapTitle}
+                  src={location.mapsEmbedSrc}
+                  width="600"
+                  height="350"
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  className="min-h-80 w-full border-0"
+                />
+              </div>
             </div>
-          </div>
+          ) : null}
         </div>
       </div>
     </section>

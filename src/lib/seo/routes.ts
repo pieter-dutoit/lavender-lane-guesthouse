@@ -1,3 +1,4 @@
+import { getSiteCopy } from "@/content/site-copy";
 import { absoluteUrl } from "@/lib/seo/site";
 import type {
   LocalizedSeoPage,
@@ -12,16 +13,16 @@ export const SEO_ROUTES: ReadonlyArray<SeoRoute> = [
     pages: {
       "en-ZA": {
         pathname: "/",
-        title: "Affordable Accommodation In Kathu | Lavender Lane Guesthouse",
+        title: getSiteCopy("en-ZA").home.hero.title,
         description:
-          "Book comfortable, affordable accommodation in central Kathu, Northern Cape, with breakfast included, full solar backup, free Wi-Fi, laundry and rooms from R750.",
+          "Book comfortable, affordable accommodation in central Kathu, Northern Cape, with breakfast included, solar backup, free Wi-Fi, laundry and rooms from R750.",
         openGraphLocale: "en_ZA",
       },
       "af-ZA": {
         pathname: "/af",
-        title: "Bekostigbare Akkommodasie In Kathu | Lavender Lane Guesthouse",
+        title: getSiteCopy("af-ZA").home.hero.title,
         description:
-          "Bespreek gerieflike, bekostigbare verblyf in sentraal Kathu, Noord-Kaap, met ontbyt ingesluit, volledige sonkrag-rugsteun, gratis Wi-Fi, wasgoeddiens en kamers vanaf R750.",
+          "Bespreek gerieflike, bekostigbare verblyf in sentraal Kathu, Noord-Kaap, met ontbyt ingesluit, sonkrag-stelsel, gratis Wi-Fi, wasgoeddiens en kamers vanaf R750.",
         openGraphLocale: "af_ZA",
       },
     },
@@ -40,7 +41,7 @@ export const SEO_ROUTES: ReadonlyArray<SeoRoute> = [
         pathname: "/af/about",
         title: "Oor Lavender Lane Guesthouse | Kathu, Noord-Kaap",
         description:
-          "Lees meer oor Lavender Lane Guesthouse, ons 15 gerieflike kamers en ’n gasvryheidspan met meer as 20 jaar se ervaring in Kathu, Noord-Kaap.",
+          "Lees meer oor Lavender Lane Guesthouse, ons 15 gerieflike kamers en ’n span met meer as 20 jaar se ervaring in Kathu, Noord-Kaap.",
         openGraphLocale: "af_ZA",
       },
     },

@@ -710,7 +710,7 @@ const siteContent = {
       id: "load-shedding",
       question: "Will load-shedding affect my stay?",
       answer:
-        "Lavender Lane uses full solar backup to continue normal guesthouse operations during load-shedding. Borehole water also supports a reliable water supply during your stay.",
+        "Lavender Lane full solar backup to continue normal guesthouse operations during load-shedding. Borehole water also supports a reliable water supply during your stay.",
     },
     {
       id: "business-travel",

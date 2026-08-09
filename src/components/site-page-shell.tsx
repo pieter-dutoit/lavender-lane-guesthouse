@@ -19,7 +19,7 @@ export function SitePageShell({
     <>
       <SiteHeader locale={locale} page={page} />
       {children}
-      <SiteFooter locale={locale} />
+      <SiteFooter locale={locale} page={page} />
     </>
   );
 }

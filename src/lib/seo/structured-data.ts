@@ -60,9 +60,9 @@ const STRUCTURED_DATA_COPY = {
         description: "Breakfast is included in every current direct room rate.",
       },
       solar: {
-        name: "Full solar backup",
+        name: "Solar backup",
         description:
-          "Full solar backup keeps normal guesthouse operations running during load-shedding.",
+          "Solar backup keeps normal guesthouse operations running during load-shedding.",
       },
       parking: {
         name: "Off-street parking outside the gated accommodation area",
@@ -82,13 +82,12 @@ const STRUCTURED_DATA_COPY = {
     amenities: {
       breakfast: {
         name: "Ontbyt ingesluit",
-        description:
-          "Ontbyt is by elke huidige direkte kamertarief ingesluit.",
+        description: "Ontbyt is by elke huidige direkte kamertarief ingesluit.",
       },
       solar: {
-        name: "Volledige sonkrag-rugsteun",
+        name: "Sonkrag stelsel",
         description:
-          "Volledige sonkrag-rugsteun hou normale gastehuisbedrywighede tydens beurtkrag aan die gang.",
+          "Sonkrag-stelsel hou normale gastehuisbedrywighede tydens beurtkrag aan die gang.",
       },
       parking: {
         name: "Parkering van die straat af, buite die omheinde verblyfarea",
